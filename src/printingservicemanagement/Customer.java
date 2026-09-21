@@ -49,16 +49,18 @@ public class Customer extends javax.swing.JFrame {
         deleteButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Customer Management");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 0));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
+        jLabel1.setBackground(new java.awt.Color(255, 153, 0));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("CUSTOMER MANAGEMENT");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -80,21 +82,21 @@ public class Customer extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 700, 120));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 153, 0));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("CUSTOMER NAME:");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("CONTACT NUMBER:");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("EMAIL:");
 
@@ -130,10 +132,7 @@ public class Customer extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(76, 76, 76)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -141,7 +140,9 @@ public class Customer extends javax.swing.JFrame {
                             .addComponent(contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
 
@@ -197,9 +198,9 @@ public class Customer extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 270, 750, 530));
 
-        backButton.setBackground(new java.awt.Color(0, 153, 255));
+        backButton.setBackground(new java.awt.Color(153, 153, 153));
         backButton.setFont(new java.awt.Font("Segoe UI", 1, 33)); // NOI18N
-        backButton.setForeground(new java.awt.Color(255, 255, 255));
+        backButton.setForeground(new java.awt.Color(0, 0, 0));
         backButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\double-left-arrow-4849_32.png")); // NOI18N
         backButton.setText("BACK");
         backButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -207,29 +208,38 @@ public class Customer extends javax.swing.JFrame {
         backButton.addActionListener(this::backButtonActionPerformed);
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 20, 160, 70));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(255, 153, 0));
         jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        addButton.setBackground(new java.awt.Color(255, 255, 255));
         addButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        addButton.setForeground(new java.awt.Color(0, 0, 0));
         addButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-251_64.png")); // NOI18N
         addButton.setText("ADD");
         addButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addButton.setIconTextGap(50);
 
+        updateButton.setBackground(new java.awt.Color(255, 255, 255));
         updateButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        updateButton.setForeground(new java.awt.Color(0, 0, 0));
         updateButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\arrows-refresh-2847_64.png")); // NOI18N
         updateButton.setText("UPDATE");
         updateButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         updateButton.setIconTextGap(20);
+        updateButton.addActionListener(this::updateButtonActionPerformed);
 
+        deleteButton.setBackground(new java.awt.Color(255, 255, 255));
         deleteButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        deleteButton.setForeground(new java.awt.Color(0, 0, 0));
         deleteButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\trash-can-10416_64.png")); // NOI18N
         deleteButton.setText("DELETE");
         deleteButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         deleteButton.setIconTextGap(20);
         deleteButton.addActionListener(this::deleteButtonActionPerformed);
 
+        clearButton.setBackground(new java.awt.Color(255, 255, 255));
         clearButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        clearButton.setForeground(new java.awt.Color(0, 0, 0));
         clearButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\eraser-14542_64.png")); // NOI18N
         clearButton.setText("CLEAR");
         clearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -269,7 +279,10 @@ public class Customer extends javax.swing.JFrame {
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 700, 300));
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\NEW MAIN.png")); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+
+        jLabel6.setText("jLabel6");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -283,6 +296,10 @@ public class Customer extends javax.swing.JFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -301,6 +318,7 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

@@ -53,17 +53,19 @@ public class Dashboard extends javax.swing.JFrame {
         setTitle("Management Dashboard");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 51));
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("KiNN CDO PRINTING SERVICE MANAGEMENT SYSTEM");
 
         logout.setBackground(new java.awt.Color(255, 0, 0));
         logout.setFont(new java.awt.Font("Segoe UI", 1, 30)); // NOI18N
+        logout.setForeground(new java.awt.Color(255, 255, 255));
         logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\exit-logout-2857_32.png")); // NOI18N
         logout.setText("LOGOUT");
+        logout.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         logout.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         logout.setIconTextGap(8);
         logout.setMargin(new java.awt.Insets(2, 4, 2, 10));
@@ -92,16 +94,18 @@ public class Dashboard extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 1560, -1));
 
+        welcomeMessage.setBackground(new java.awt.Color(255, 153, 51));
         welcomeMessage.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        welcomeMessage.setForeground(new java.awt.Color(255, 255, 255));
         welcomeMessage.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         welcomeMessage.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         welcomeMessage.addActionListener(this::welcomeMessageActionPerformed);
         getContentPane().add(welcomeMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 590, 80));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 153, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        customerButton.setBackground(new java.awt.Color(153, 153, 153));
+        customerButton.setBackground(new java.awt.Color(255, 255, 255));
         customerButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         customerButton.setForeground(new java.awt.Color(0, 0, 0));
         customerButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\client-5251_128.png")); // NOI18N
@@ -109,7 +113,7 @@ public class Dashboard extends javax.swing.JFrame {
         customerButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         customerButton.addActionListener(this::customerButtonActionPerformed);
 
-        serviceButton.setBackground(new java.awt.Color(153, 153, 153));
+        serviceButton.setBackground(new java.awt.Color(255, 255, 255));
         serviceButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         serviceButton.setForeground(new java.awt.Color(0, 0, 0));
         serviceButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\consultation-services-team-black-26528_128.png")); // NOI18N
@@ -117,7 +121,7 @@ public class Dashboard extends javax.swing.JFrame {
         serviceButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         serviceButton.addActionListener(this::serviceButtonActionPerformed);
 
-        ordersButton.setBackground(new java.awt.Color(153, 153, 153));
+        ordersButton.setBackground(new java.awt.Color(255, 255, 255));
         ordersButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         ordersButton.setForeground(new java.awt.Color(0, 0, 0));
         ordersButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\list-6241_128.png")); // NOI18N
@@ -125,14 +129,15 @@ public class Dashboard extends javax.swing.JFrame {
         ordersButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ordersButton.addActionListener(this::ordersButtonActionPerformed);
 
-        reportsButton.setBackground(new java.awt.Color(153, 153, 153));
+        reportsButton.setBackground(new java.awt.Color(255, 255, 255));
         reportsButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         reportsButton.setForeground(new java.awt.Color(0, 0, 0));
         reportsButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\tax-calculator-9256_128.png")); // NOI18N
         reportsButton.setText("REPORTS");
         reportsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        reportsButton.addActionListener(this::reportsButtonActionPerformed);
 
-        creationButton.setBackground(new java.awt.Color(153, 153, 153));
+        creationButton.setBackground(new java.awt.Color(255, 255, 255));
         creationButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         creationButton.setForeground(new java.awt.Color(0, 0, 0));
         creationButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\management-9642_128.png")); // NOI18N
@@ -210,6 +215,10 @@ public class Dashboard extends javax.swing.JFrame {
         newSelection.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_ordersButtonActionPerformed
+
+    private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportsButtonActionPerformed
 
     /**
      * @param args the command line arguments
