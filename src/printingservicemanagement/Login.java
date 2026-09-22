@@ -5,6 +5,7 @@
 package printingservicemanagement;
 
 import javax.swing.JOptionPane;
+import java.sql.*;
 
 /**
  *
@@ -157,7 +158,7 @@ public class Login extends javax.swing.JFrame {
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String userField = username.getText();
-        String passField = password.getText();
+        String passField = new String(password.getPassword());
         
         if(userField.isEmpty() && passField.isEmpty()) {
             JOptionPane.showMessageDialog(this,"Both fields are required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
@@ -173,28 +174,32 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Password is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
             return;
         }
+        
+        Connection conn = DBConnection.connect();
+        
+        try {
+            String sql = "SELECT * FROM tbl_users WHERE username= ? AND password = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, userField);
+            pst.setString(2,passField);
             
-        
-        if(userField.equals("admin") && passField.equals("admin123")) {
-            JOptionPane.showMessageDialog(this,"You are logging in as admin, please verify!","Warning!",JOptionPane.WARNING_MESSAGE);
-            AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
-            adminAuth.setVisible(true);
-            this.dispose();
-        }
-        
-        else if(userField.equals("staff") && passField.equals("staff123")) {
-            Dashboard newDashboard = new Dashboard(userField);
-            newDashboard.setVisible(true);
-            this.dispose();
-        }
-        else if(userField.equals("customer") && passField.equals("customer123")) {
-            CustomerDashboard newDashboard = new CustomerDashboard(userField);
-            newDashboard.setVisible(true);
-            this.dispose();
-        }
-        else {
-            JOptionPane.showMessageDialog(this,"Invalid username or password","Error!",JOptionPane.ERROR_MESSAGE);
-            return;
+            ResultSet rs = pst.executeQuery();
+            
+            if(rs.next()) {
+                int userId = rs.getInt("user_id");
+                
+                userSession.setUser(userId, userField);
+                JOptionPane.showMessageDialog(this, "Login successful!");
+                Dashboard newDashboard = new Dashboard(userField);
+                newDashboard.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(this,"Invalid username or password");
+            }
+            
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 
