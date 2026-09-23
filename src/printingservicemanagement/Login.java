@@ -189,10 +189,27 @@ public class Login extends javax.swing.JFrame {
                 int userId = rs.getInt("user_id");
                 
                 userSession.setUser(userId, userField);
-                JOptionPane.showMessageDialog(this, "Login successful!");
-                Dashboard newDashboard = new Dashboard(userField);
-                newDashboard.setVisible(true);
-                this.dispose();
+                if(userField.equals("admin") && passField.equals("admin123")) {
+            JOptionPane.showMessageDialog(this,"You are logging in as admin, please verify!","Warning!",JOptionPane.WARNING_MESSAGE);
+            AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
+            adminAuth.setVisible(true);
+            this.dispose();
+        }
+        
+        else if(userField.equals("staff") && passField.equals("staff123")) {
+            Dashboard newDashboard = new Dashboard(userField);
+            newDashboard.setVisible(true);
+            this.dispose();
+        }
+        else if(userField.equals("customer") && passField.equals("customer123")) {
+            CustomerDashboard newDashboard = new CustomerDashboard(userField);
+            newDashboard.setVisible(true);
+            this.dispose();
+        }
+        else {
+            JOptionPane.showMessageDialog(this,"Invalid username or password","Error!",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
             } else {
                 JOptionPane.showMessageDialog(this,"Invalid username or password");
             }
