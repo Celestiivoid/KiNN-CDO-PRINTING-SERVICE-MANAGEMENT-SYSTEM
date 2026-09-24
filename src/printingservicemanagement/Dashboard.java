@@ -23,8 +23,8 @@ public class Dashboard extends javax.swing.JFrame {
         welcomeMessage.setText("Welcome, " + welcomeName + "!");
         
         if(!welcomeName.equals("admin")) {
-            creationButton.setEnabled(false);
-            reportsButton.setEnabled(false);
+            creationButton.setVisible(false);
+            reportsButton.setVisible(false);
         }
     }
 
@@ -104,6 +104,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 51));
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         customerButton.setBackground(new java.awt.Color(255, 255, 255));
         customerButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -112,6 +113,7 @@ public class Dashboard extends javax.swing.JFrame {
         customerButton.setText("CUSTOMERS");
         customerButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         customerButton.addActionListener(this::customerButtonActionPerformed);
+        jPanel2.add(customerButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(16, 8, 287, 191));
 
         serviceButton.setBackground(new java.awt.Color(255, 255, 255));
         serviceButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -120,6 +122,7 @@ public class Dashboard extends javax.swing.JFrame {
         serviceButton.setText("SERVICE");
         serviceButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         serviceButton.addActionListener(this::serviceButtonActionPerformed);
+        jPanel2.add(serviceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 8, 287, 191));
 
         ordersButton.setBackground(new java.awt.Color(255, 255, 255));
         ordersButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -128,6 +131,7 @@ public class Dashboard extends javax.swing.JFrame {
         ordersButton.setText("ORDERS");
         ordersButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         ordersButton.addActionListener(this::ordersButtonActionPerformed);
+        jPanel2.add(ordersButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(626, 8, 287, 191));
 
         reportsButton.setBackground(new java.awt.Color(255, 255, 255));
         reportsButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -136,6 +140,7 @@ public class Dashboard extends javax.swing.JFrame {
         reportsButton.setText("REPORTS");
         reportsButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         reportsButton.addActionListener(this::reportsButtonActionPerformed);
+        jPanel2.add(reportsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(933, 8, 287, 191));
 
         creationButton.setBackground(new java.awt.Color(255, 255, 255));
         creationButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -145,38 +150,9 @@ public class Dashboard extends javax.swing.JFrame {
         creationButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         creationButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         creationButton.addActionListener(this::creationButtonActionPerformed);
+        jPanel2.add(creationButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1238, 8, 293, 191));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(customerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(serviceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(ordersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(reportsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(creationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(customerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(serviceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(ordersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reportsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(creationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1560, 220));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 1550, 220));
 
         jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\KINN CDO FRAME.png")); // NOI18N
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1610, -1));
@@ -217,7 +193,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_ordersButtonActionPerformed
 
     private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
-        // TODO add your handling code here:
+    
     }//GEN-LAST:event_reportsButtonActionPerformed
 
     /**

@@ -187,29 +187,29 @@ public class Login extends javax.swing.JFrame {
             
             if(rs.next()) {
                 int userId = rs.getInt("user_id");
+                String userRoles = rs.getString("role");
                 
-                userSession.setUser(userId, userField);
-                if(userField.equals("admin") && passField.equals("admin123")) {
-            JOptionPane.showMessageDialog(this,"You are logging in as admin, please verify!","Warning!",JOptionPane.WARNING_MESSAGE);
-            AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
-            adminAuth.setVisible(true);
-            this.dispose();
-        }
-        
-        else if(userField.equals("staff") && passField.equals("staff123")) {
-            Dashboard newDashboard = new Dashboard(userField);
-            newDashboard.setVisible(true);
-            this.dispose();
-        }
-        else if(userField.equals("customer") && passField.equals("customer123")) {
-            CustomerDashboard newDashboard = new CustomerDashboard(userField);
-            newDashboard.setVisible(true);
-            this.dispose();
-        }
-        else {
-            JOptionPane.showMessageDialog(this,"Invalid username or password","Error!",JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+                userSession.setUser(userId, userField,userRoles);
+                
+                switch(userRoles.toLowerCase()) {
+                    case "administrator":
+                        AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
+                        adminAuth.setVisible(true);
+                        this.dispose();
+                        break;
+                    case "worker":
+                        Dashboard staffDash = new Dashboard(userField);
+                        staffDash.setVisible(true);
+                        this.dispose();
+                        break;
+                    case "customer":
+                        CustomerDashboard customerDash = new CustomerDashboard(userField);
+                        customerDash.setVisible(true);
+                        this.dispose();
+                        break;
+                    default:
+                        JOptionPane.showMessageDialog(this,"Invalid role.","Error!",JOptionPane.ERROR_MESSAGE);
+                }
             } else {
                 JOptionPane.showMessageDialog(this,"Invalid username or password");
             }

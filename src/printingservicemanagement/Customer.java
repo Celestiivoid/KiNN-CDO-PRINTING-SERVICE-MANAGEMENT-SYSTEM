@@ -19,6 +19,11 @@ public class Customer extends javax.swing.JFrame {
     public Customer(String welcomeName) {
         this.welcomeName = welcomeName;
         initComponents();
+        setResizable(false);
+        
+        if(welcomeName.equals("admin")) {
+            deleteButton.setEnabled(false);
+        }
     }
 
     /**

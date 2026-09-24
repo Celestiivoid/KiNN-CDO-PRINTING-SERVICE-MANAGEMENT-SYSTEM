@@ -11,10 +11,12 @@ package printingservicemanagement;
 public class userSession {
     private static int userId;
     private static String username;
+    private static String userRole;
     
-    public static void setUser(int id, String user) {
+    public static void setUser(int id, String user, String role) {
         userId = id;
         username = user;
+        userRole = role;
     }
     
     public static int getUserId() {
@@ -22,6 +24,9 @@ public class userSession {
     }
     public static String getUsername() {
         return username;
+    }
+    public static String getUserRole() {
+        return userRole;
     }
     public static void clearSection() {
         userId = 0;
