@@ -4,12 +4,16 @@
  */
 package printingservicemanagement;
 
-/**
- *
- * @author User
- */
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.sql.*;
+
 public class Customer extends javax.swing.JFrame {
     private String welcomeName;
+    private DefaultTableModel customerTables;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Customer.class.getName());
 
@@ -24,7 +28,38 @@ public class Customer extends javax.swing.JFrame {
         if(welcomeName.equals("admin")) {
             deleteButton.setEnabled(false);
         }
+        
+        customerTables = (DefaultTableModel) customerTable.getModel();
+        displayCustomer();
     }
+    
+    public void displayCustomer() {
+    Connection conn = DBConnection.connect();
+    String sql = "SELECT username, password, role FROM tbl_users WHERE role = 'customer'";
+
+    try (PreparedStatement pst = conn.prepareStatement(sql);
+         ResultSet rs = pst.executeQuery()) {
+
+        customerTables.setRowCount(0); // clear table
+
+        while (rs.next()) {
+            customerTables.addRow(new Object[] {
+                rs.getString("username"),
+                rs.getString("password"),
+                rs.getString("role")
+            });
+        }
+    } catch (SQLException e) {
+        logger.severe("Error displaying customers: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+    } finally {
+        try {
+            if (conn != null) conn.close();
+        } catch (SQLException e) {
+            logger.warning("Failed to close connection: " + e.getMessage());
+        }
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +81,7 @@ public class Customer extends javax.swing.JFrame {
         email = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        customerTable = new javax.swing.JTable();
         backButton = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         addButton = new javax.swing.JButton();
@@ -153,8 +188,8 @@ public class Customer extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 710, 210));
 
-        jTable1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        customerTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -186,7 +221,7 @@ public class Customer extends javax.swing.JFrame {
                 "Costumer ID", "Name", "Contact Number", "Email"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(customerTable);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -223,6 +258,7 @@ public class Customer extends javax.swing.JFrame {
         addButton.setText("ADD");
         addButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         addButton.setIconTextGap(50);
+        addButton.addActionListener(this::addButtonActionPerformed);
 
         updateButton.setBackground(new java.awt.Color(255, 255, 255));
         updateButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -306,6 +342,13 @@ public class Customer extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_updateButtonActionPerformed
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        String name = customerName.getText();
+        String contact = contactNumber.getText();
+        String customerEmail = email.getText();
+        
+    }//GEN-LAST:event_addButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -316,6 +359,7 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JButton clearButton;
     private javax.swing.JTextField contactNumber;
     private javax.swing.JTextField customerName;
+    private javax.swing.JTable customerTable;
     private javax.swing.JButton deleteButton;
     private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel1;
@@ -329,7 +373,6 @@ public class Customer extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
