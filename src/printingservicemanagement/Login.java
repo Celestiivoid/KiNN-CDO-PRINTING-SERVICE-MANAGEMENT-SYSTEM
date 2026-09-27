@@ -32,197 +32,116 @@ public class Login extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
-        password = new javax.swing.JPasswordField();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        showPass = new javax.swing.JCheckBox();
+        username = new javax.swing.JTextField();
+        password = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        showPass = new javax.swing.JCheckBox();
+        jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Management Login");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 153, 51));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        jLabel1.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("KiNN CDO PRINTING SERVICE MANAGEMENT SYSTEM");
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        username.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        username.addActionListener(this::usernameActionPerformed);
-
-        password.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        password.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        jLabel2.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-3295_32.png")); // NOI18N
-        jLabel2.setText("USERNAME:");
-        jLabel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel2.setIconTextGap(8);
-
-        jLabel3.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\login-password-11924_32.png")); // NOI18N
-        jLabel3.setText("PASSWORD:");
-        jLabel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jLabel3.setIconTextGap(8);
-
-        showPass.setBackground(new java.awt.Color(255, 153, 0));
-        showPass.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        showPass.setForeground(new java.awt.Color(255, 255, 255));
-        showPass.setText("SHOW PASSWORD");
-        showPass.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        showPass.addActionListener(this::showPassActionPerformed);
-
-        loginButton.setBackground(new java.awt.Color(255, 255, 255));
-        loginButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        loginButton.setForeground(new java.awt.Color(0, 0, 0));
-        loginButton.setText("LOGIN");
-        loginButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        loginButton.addActionListener(this::loginButtonActionPerformed);
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 518, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(showPass))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
-                            .addComponent(username))))
-                .addGap(17, 17, 17))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(username, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(showPass, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, -1, -1));
-
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(585, 6, -1, -1));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\NEW MAIN.png")); // NOI18N
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1650, 900));
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\OneDrive\\Pictures\\Screenshots 1\\Screenshot 2026-09-27 212113.png")); // NOI18N
+        jLabel5.setText("jLabel5");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 530, 450));
+
+        jLabel6.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("PRINTING SERVICE AND ORDER MANAGEMENT");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 570, 460, -1));
+
+        jLabel7.setFont(new java.awt.Font("Comic Sans MS", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 153, 153));
+        jLabel7.setText("SYSTEM");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 600, -1, -1));
+
+        jPanel3.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel3.setForeground(new java.awt.Color(255, 153, 51));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+        );
+
+        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 100, 10, 630));
+
+        jLabel2.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-3295_32.png")); // NOI18N
+        jLabel2.setText("USERNAME:");
+        jLabel2.setIconTextGap(8);
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 210, 207, 64));
+
+        jLabel3.setBackground(new java.awt.Color(255, 153, 0));
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\login-password-11924_32.png")); // NOI18N
+        jLabel3.setText("PASSWORD:");
+        jLabel3.setIconTextGap(8);
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 300, 207, 62));
+
+        username.setBackground(new java.awt.Color(255, 255, 255));
+        username.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        username.setForeground(new java.awt.Color(0, 0, 0));
+        username.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        username.addActionListener(this::usernameActionPerformed);
+        getContentPane().add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 210, 460, 64));
+
+        password.setBackground(new java.awt.Color(255, 255, 255));
+        password.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        password.setForeground(new java.awt.Color(0, 0, 0));
+        password.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        getContentPane().add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(1040, 300, 460, 62));
+
+        loginButton.setBackground(new java.awt.Color(255, 51, 51));
+        loginButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        loginButton.setForeground(new java.awt.Color(255, 255, 255));
+        loginButton.setText("LOGIN");
+        loginButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        loginButton.addActionListener(this::loginButtonActionPerformed);
+        getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 470, 670, 60));
+
+        showPass.setBackground(new java.awt.Color(255, 255, 255));
+        showPass.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        showPass.setForeground(new java.awt.Color(0, 0, 0));
+        showPass.setText("SHOW PASSWORD");
+        showPass.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        showPass.addActionListener(this::showPassActionPerformed);
+        getContentPane().add(showPass, new org.netbeans.lib.awtextra.AbsoluteConstraints(1310, 370, -1, 35));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Welcome!");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 60, 300, 80));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\NEW NEW MAIN MAIN.png")); // NOI18N
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 900));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        String userField = username.getText();
-        String passField = new String(password.getPassword());
-        
-        if(userField.isEmpty() && passField.isEmpty()) {
-            JOptionPane.showMessageDialog(this,"Both fields are required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if(userField.isEmpty()) {
-            JOptionPane.showMessageDialog(this,"Username is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if(passField.isEmpty()) {
-            JOptionPane.showMessageDialog(this,"Password is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        Connection conn = DBConnection.connect();
-        
-        try {
-            String sql = "SELECT * FROM tbl_users WHERE username= ? AND password = ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, userField);
-            pst.setString(2,passField);
-            
-            ResultSet rs = pst.executeQuery();
-            
-            if(rs.next()) {
-                int userId = rs.getInt("user_id");
-                String userRoles = rs.getString("role");
-                
-                userSession.setUser(userId, userField,userRoles);
-                
-                switch(userRoles.toLowerCase()) {
-                    case "administrator":
-                        AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
-                        adminAuth.setVisible(true);
-                        this.dispose();
-                        break;
-                    case "worker":
-                        Dashboard staffDash = new Dashboard(userField);
-                        staffDash.setVisible(true);
-                        this.dispose();
-                        break;
-                    case "customer":
-                        CustomerDashboard customerDash = new CustomerDashboard(userField);
-                        customerDash.setVisible(true);
-                        this.dispose();
-                        break;
-                    default:
-                        JOptionPane.showMessageDialog(this,"Invalid role.","Error!",JOptionPane.ERROR_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this,"Invalid username or password");
-            }
-            
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
-        }
-    }//GEN-LAST:event_loginButtonActionPerformed
-
-    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameActionPerformed
 
     private void showPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPassActionPerformed
         if(showPass.isSelected()) {
@@ -232,6 +151,74 @@ public class Login extends javax.swing.JFrame {
             password.setEchoChar('*');
         }
     }//GEN-LAST:event_showPassActionPerformed
+
+    private void usernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_usernameActionPerformed
+
+    private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
+        String userField = username.getText();
+        String passField = new String(password.getPassword());
+
+        if(userField.isEmpty() && passField.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Both fields are required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if(userField.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Username is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        if(passField.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Password is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Connection conn = DBConnection.connect();
+
+        try {
+            String sql = "SELECT * FROM tbl_users WHERE username= ? AND password = ?";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            pst.setString(1, userField);
+            pst.setString(2,passField);
+
+            ResultSet rs = pst.executeQuery();
+
+            if(rs.next()) {
+                int userId = rs.getInt("user_id");
+                String userRoles = rs.getString("role");
+
+                userSession.setUser(userId, userField,userRoles);
+
+                switch(userRoles.toLowerCase()) {
+                    case "administrator":
+                    AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
+                    adminAuth.setVisible(true);
+                    this.dispose();
+                    break;
+                    case "worker":
+                    Dashboard staffDash = new Dashboard(userField);
+                    staffDash.setVisible(true);
+                    this.dispose();
+                    break;
+                    case "customer":
+                    CustomerDashboard customerDash = new CustomerDashboard(userField);
+                    customerDash.setVisible(true);
+                    this.dispose();
+                    break;
+                    default:
+                    JOptionPane.showMessageDialog(this,"Invalid role.","Error!",JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,"Invalid username or password");
+            }
+
+            conn.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
+        }
+    }//GEN-LAST:event_loginButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,12 +246,15 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField password;
     private javax.swing.JCheckBox showPass;
