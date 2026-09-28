@@ -9,6 +9,7 @@ package printingservicemanagement;
  * @author User
  */
 public class Service extends javax.swing.JFrame {
+    private String userRole;
     private String welcomeName;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Service.class.getName());
@@ -16,8 +17,9 @@ public class Service extends javax.swing.JFrame {
     /**
      * Creates new form Customer
      */
-    public Service(String welcomeName) {
+    public Service(String welcomeName, String userRole) {
         this.welcomeName = welcomeName;
+        this.userRole = userRole;
         initComponents();
     }
 
@@ -298,7 +300,7 @@ public class Service extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        Dashboard backDashboard = new Dashboard(welcomeName);
+        Dashboard backDashboard = new Dashboard(welcomeName,userRole);
         backDashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed

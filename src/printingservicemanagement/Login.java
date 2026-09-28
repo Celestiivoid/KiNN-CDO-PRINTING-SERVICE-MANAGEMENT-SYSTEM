@@ -185,20 +185,20 @@ public class Login extends javax.swing.JFrame {
 
             ResultSet rs = pst.executeQuery();
 
-            if(rs.next()) {
+            if(rs.next()) { 
                 int userId = rs.getInt("user_id");
                 String userRoles = rs.getString("role");
 
                 userSession.setUser(userId, userField,userRoles);
 
-                switch(userRoles.toLowerCase()) {
-                    case "administrator":
-                    AdminAuthenticator adminAuth = new AdminAuthenticator(userField);
+                switch(userRoles) {
+                    case "Administrator":
+                    AdminAuthenticator adminAuth = new AdminAuthenticator(userField,userRoles);
                     adminAuth.setVisible(true);
                     this.dispose();
                     break;
-                    case "worker":
-                    Dashboard staffDash = new Dashboard(userField);
+                    case "Worker":
+                    Dashboard staffDash = new Dashboard(userField,userRoles);
                     staffDash.setVisible(true);
                     this.dispose();
                     break;
@@ -207,8 +207,6 @@ public class Login extends javax.swing.JFrame {
                     customerDash.setVisible(true);
                     this.dispose();
                     break;
-                    default:
-                    JOptionPane.showMessageDialog(this,"Invalid role.","Error!",JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this,"Invalid username or password");

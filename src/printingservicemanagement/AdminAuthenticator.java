@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
  * @author User
  */
 public class AdminAuthenticator extends javax.swing.JFrame {
+    private String userRole;
     private String welcomeName;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminAuthenticator.class.getName());
@@ -18,8 +19,9 @@ public class AdminAuthenticator extends javax.swing.JFrame {
     /**
      * Creates new form AdminAuthenticator
      */
-    public AdminAuthenticator(String welcomeName) {
+    public AdminAuthenticator(String welcomeName, String userRole) {
         this.welcomeName = welcomeName;
+        this.userRole = userRole;
         initComponents();
         setResizable(false);
         setLocationRelativeTo(null);
@@ -122,7 +124,7 @@ public class AdminAuthenticator extends javax.swing.JFrame {
         String codeField = passCode.getText();
         
         if(codeField.equals("127995121653")) {
-            Dashboard newDashboard = new Dashboard(welcomeName);
+            Dashboard newDashboard = new Dashboard(welcomeName,"Administrator");
             newDashboard.setVisible(true);
             this.dispose();
         }

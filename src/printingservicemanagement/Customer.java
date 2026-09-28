@@ -13,6 +13,7 @@ import java.sql.*;
 
 public class Customer extends javax.swing.JFrame {
     private String welcomeName;
+    private String userRole;
     private DefaultTableModel customerTables;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Customer.class.getName());
@@ -20,7 +21,8 @@ public class Customer extends javax.swing.JFrame {
     /**
      * Creates new form Customer
      */
-    public Customer(String welcomeName) {
+    public Customer(String welcomeName, String userRole) {
+        this.userRole = userRole;
         this.welcomeName = welcomeName;
         initComponents();
         setResizable(false);
@@ -329,7 +331,7 @@ public class Customer extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        Dashboard backDashboard = new Dashboard(welcomeName);
+        Dashboard backDashboard = new Dashboard(welcomeName,userRole);
         backDashboard.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed

@@ -127,9 +127,7 @@ public class OrdersSelection extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        Dashboard backDashboard = new Dashboard(welcomeName);
-        backDashboard.setVisible(true);
-        this.dispose();
+
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
