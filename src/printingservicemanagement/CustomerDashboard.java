@@ -241,7 +241,7 @@ public class CustomerDashboard extends javax.swing.JFrame {
     private void processButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processButtonActionPerformed
         String chosenType = (String) typeBox.getSelectedItem();
         
-        if(chosenType.equals("Cash on pick-up")) {
+        if(chosenType.equals("Cash pick-up")) {
             COPType newType = new COPType(chosenType);
             newType.setVisible(true);
         }
