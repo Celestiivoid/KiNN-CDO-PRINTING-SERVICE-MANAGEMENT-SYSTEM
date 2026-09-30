@@ -97,7 +97,7 @@ public class AdminAuthenticator extends javax.swing.JFrame {
     private void verifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyButtonActionPerformed
         String passField = new String(passCode.getPassword());
         
-        if(passField.equals("127995121653")) {
+        if(passField.equals("127995121653$xD")) {
             Dashboard newDashboard = new Dashboard(welcomeName,userRole);
             newDashboard.setVisible(true);
             this.dispose();
