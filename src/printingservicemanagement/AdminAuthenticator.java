@@ -23,7 +23,6 @@ public class AdminAuthenticator extends javax.swing.JFrame {
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         initComponents();
-        setResizable(false);
         setLocationRelativeTo(null);
     }
 
@@ -38,100 +37,72 @@ public class AdminAuthenticator extends javax.swing.JFrame {
 
         jCheckBox1 = new javax.swing.JCheckBox();
         jCheckBox2 = new javax.swing.JCheckBox();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         passCode = new javax.swing.JPasswordField();
-        verifyButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        verifyButton = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        showPin = new javax.swing.JCheckBox();
+        jLabel2 = new javax.swing.JLabel();
 
         jCheckBox1.setText("jCheckBox1");
 
         jCheckBox2.setText("jCheckBox2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-
-        jPanel1.setBackground(new java.awt.Color(255, 153, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        jLabel1.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ADMIN LOGIN AUTHENTICATOR");
-        jLabel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         passCode.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
         passCode.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        verifyButton.setBackground(new java.awt.Color(255, 255, 255));
-        verifyButton.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
-        verifyButton.setForeground(new java.awt.Color(0, 0, 0));
-        verifyButton.setText("VERIFY");
-        verifyButton.addActionListener(this::verifyButtonActionPerformed);
+        getContentPane().add(passCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 340, 450, 60));
 
         backButton.setBackground(new java.awt.Color(255, 255, 255));
         backButton.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
         backButton.setForeground(new java.awt.Color(0, 0, 0));
         backButton.setText("BACK");
         backButton.addActionListener(this::backButtonActionPerformed);
+        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1390, 790, 180, 60));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 413, Short.MAX_VALUE)
-                    .addComponent(passCode)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(verifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)))
-                .addContainerGap())
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(passCode, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(verifyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        verifyButton.setBackground(new java.awt.Color(255, 255, 255));
+        verifyButton.setFont(new java.awt.Font("Segoe UI", 1, 25)); // NOI18N
+        verifyButton.setForeground(new java.awt.Color(0, 0, 0));
+        verifyButton.setText("VERIFY");
+        verifyButton.addActionListener(this::verifyButtonActionPerformed);
+        getContentPane().add(verifyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 470, 190, 60));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 40)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("ADMIN AUTHENTICATOR");
+        jLabel1.setToolTipText("");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 240, 560, 60));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-security-11932_128.png")); // NOI18N
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 100, 120, 130));
+
+        showPin.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        showPin.setForeground(new java.awt.Color(0, 0, 0));
+        showPin.setText("SHOW PIN");
+        showPin.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        showPin.addActionListener(this::showPinActionPerformed);
+        getContentPane().add(showPin, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 410, 130, 40));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\NEW NEW MAIN MAIN.png")); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void verifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyButtonActionPerformed
-        String codeField = passCode.getText();
+        String passField = new String(passCode.getPassword());
         
-        if(codeField.equals("127995121653")) {
-            Dashboard newDashboard = new Dashboard(welcomeName,"Administrator");
+        if(passField.equals("127995121653")) {
+            Dashboard newDashboard = new Dashboard(welcomeName,userRole);
             newDashboard.setVisible(true);
             this.dispose();
         }
-        else {
-            JOptionPane.showMessageDialog(this,"Invalid pass code!","Error!",JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        
     }//GEN-LAST:event_verifyButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -139,6 +110,15 @@ public class AdminAuthenticator extends javax.swing.JFrame {
         backLogin.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void showPinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showPinActionPerformed
+        if(showPin.isSelected()) {
+            passCode.setEchoChar((char)0);
+        }
+        else {
+            passCode.setEchoChar('*');
+        }
+    }//GEN-LAST:event_showPinActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,8 +129,10 @@ public class AdminAuthenticator extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField passCode;
+    private javax.swing.JCheckBox showPin;
     private javax.swing.JButton verifyButton;
     // End of variables declaration//GEN-END:variables
 }

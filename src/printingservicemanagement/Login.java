@@ -203,7 +203,7 @@ public class Login extends javax.swing.JFrame {
                     this.dispose();
                     break;
                     case "customer":
-                    CustomerDashboard customerDash = new CustomerDashboard(userField);
+                    CustomerDashboard customerDash = new CustomerDashboard(userField, userRoles);
                     customerDash.setVisible(true);
                     this.dispose();
                     break;
