@@ -27,6 +27,9 @@ public class Dashboard extends javax.swing.JFrame {
         dashboardComponents();
         dashboardDate();
         dashboardMessageSetter();
+        
+        clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
+        clockTimer.start();
     }
     
     public void dashboardDate() {
@@ -83,9 +86,6 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     private void displayDateTime() {
-        
-        clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
-        clockTimer.start();
         
         SimulationDate.setText(
         DateSimulationHandler.getDate().format(
@@ -310,7 +310,7 @@ public class Dashboard extends javax.swing.JFrame {
         SimulationDate.setBackground(new java.awt.Color(255, 255, 255));
         SimulationDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         SimulationDate.setForeground(new java.awt.Color(0, 153, 153));
-        SimulationDate.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        SimulationDate.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         SimulationDate.setBorder(null);
         SimulationDate.addActionListener(this::SimulationDateActionPerformed);
         getContentPane().add(SimulationDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 70, 250, 50));
@@ -318,7 +318,7 @@ public class Dashboard extends javax.swing.JFrame {
         Time.setBackground(new java.awt.Color(255, 255, 255));
         Time.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         Time.setForeground(new java.awt.Color(255, 153, 0));
-        Time.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        Time.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         Time.setBorder(null);
         Time.addActionListener(this::TimeActionPerformed);
         getContentPane().add(Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 130, 250, 50));
