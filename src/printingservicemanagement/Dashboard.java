@@ -3,17 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package printingservicemanagement;
-import java.awt.CardLayout;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import javax.swing.JPanel;
+import java.util.Date;
+import java.util.Random;
+import javax.swing.JOptionPane;
 
-
-/**
- *
- * @author User
- */
 public class Dashboard extends javax.swing.JFrame {
     private String welcomeName;
     private String userRole;
@@ -21,14 +19,45 @@ public class Dashboard extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Dashboard.class.getName());
 
-    /**
-     * Creates new form Dashboard
-     */
     public Dashboard(String welcomeName,String userRole) {
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         initComponents();
-        
+        displayDateTime();
+        dashboardComponents();
+        dashboardDate();
+        dashboardMessageSetter();
+    }
+    
+    public void dashboardDate() {
+        JDate.setDate(
+        java.sql.Date.valueOf(DateSimulationHandler.getDate())
+    );
+
+    JDate.getDateEditor()
+        .addPropertyChangeListener(evt -> {
+
+            if ("date".equals(evt.getPropertyName())) {
+
+                Date selectedDate =
+                    JDate.getDate();
+
+                if (selectedDate != null) {
+
+                    LocalDate selectDate = selectedDate.toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDate();
+
+                    DateSimulationHandler.setDate(selectDate);
+                    
+                    displayDateTime();
+                }
+            }
+        });
+    }
+    
+    public void dashboardComponents() {
+        Time.setEditable(false);
         totalOrders.setEditable(false);
         totalPending.setEditable(false);
         totalCompleted.setEditable(false);
@@ -37,8 +66,8 @@ public class Dashboard extends javax.swing.JFrame {
         clockTimer.start();
         
         
-        welcomeMessage.setEditable(false);
-        welcomeMessage.setText("Welcome, " + welcomeName + "!");
+        welcomeText.setEditable(false);
+        welcomeText.setText("Welcome, " + welcomeName + "!");
         
         loggedAccount.setText(welcomeName);
         accountRole.setText(userRole);
@@ -54,25 +83,47 @@ public class Dashboard extends javax.swing.JFrame {
     }
     
     private void displayDateTime() {
+        
+        clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
+        clockTimer.start();
+        
+        SimulationDate.setText(
+        DateSimulationHandler.getDate().format(
+            DateTimeFormatter.ofPattern("MMMM dd, yyyy")
+         )
+    );
+        LocalTime currentTime = LocalTime.now();
 
-    // Current local date
-    LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter timeFormatter =
+        DateTimeFormatter.ofPattern("hh:mm:ss a");
 
-    DateTimeFormatter dateFormatter =
-            DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-    localDate.setText(currentDate.format(dateFormatter));
-
-
-    // Current local time
-    LocalTime currentTime = LocalTime.now();
-
-    DateTimeFormatter timeFormatter =
-            DateTimeFormatter.ofPattern("hh:mm:ss a");
-
-    localTime.setText(currentTime.format(timeFormatter));
+    Time.setText(currentTime.format(timeFormatter));
 }
-
+    
+    public void dashboardMessageSetter() {
+        Random random = new Random();
+        
+        int randomizer = random.nextInt(1,5);
+        
+        if(randomizer == 1) {
+            welcomeMessage.setText("Here’s what’s happening with your orders today.");
+        }
+        else if(randomizer == 2) {
+            welcomeMessage.setText("Keep track of your printing services and orders.");
+        }
+        else if(randomizer == 3) {
+            welcomeMessage.setText("Manage today’s orders and service activities.");
+        }
+        else if(randomizer == 4) {
+            welcomeMessage.setText("Here’s your overview for today.");
+        }
+        else if(randomizer == 5) {
+            welcomeMessage.setText("Keep track of what’s happening.");
+        }
+    }
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -83,21 +134,7 @@ public class Dashboard extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        welcomeMessage = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        serviceButton1 = new javax.swing.JButton();
-        serviceButton = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        ordersButton = new javax.swing.JButton();
-        reportsButton = new javax.swing.JButton();
-        creationButton = new javax.swing.JButton();
-        accountRole = new javax.swing.JTextField();
-        loggedAccount = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        Logout = new javax.swing.JButton();
-        ordersButton1 = new javax.swing.JButton();
-        reportsButton1 = new javax.swing.JButton();
+        welcomeText = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -110,8 +147,25 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         totalCompleted = new javax.swing.JTextField();
-        localDate = new javax.swing.JTextField();
-        localTime = new javax.swing.JTextField();
+        SimulationDate = new javax.swing.JTextField();
+        Time = new javax.swing.JTextField();
+        JDate = new com.toedter.calendar.JDateChooser();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        serviceButton1 = new javax.swing.JButton();
+        ordersButton = new javax.swing.JButton();
+        ordersButton1 = new javax.swing.JButton();
+        creationButton = new javax.swing.JButton();
+        reportsButton = new javax.swing.JButton();
+        reportsButton1 = new javax.swing.JButton();
+        loggedAccount = new javax.swing.JTextField();
+        accountRole = new javax.swing.JTextField();
+        Logout = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        addCustomer = new javax.swing.JButton();
+        newService = new javax.swing.JButton();
+        welcomeMessage = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Management Dashboard");
@@ -119,185 +173,15 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1610, -1));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        welcomeText.setBackground(new java.awt.Color(255, 255, 255));
+        welcomeText.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
+        welcomeText.setForeground(new java.awt.Color(0, 0, 0));
+        welcomeText.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        welcomeText.setBorder(null);
+        welcomeText.addActionListener(this::welcomeTextActionPerformed);
+        getContentPane().add(welcomeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 670, 100));
 
-        welcomeMessage.setBackground(new java.awt.Color(255, 255, 255));
-        welcomeMessage.setFont(new java.awt.Font("Segoe UI", 1, 50)); // NOI18N
-        welcomeMessage.setForeground(new java.awt.Color(0, 0, 0));
-        welcomeMessage.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        welcomeMessage.setBorder(null);
-        welcomeMessage.addActionListener(this::welcomeMessageActionPerformed);
-        jPanel2.add(welcomeMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 60, 670, 100));
-
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        serviceButton1.setBackground(new java.awt.Color(255, 255, 255));
-        serviceButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        serviceButton1.setForeground(new java.awt.Color(0, 0, 0));
-        serviceButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\it-technical-support-screen-black-outline-25328_32.png")); // NOI18N
-        serviceButton1.setText("New Orders");
-        serviceButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        serviceButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        serviceButton1.setIconTextGap(15);
-        serviceButton1.setName(""); // NOI18N
-        serviceButton1.addActionListener(this::serviceButton1ActionPerformed);
-
-        serviceButton.setBackground(new java.awt.Color(255, 255, 255));
-        serviceButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        serviceButton.setForeground(new java.awt.Color(0, 0, 0));
-        serviceButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\it-technical-support-screen-black-outline-25328_32.png")); // NOI18N
-        serviceButton.setText("Services");
-        serviceButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        serviceButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        serviceButton.setIconTextGap(15);
-        serviceButton.setName(""); // NOI18N
-        serviceButton.addActionListener(this::serviceButtonActionPerformed);
-
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\Screenshot 2026-09-27 212113 (2).png")); // NOI18N
-
-        ordersButton.setBackground(new java.awt.Color(255, 255, 255));
-        ordersButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        ordersButton.setForeground(new java.awt.Color(0, 0, 0));
-        ordersButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\list-6235_32.png")); // NOI18N
-        ordersButton.setText("Orders");
-        ordersButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        ordersButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ordersButton.setIconTextGap(15);
-        ordersButton.addActionListener(this::ordersButtonActionPerformed);
-
-        reportsButton.setBackground(new java.awt.Color(255, 255, 255));
-        reportsButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        reportsButton.setForeground(new java.awt.Color(0, 0, 0));
-        reportsButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\document-663_32.png")); // NOI18N
-        reportsButton.setText("Reports");
-        reportsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        reportsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        reportsButton.setIconTextGap(15);
-        reportsButton.addActionListener(this::reportsButtonActionPerformed);
-
-        creationButton.setBackground(new java.awt.Color(255, 255, 255));
-        creationButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        creationButton.setForeground(new java.awt.Color(0, 0, 0));
-        creationButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-256_32.png")); // NOI18N
-        creationButton.setText("User Management");
-        creationButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        creationButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        creationButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        creationButton.setIconTextGap(15);
-        creationButton.addActionListener(this::creationButtonActionPerformed);
-
-        accountRole.setBackground(new java.awt.Color(255, 255, 255));
-        accountRole.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
-        accountRole.setForeground(new java.awt.Color(0, 0, 0));
-        accountRole.setBorder(null);
-
-        loggedAccount.setBackground(new java.awt.Color(255, 255, 255));
-        loggedAccount.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        loggedAccount.setForeground(new java.awt.Color(0, 0, 0));
-        loggedAccount.setBorder(null);
-        loggedAccount.addActionListener(this::loggedAccountActionPerformed);
-
-        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-3295_64.png")); // NOI18N
-
-        Logout.setBackground(new java.awt.Color(255, 255, 255));
-        Logout.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        Logout.setForeground(new java.awt.Color(0, 0, 0));
-        Logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\exit-2860_32.png")); // NOI18N
-        Logout.setText("Logout");
-        Logout.setBorder(null);
-        Logout.setIconTextGap(15);
-        Logout.addActionListener(this::LogoutActionPerformed);
-
-        ordersButton1.setBackground(new java.awt.Color(255, 255, 255));
-        ordersButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        ordersButton1.setForeground(new java.awt.Color(0, 0, 0));
-        ordersButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\list-6235_32.png")); // NOI18N
-        ordersButton1.setText("Payments");
-        ordersButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        ordersButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        ordersButton1.setIconTextGap(15);
-        ordersButton1.addActionListener(this::ordersButton1ActionPerformed);
-
-        reportsButton1.setBackground(new java.awt.Color(255, 255, 255));
-        reportsButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        reportsButton1.setForeground(new java.awt.Color(0, 0, 0));
-        reportsButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\document-663_32.png")); // NOI18N
-        reportsButton1.setText("Transaction");
-        reportsButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        reportsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        reportsButton1.setIconTextGap(15);
-        reportsButton1.addActionListener(this::reportsButton1ActionPerformed);
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(Logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(loggedAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(accountRole, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(31, Short.MAX_VALUE))
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(reportsButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(reportsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(serviceButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(serviceButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ordersButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(creationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(ordersButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(serviceButton)
-                .addGap(32, 32, 32)
-                .addComponent(serviceButton1)
-                .addGap(31, 31, 31)
-                .addComponent(ordersButton)
-                .addGap(27, 27, 27)
-                .addComponent(ordersButton1)
-                .addGap(26, 26, 26)
-                .addComponent(creationButton)
-                .addGap(27, 27, 27)
-                .addComponent(reportsButton)
-                .addGap(27, 27, 27)
-                .addComponent(reportsButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(loggedAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(accountRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(28, 28, 28)
-                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49))
-        );
-
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 900));
-
-        jPanel1.setBackground(new java.awt.Color(255, 153, 0));
+        jPanel1.setBackground(new java.awt.Color(255, 51, 51));
 
         jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\test-document-checkmarks-and-pencil-black-outline-17446_64.png")); // NOI18N
 
@@ -305,7 +189,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Total Orders");
 
-        totalOrders.setBackground(new java.awt.Color(255, 153, 0));
+        totalOrders.setBackground(new java.awt.Color(255, 51, 51));
         totalOrders.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         totalOrders.setForeground(new java.awt.Color(255, 255, 255));
         totalOrders.setText("123");
@@ -336,9 +220,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, 280, 260));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, -1, -1));
 
-        jPanel4.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel4.setBackground(new java.awt.Color(255, 102, 0));
 
         jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\processing-6093_64 (1).png")); // NOI18N
 
@@ -346,7 +230,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Pending");
 
-        totalPending.setBackground(new java.awt.Color(0, 153, 153));
+        totalPending.setBackground(new java.awt.Color(255, 102, 0));
         totalPending.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         totalPending.setForeground(new java.awt.Color(255, 255, 255));
         totalPending.setText("123");
@@ -377,9 +261,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 300, 280, 260));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 280, -1, -1));
 
-        jPanel5.setBackground(new java.awt.Color(51, 102, 255));
+        jPanel5.setBackground(new java.awt.Color(0, 153, 153));
 
         jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\confirm-check-3091_64.png")); // NOI18N
 
@@ -387,7 +271,7 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Completed");
 
-        totalCompleted.setBackground(new java.awt.Color(51, 102, 255));
+        totalCompleted.setBackground(new java.awt.Color(0, 153, 153));
         totalCompleted.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         totalCompleted.setForeground(new java.awt.Color(255, 255, 255));
         totalCompleted.setText("123");
@@ -421,41 +305,288 @@ public class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 300, 270, 260));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 280, -1, -1));
 
-        localDate.setBackground(new java.awt.Color(255, 255, 255));
-        localDate.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        localDate.setForeground(new java.awt.Color(0, 0, 0));
-        localDate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        localDate.setBorder(null);
-        localDate.addActionListener(this::localDateActionPerformed);
-        jPanel2.add(localDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1341, 40, 230, 50));
+        SimulationDate.setBackground(new java.awt.Color(255, 255, 255));
+        SimulationDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        SimulationDate.setForeground(new java.awt.Color(0, 153, 153));
+        SimulationDate.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        SimulationDate.setBorder(null);
+        SimulationDate.addActionListener(this::SimulationDateActionPerformed);
+        getContentPane().add(SimulationDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 70, 250, 50));
 
-        localTime.setBackground(new java.awt.Color(255, 255, 255));
-        localTime.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        localTime.setForeground(new java.awt.Color(255, 153, 0));
-        localTime.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        localTime.setBorder(null);
-        jPanel2.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1340, 100, 230, 50));
+        Time.setBackground(new java.awt.Color(255, 255, 255));
+        Time.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        Time.setForeground(new java.awt.Color(255, 153, 0));
+        Time.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        Time.setBorder(null);
+        Time.addActionListener(this::TimeActionPerformed);
+        getContentPane().add(Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 130, 250, 50));
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 900));
+        JDate.setBackground(new java.awt.Color(255, 255, 255));
+        JDate.setForeground(new java.awt.Color(0, 0, 0));
+        getContentPane().add(JDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1330, 20, 250, 40));
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\Screenshot 2026-09-27 212113 (2).png")); // NOI18N
+
+        serviceButton1.setBackground(new java.awt.Color(255, 255, 255));
+        serviceButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        serviceButton1.setForeground(new java.awt.Color(0, 0, 0));
+        serviceButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\add-to-cart-3046_32.png")); // NOI18N
+        serviceButton1.setText("New Order");
+        serviceButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        serviceButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        serviceButton1.setIconTextGap(15);
+        serviceButton1.setName(""); // NOI18N
+        serviceButton1.addActionListener(this::serviceButton1ActionPerformed);
+
+        ordersButton.setBackground(new java.awt.Color(255, 255, 255));
+        ordersButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        ordersButton.setForeground(new java.awt.Color(0, 0, 0));
+        ordersButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\list-6236_32.png")); // NOI18N
+        ordersButton.setText("Orders");
+        ordersButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        ordersButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ordersButton.setIconTextGap(15);
+        ordersButton.addActionListener(this::ordersButtonActionPerformed);
+
+        ordersButton1.setBackground(new java.awt.Color(255, 255, 255));
+        ordersButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        ordersButton1.setForeground(new java.awt.Color(0, 0, 0));
+        ordersButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\bill-8853_32.png")); // NOI18N
+        ordersButton1.setText("Payments");
+        ordersButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        ordersButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        ordersButton1.setIconTextGap(15);
+        ordersButton1.addActionListener(this::ordersButton1ActionPerformed);
+
+        creationButton.setBackground(new java.awt.Color(255, 255, 255));
+        creationButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        creationButton.setForeground(new java.awt.Color(0, 0, 0));
+        creationButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\admin-9575_32.png")); // NOI18N
+        creationButton.setText("User Management");
+        creationButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        creationButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        creationButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        creationButton.setIconTextGap(15);
+        creationButton.addActionListener(this::creationButtonActionPerformed);
+
+        reportsButton.setBackground(new java.awt.Color(255, 255, 255));
+        reportsButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        reportsButton.setForeground(new java.awt.Color(0, 0, 0));
+        reportsButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\document-663_32.png")); // NOI18N
+        reportsButton.setText("Reports");
+        reportsButton.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        reportsButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        reportsButton.setIconTextGap(15);
+        reportsButton.addActionListener(this::reportsButtonActionPerformed);
+
+        reportsButton1.setBackground(new java.awt.Color(255, 255, 255));
+        reportsButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        reportsButton1.setForeground(new java.awt.Color(0, 0, 0));
+        reportsButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\history-7611_32.png")); // NOI18N
+        reportsButton1.setText("Transaction History");
+        reportsButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        reportsButton1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        reportsButton1.setIconTextGap(15);
+        reportsButton1.addActionListener(this::reportsButton1ActionPerformed);
+
+        loggedAccount.setBackground(new java.awt.Color(255, 255, 255));
+        loggedAccount.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        loggedAccount.setForeground(new java.awt.Color(0, 0, 0));
+        loggedAccount.setBorder(null);
+        loggedAccount.addActionListener(this::loggedAccountActionPerformed);
+
+        accountRole.setBackground(new java.awt.Color(255, 255, 255));
+        accountRole.setFont(new java.awt.Font("Segoe UI", 0, 26)); // NOI18N
+        accountRole.setForeground(new java.awt.Color(0, 0, 0));
+        accountRole.setBorder(null);
+
+        Logout.setBackground(new java.awt.Color(255, 255, 255));
+        Logout.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        Logout.setForeground(new java.awt.Color(0, 0, 0));
+        Logout.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\exit-2860_32.png")); // NOI18N
+        Logout.setText("Logout");
+        Logout.setBorder(null);
+        Logout.setIconTextGap(15);
+        Logout.addActionListener(this::LogoutActionPerformed);
+
+        jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-3295_64.png")); // NOI18N
+
+        addCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        addCustomer.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        addCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        addCustomer.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\users-267_32.png")); // NOI18N
+        addCustomer.setText("Add Customer");
+        addCustomer.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        addCustomer.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        addCustomer.setIconTextGap(15);
+        addCustomer.setName(""); // NOI18N
+        addCustomer.addActionListener(this::addCustomerActionPerformed);
+
+        newService.setBackground(new java.awt.Color(255, 255, 255));
+        newService.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        newService.setForeground(new java.awt.Color(0, 0, 0));
+        newService.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\technical-support-black-gear-and-information-18738_32.png")); // NOI18N
+        newService.setText("Services");
+        newService.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        newService.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        newService.setIconTextGap(15);
+        newService.setName(""); // NOI18N
+        newService.addActionListener(this::newServiceActionPerformed);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(jLabel4)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(loggedAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(accountRole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(Logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(reportsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(newService, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(creationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ordersButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(ordersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(serviceButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(reportsButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(jLabel3)))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel3)
+                .addGap(40, 40, 40)
+                .addComponent(addCustomer)
+                .addGap(19, 19, 19)
+                .addComponent(newService)
+                .addGap(18, 18, 18)
+                .addComponent(serviceButton1)
+                .addGap(18, 18, 18)
+                .addComponent(ordersButton)
+                .addGap(18, 18, 18)
+                .addComponent(ordersButton1)
+                .addGap(18, 18, 18)
+                .addComponent(creationButton)
+                .addGap(18, 18, 18)
+                .addComponent(reportsButton)
+                .addGap(18, 18, 18)
+                .addComponent(reportsButton1)
+                .addGap(46, 46, 46)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(loggedAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(accountRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addGap(37, 37, 37)
+                .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 900));
+
+        welcomeMessage.setBackground(new java.awt.Color(255, 255, 255));
+        welcomeMessage.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
+        welcomeMessage.setForeground(new java.awt.Color(0, 0, 0));
+        welcomeMessage.setBorder(null);
+        getContentPane().add(welcomeMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 670, 70));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\DASHBOARD BACKGROUNDS.png")); // NOI18N
+        jLabel2.setText("jLabel2");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 900));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void welcomeMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeMessageActionPerformed
+    
+    private void addCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerActionPerformed
+        Customer newService = new Customer(welcomeName,userRole);
+        newService.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_addCustomerActionPerformed
 
-    }//GEN-LAST:event_welcomeMessageActionPerformed
+    private void loggedAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggedAccountActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_loggedAccountActionPerformed
+
+    private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
+        int logoutOption = JOptionPane.showConfirmDialog(this,"Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
+        
+        if(logoutOption == JOptionPane.YES_OPTION) {
+            if(userRole.equals("Administrator")) {
+                AdminAuthenticator backAuth = new AdminAuthenticator(welcomeName,userRole);
+                backAuth.setVisible(true);
+                this.dispose();
+            }
+            else if(userRole.equals("Worker")) {
+                Login backLogin = new Login();
+                backLogin.setVisible(true);
+                this.dispose();
+            }
+        }
+        else if(logoutOption == JOptionPane.NO_OPTION) {
+            return;
+        }
+    }//GEN-LAST:event_LogoutActionPerformed
+
+    private void SimulationDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SimulationDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SimulationDateActionPerformed
+
+    private void totalPendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPendingActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_totalPendingActionPerformed
+
+    private void totalOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalOrdersActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_totalOrdersActionPerformed
+
+    private void reportsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportsButton1ActionPerformed
+
+    private void ordersButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordersButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ordersButton1ActionPerformed
 
     private void creationButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_creationButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_creationButtonActionPerformed
 
-    private void serviceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceButtonActionPerformed
-        Service newService = new Service(welcomeName,userRole);
-        newService.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_serviceButtonActionPerformed
+    private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
+
+    }//GEN-LAST:event_reportsButtonActionPerformed
 
     private void ordersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordersButtonActionPerformed
         OrdersSelection newSelection = new OrdersSelection(welcomeName);
@@ -463,61 +594,37 @@ public class Dashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_ordersButtonActionPerformed
 
-    private void reportsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButtonActionPerformed
-    
-    }//GEN-LAST:event_reportsButtonActionPerformed
-
-    private void loggedAccountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loggedAccountActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_loggedAccountActionPerformed
-
-    private void LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutActionPerformed
-        if(welcomeName.equals("admin")) {
-            AdminAuthenticator backAuth = new AdminAuthenticator(welcomeName,userRole);
-            backAuth.setVisible(true);
-            this.dispose();
-        } else if(welcomeName.equals("staff")) {
-            Login backLogin = new Login();
-            backLogin.setVisible(true);
-            this.dispose();
-        }
-    }//GEN-LAST:event_LogoutActionPerformed
-
-    private void localDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localDateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_localDateActionPerformed
-
-    private void ordersButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordersButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ordersButton1ActionPerformed
-
     private void serviceButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_serviceButton1ActionPerformed
 
-    private void reportsButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportsButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_reportsButton1ActionPerformed
+    private void welcomeTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeTextActionPerformed
 
-    private void totalOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalOrdersActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_totalOrdersActionPerformed
+    }//GEN-LAST:event_welcomeTextActionPerformed
 
-    private void totalPendingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalPendingActionPerformed
+    private void TimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TimeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_totalPendingActionPerformed
+    }//GEN-LAST:event_TimeActionPerformed
 
-    /**
-     *  @param args the command line arguments
-     */
+    private void newServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newServiceActionPerformed
+        Customer newService = new Customer(welcomeName,userRole);
+        newService.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_newServiceActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser JDate;
     private javax.swing.JButton Logout;
+    private javax.swing.JTextField SimulationDate;
+    private javax.swing.JTextField Time;
     private javax.swing.JTextField accountRole;
+    private javax.swing.JButton addCustomer;
     private javax.swing.JButton creationButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -526,21 +633,19 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JTextField localDate;
-    private javax.swing.JTextField localTime;
     private javax.swing.JTextField loggedAccount;
+    private javax.swing.JButton newService;
     private javax.swing.JButton ordersButton;
     private javax.swing.JButton ordersButton1;
     private javax.swing.JButton reportsButton;
     private javax.swing.JButton reportsButton1;
-    private javax.swing.JButton serviceButton;
     private javax.swing.JButton serviceButton1;
     private javax.swing.JTextField totalCompleted;
     private javax.swing.JTextField totalOrders;
     private javax.swing.JTextField totalPending;
     private javax.swing.JTextField welcomeMessage;
+    private javax.swing.JTextField welcomeText;
     // End of variables declaration//GEN-END:variables
 }

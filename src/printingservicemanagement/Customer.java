@@ -3,18 +3,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package printingservicemanagement;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import java.sql.*;
-
+/**
+ *
+ * @author User
+ */
 public class Customer extends javax.swing.JFrame {
-    private String welcomeName;
     private String userRole;
-    private DefaultTableModel customerTables;
+    private String welcomeName;
+    private javax.swing.Timer clockTimer;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Customer.class.getName());
 
@@ -22,45 +24,28 @@ public class Customer extends javax.swing.JFrame {
      * Creates new form Customer
      */
     public Customer(String welcomeName, String userRole) {
-        this.userRole = userRole;
         this.welcomeName = welcomeName;
+        this.userRole = userRole;
         initComponents();
-        setResizable(false);
-        
-        if(welcomeName.equals("admin")) {
-            deleteButton.setEnabled(false);
-        }
-        
-        customerTables = (DefaultTableModel) customerTable.getModel();
-        displayCustomer();
+        displayDateTime();
     }
     
-    public void displayCustomer() {
-    Connection conn = DBConnection.connect();
-    String sql = "SELECT username, password, role FROM tbl_users WHERE role = 'customer'";
+    private void displayDateTime() {
+        
+        clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
+        clockTimer.start();
+        
+        SimulatedDate.setText(
+        DateSimulationHandler.getDate().format(
+            DateTimeFormatter.ofPattern("MMMM dd, yyyy")
+         )
+    );
+        LocalTime currentTime = LocalTime.now();
 
-    try (PreparedStatement pst = conn.prepareStatement(sql);
-         ResultSet rs = pst.executeQuery()) {
+        DateTimeFormatter timeFormatter =
+        DateTimeFormatter.ofPattern("hh:mm:ss a");
 
-        customerTables.setRowCount(0); // clear table
-
-        while (rs.next()) {
-            customerTables.addRow(new Object[] {
-                rs.getString("username"),
-                rs.getString("password"),
-                rs.getString("role")
-            });
-        }
-    } catch (SQLException e) {
-        logger.severe("Error displaying customers: " + e.getMessage());
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
-    } finally {
-        try {
-            if (conn != null) conn.close();
-        } catch (SQLException e) {
-            logger.warning("Failed to close connection: " + e.getMessage());
-        }
-    }
+    Time.setText(currentTime.format(timeFormatter));
 }
 
     /**
@@ -72,309 +57,79 @@ public class Customer extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        SimulatedDate = new javax.swing.JTextField();
+        Time = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        customerName = new javax.swing.JTextField();
-        contactNumber = new javax.swing.JTextField();
-        email = new javax.swing.JTextField();
-        jPanel3 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        customerTable = new javax.swing.JTable();
-        backButton = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        addButton = new javax.swing.JButton();
-        updateButton = new javax.swing.JButton();
-        deleteButton = new javax.swing.JButton();
-        clearButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Customer Management");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(255, 153, 0));
-        jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        SimulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        getContentPane().add(SimulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 20, 230, 50));
 
-        jLabel1.setBackground(new java.awt.Color(255, 153, 0));
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("CUSTOMER MANAGEMENT");
+        Time.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        getContentPane().add(Time, new org.netbeans.lib.awtextra.AbsoluteConstraints(1360, 80, 230, 50));
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\add-create-user-account-black-circle-27274_128.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addComponent(jLabel1)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(990, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel1)
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 20, 700, 120));
-
-        jPanel2.setBackground(new java.awt.Color(255, 153, 0));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("CUSTOMER NAME:");
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("CONTACT NUMBER:");
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("EMAIL:");
-
-        customerName.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        customerName.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        contactNumber.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        contactNumber.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        email.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        email.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(customerName)
-                    .addComponent(contactNumber, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE)
-                    .addComponent(email, javax.swing.GroupLayout.DEFAULT_SIZE, 464, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(customerName, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(contactNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(email, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(684, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 710, 210));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 1130, 830));
 
-        customerTable.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        customerTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Costumer ID", "Name", "Contact Number", "Email"
-            }
-        ));
-        jScrollPane1.setViewportView(customerTable);
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
+        jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-arrow-7304_32.png")); // NOI18N
+        jButton1.setText("Back");
+        jButton1.setBorder(null);
+        jButton1.setIconTextGap(15);
+        jButton1.addActionListener(this::jButton1ActionPerformed);
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1440, 140, 150, 50));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(0, 1, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 749, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
-        );
-
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 270, 750, 530));
-
-        backButton.setBackground(new java.awt.Color(153, 153, 153));
-        backButton.setFont(new java.awt.Font("Segoe UI", 1, 33)); // NOI18N
-        backButton.setForeground(new java.awt.Color(0, 0, 0));
-        backButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\double-left-arrow-4849_32.png")); // NOI18N
-        backButton.setText("BACK");
-        backButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        backButton.setIconTextGap(20);
-        backButton.addActionListener(this::backButtonActionPerformed);
-        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 20, 160, 70));
-
-        jPanel4.setBackground(new java.awt.Color(255, 153, 0));
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-
-        addButton.setBackground(new java.awt.Color(255, 255, 255));
-        addButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        addButton.setForeground(new java.awt.Color(0, 0, 0));
-        addButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-251_64.png")); // NOI18N
-        addButton.setText("ADD");
-        addButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        addButton.setIconTextGap(50);
-        addButton.addActionListener(this::addButtonActionPerformed);
-
-        updateButton.setBackground(new java.awt.Color(255, 255, 255));
-        updateButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        updateButton.setForeground(new java.awt.Color(0, 0, 0));
-        updateButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\arrows-refresh-2847_64.png")); // NOI18N
-        updateButton.setText("UPDATE");
-        updateButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        updateButton.setIconTextGap(20);
-        updateButton.addActionListener(this::updateButtonActionPerformed);
-
-        deleteButton.setBackground(new java.awt.Color(255, 255, 255));
-        deleteButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        deleteButton.setForeground(new java.awt.Color(0, 0, 0));
-        deleteButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\trash-can-10416_64.png")); // NOI18N
-        deleteButton.setText("DELETE");
-        deleteButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        deleteButton.setIconTextGap(20);
-        deleteButton.addActionListener(this::deleteButtonActionPerformed);
-
-        clearButton.setBackground(new java.awt.Color(255, 255, 255));
-        clearButton.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        clearButton.setForeground(new java.awt.Color(0, 0, 0));
-        clearButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\eraser-14542_64.png")); // NOI18N
-        clearButton.setText("CLEAR");
-        clearButton.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        clearButton.setIconTextGap(45);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 700, 300));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\NEW MAIN.png")); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
-
-        jLabel6.setText("jLabel6");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, -1, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\DASHBOARD BACKGROUNDS.png")); // NOI18N
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 900));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        Dashboard backDashboard = new Dashboard(welcomeName,userRole);
-        backDashboard.setVisible(true);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Dashboard backDash = new Dashboard(welcomeName,userRole);
+        backDash.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_backButtonActionPerformed
-
-    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteButtonActionPerformed
-
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateButtonActionPerformed
-
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-        String name = customerName.getText();
-        String contact = contactNumber.getText();
-        String customerEmail = email.getText();
-        
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
-    private javax.swing.JButton backButton;
-    private javax.swing.JButton clearButton;
-    private javax.swing.JTextField contactNumber;
-    private javax.swing.JTextField customerName;
-    private javax.swing.JTable customerTable;
-    private javax.swing.JButton deleteButton;
-    private javax.swing.JTextField email;
+    private javax.swing.JTextField SimulatedDate;
+    private javax.swing.JTextField Time;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton updateButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -202,11 +202,6 @@ public class Login extends javax.swing.JFrame {
                     staffDash.setVisible(true);
                     this.dispose();
                     break;
-                    case "customer":
-                    CustomerDashboard customerDash = new CustomerDashboard(userField, userRoles);
-                    customerDash.setVisible(true);
-                    this.dispose();
-                    break;
                 }
             } else {
                 JOptionPane.showMessageDialog(this,"Invalid username or password");
