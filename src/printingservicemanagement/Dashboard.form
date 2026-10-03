@@ -401,44 +401,29 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="32767" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="loggedAccount" alignment="1" min="-2" pref="187" max="-2" attributes="0"/>
-                                          <Component id="accountRole" alignment="1" min="-2" pref="187" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="loggedAccount" alignment="1" min="-2" pref="187" max="-2" attributes="0"/>
+                                              <Component id="accountRole" alignment="1" min="-2" pref="187" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
+                                      <Component id="Logout" alignment="0" max="32767" attributes="0"/>
+                                      <Component id="reportsButton" alignment="1" min="-2" pref="290" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="Logout" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="reportsButton" min="-2" pref="290" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="addCustomer" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
+                                  <Component id="newService" alignment="0" min="-2" pref="290" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="addCustomer" min="-2" pref="290" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="newService" min="-2" pref="290" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="creationButton" min="-2" pref="290" max="-2" attributes="0"/>
-                                  <Component id="ordersButton1" min="-2" pref="290" max="-2" attributes="0"/>
-                                  <Component id="ordersButton" min="-2" pref="290" max="-2" attributes="0"/>
-                                  <Component id="serviceButton1" min="-2" pref="290" max="-2" attributes="0"/>
-                              </Group>
+                              <Component id="creationButton" min="-2" pref="290" max="-2" attributes="0"/>
+                              <Component id="ordersButton1" min="-2" pref="290" max="-2" attributes="0"/>
+                              <Component id="ordersButton" min="-2" pref="290" max="-2" attributes="0"/>
+                              <Component id="serviceButton1" min="-2" pref="290" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
