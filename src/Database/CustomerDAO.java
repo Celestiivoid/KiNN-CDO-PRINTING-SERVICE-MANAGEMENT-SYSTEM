@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Database;
+import GUI.UpdateCustomer;
+import Utility.Customer;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +49,41 @@ public class CustomerDAO {
             System.out.println("Error inserting customer: " + error.getMessage());
         }
         return null;
+    }
+    
+    public boolean updateCustomer(
+           int customerID,
+           String firstName,
+           String lastName,
+           String phoneNumber,
+           String emailAddress,
+           String customerType) {
+        
+        String sql = "UPDATE tbl_customers "
+                   + "SET ctm_ftName = ?, "
+                   + "ctm_ltName = ?, "
+                   + "ctm_phNumber = ?, "
+                   + "ctm_emAddress = ?, "
+                   + "ctm_Type = ? "
+                   + "WHERE ctm_id = ?";
+        
+        try(Connection conn = DBConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, phoneNumber);
+            pstmt.setString(4, emailAddress);
+            pstmt.setString(5, customerType);
+            pstmt.setInt(6, customerID);
+            
+            int update = pstmt.executeUpdate();
+            
+            return update > 0;
+        } catch (SQLException error) {
+            System.out.println("Error updating customer: " + error.getMessage());
+            return false;
+        }
     }
     
     public List<Object[]> loadCustomers() {
@@ -250,5 +287,39 @@ public class CustomerDAO {
             System.out.println("Error retrieving: " + error.getMessage());
             return false;
         }
+    }
+    
+    public Customer getCustomer(int customerID) {
+        
+        String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
+                   + "ctm_phNumber, ctm_emAddress, ctm_Type "
+                   + "FROM tbl_customers "
+                   + "WHERE ctm_id = ? AND ctm_archived = 0";
+        
+        try(Connection conn = DBConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                
+            pstmt.setInt(1, customerID);
+            
+            try(ResultSet rs = pstmt.executeQuery()) {
+                
+                if(rs.next()) {
+                    
+                    Customer ctmSet = new Customer();
+                    
+                    ctmSet.setcustomerID(rs.getInt("ctm_id"));
+                    ctmSet.setFirstName(rs.getString("ctm_ftName"));
+                    ctmSet.setLastName(rs.getString("ctm_ltName"));
+                    ctmSet.setPhoneNumber(rs.getString("ctm_phNumber"));
+                    ctmSet.setEmailAddress(rs.getString("ctm_emAddress"));
+                    ctmSet.setCustomerType(rs.getString("ctm_Type"));
+                    
+                    return ctmSet;
+                }
+            }
+        } catch (SQLException error) {
+            System.out.println("Error searching: " + error.getMessage());
+        }
+        return null;
     }
 }

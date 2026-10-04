@@ -585,7 +585,7 @@ public class Dashboard extends javax.swing.JFrame {
 
     
     private void addCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerActionPerformed
-        Customer newService = new Customer(welcomeName,userRole);
+        CustomerFrame newService = new CustomerFrame(welcomeName,userRole);
         newService.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_addCustomerActionPerformed
@@ -652,7 +652,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_TimeActionPerformed
 
     private void newServiceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newServiceActionPerformed
-        Customer newService = new Customer(welcomeName,userRole);
+        CustomerFrame newService = new CustomerFrame(welcomeName,userRole);
         newService.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_newServiceActionPerformed

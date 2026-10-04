@@ -14,17 +14,17 @@ import Utility.DateSimulationHandler;
  *
  * @author User
  */
-public class Customer extends javax.swing.JFrame {
+public class CustomerFrame extends javax.swing.JFrame {
     private String userRole;
     private String welcomeName;
     private javax.swing.Timer clockTimer;
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Customer.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerFrame.class.getName());
 
     /**
      * Creates new form Customer
      */
-    public Customer(String welcomeName, String userRole) {
+    public CustomerFrame(String welcomeName, String userRole) {
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         initComponents();
@@ -167,6 +167,7 @@ public class Customer extends javax.swing.JFrame {
         customerTypeBox.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         customerTypeBox.setForeground(new java.awt.Color(0, 0, 0));
         customerTypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pick customer type", "Regular", "Student" }));
+        customerTypeBox.addActionListener(this::customerTypeBoxActionPerformed);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
@@ -396,6 +397,10 @@ public class Customer extends javax.swing.JFrame {
         CustomerSearch ctmSearch = new CustomerSearch(welcomeName,userRole);
         ctmSearch.setVisible(true);
     }//GEN-LAST:event_searchCustomerActionPerformed
+
+    private void customerTypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerTypeBoxActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_customerTypeBoxActionPerformed
 
     /**
      * @param args the command line arguments
