@@ -2,12 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package printingservicemanagement;
+package GUI;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.ResultSet;
+import Database.CustomerDAO;
+import GUI.CustomerSearch;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,8 +26,7 @@ public class ArchivedCustomer extends javax.swing.JFrame {
         
         initComponents();
         frameComponents();
-        loadCustomers();
-        uneditableTable();
+        loadArchivedCustomers();
     }
     
     public void frameComponents() {
@@ -37,124 +35,44 @@ public class ArchivedCustomer extends javax.swing.JFrame {
         setAlwaysOnTop(true);
     }
     
-    private void uneditableTable() {
-
-    DefaultTableModel model =
-            (DefaultTableModel) customerTable.getModel();
-
-    customerTable.setDefaultEditor(Object.class, null);
-    
-    customerTable.getColumnModel().getColumn(0).setMinWidth(0);
-    customerTable.getColumnModel().getColumn(0).setMaxWidth(0);
-    customerTable.getColumnModel().getColumn(0).setPreferredWidth(0);
-}
-    
     private void searchCustomers() {
-
-    String search = searchField.getText().trim();
-
-    if (search.isEmpty()) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Please enter a customer name.",
-            "Search",
-            JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
-
-     String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-               + "ctm_phNumber, ctm_emAddress, ctm_Type "
-               + "FROM tbl_customers "
-               + "WHERE ctm_archived = 1 "
-               + "AND (ctm_ftName LIKE ? OR ctm_ltName LIKE ?)";
-
-    try (Connection conn = DBConnection.connect();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        String keyword = "%" + search + "%";
-
-        pstmt.setString(1, keyword);
-        pstmt.setString(2, keyword);
-
-        try (ResultSet rs = pstmt.executeQuery()) {
-
-            DefaultTableModel model =
-                    (DefaultTableModel) customerTable.getModel();
-
-            model.setRowCount(0);
-
-            while (rs.next()) {
-
-                model.addRow(new Object[]{
-                    rs.getString("ctm_ftName"),
-                    rs.getString("ctm_ltName"),
-                    rs.getString("ctm_phNumber"),
-                    rs.getString("ctm_emAddress"),
-                    rs.getString("ctm_Type")
-                });
-            }
-
-            // No results
-            if (model.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "No customer found.",
-                    "Search",
-                    JOptionPane.INFORMATION_MESSAGE
-                );
-            }
+        String search = searchField.getText().trim();
+        
+        if(search.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Please enter an customer information.","Search",JOptionPane.WARNING_MESSAGE);
+            return;
         }
-
-    } catch (SQLException e) {
-
-        JOptionPane.showMessageDialog(
-            this,
-            "Error searching customers: " + e.getMessage(),
-            "Database Error",
-            JOptionPane.ERROR_MESSAGE
-        );
-    }
+        
+        CustomerDAO ctmDAO = new CustomerDAO();
+        
+        List<Object[]> customers = ctmDAO.searchArchivedCustomer(search);
+        
+        DefaultTableModel customerModel = (DefaultTableModel) customerTable.getModel();
+        
+        customerModel.setRowCount(0);
+        
+        for(Object[] row : customers) {
+            customerModel.addRow(row);
+        }
+        
+        if(customers.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Customer not found.","Search",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 }
     
-    private void loadCustomers() {
-
-    String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-               + "ctm_phNumber, ctm_emAddress, ctm_Type "
-               + "FROM tbl_customers "
-               + "WHERE ctm_archived = 1";
-
-    try (Connection conn = DBConnection.connect();
-         PreparedStatement pstmt = conn.prepareStatement(sql);
-         ResultSet rs = pstmt.executeQuery()) {
-
-        DefaultTableModel model =
-                (DefaultTableModel) customerTable.getModel();
-
-        model.setRowCount(0);
-
-        while (rs.next()) {
-
-            Object[] row = {
-                rs.getInt("ctm_id"),
-                rs.getString("ctm_ftName"),
-                rs.getString("ctm_ltName"),
-                rs.getString("ctm_phNumber"),
-                rs.getString("ctm_emAddress"),
-                rs.getString("ctm_Type")
-            };
-
-            model.addRow(row);
+    private void loadArchivedCustomers() {
+        CustomerDAO ctmDAO = new CustomerDAO();
+        
+        List<Object[]> customers = ctmDAO.loadarchivedCustomer();
+        
+        DefaultTableModel customerModel = (DefaultTableModel) customerTable.getModel();
+        
+        customerModel.setRowCount(0);
+        
+        for(Object [] row : customers) {
+            customerModel.addRow(row);
         }
-
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(
-            this,
-            "Error loading customers: " + e.getMessage(),
-            "Database Error",
-            JOptionPane.ERROR_MESSAGE
-        );
-    }
 }
 
     /**
@@ -187,35 +105,43 @@ public class ArchivedCustomer extends javax.swing.JFrame {
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         searchField.setForeground(new java.awt.Color(0, 0, 0));
         searchField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 16, 460, 40));
+        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 16, 470, 40));
 
         searchButton.setBackground(new java.awt.Color(255, 255, 255));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchButton.setForeground(new java.awt.Color(0, 0, 0));
+        searchButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\search-2904_32.png")); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(15);
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 10, 160, 50));
+        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 10, 220, 50));
 
         displayAll.setBackground(new java.awt.Color(255, 255, 255));
         displayAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         displayAll.setForeground(new java.awt.Color(0, 0, 0));
+        displayAll.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\client-5251_32.png")); // NOI18N
         displayAll.setText("Display All");
+        displayAll.setIconTextGap(15);
         displayAll.addActionListener(this::displayAllActionPerformed);
-        getContentPane().add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 160, 50));
+        getContentPane().add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 10, 210, 50));
 
         RetrieveButton.setBackground(new java.awt.Color(255, 255, 255));
         RetrieveButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         RetrieveButton.setForeground(new java.awt.Color(0, 0, 0));
+        RetrieveButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-curved-arrow-7982_32.png")); // NOI18N
         RetrieveButton.setText("Retrieve");
+        RetrieveButton.setIconTextGap(15);
         RetrieveButton.addActionListener(this::RetrieveButtonActionPerformed);
-        getContentPane().add(RetrieveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1160, 10, 158, 50));
+        getContentPane().add(RetrieveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1130, 10, 210, 50));
 
-        backButton.setBackground(new java.awt.Color(255, 255, 255));
+        backButton.setBackground(new java.awt.Color(153, 153, 153));
         backButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         backButton.setForeground(new java.awt.Color(0, 0, 0));
+        backButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-arrow-7304_32.png")); // NOI18N
         backButton.setText("Back");
+        backButton.setIconTextGap(15);
         backButton.addActionListener(this::backButtonActionPerformed);
-        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1400, 10, 160, 50));
+        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1370, 10, 200, 50));
 
         customerTable.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         customerTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -228,7 +154,15 @@ public class ArchivedCustomer extends javax.swing.JFrame {
             new String [] {
                 "Customer ID", "First Name", "Last Name", "Contact Number", "Email Address", "Customer Type"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(customerTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 1540, 782));
@@ -252,7 +186,7 @@ public class ArchivedCustomer extends javax.swing.JFrame {
 
     private void displayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayAllActionPerformed
         searchField.setText("");
-        loadCustomers();
+        loadArchivedCustomers();
     }//GEN-LAST:event_displayAllActionPerformed
 
     private void RetrieveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RetrieveButtonActionPerformed
@@ -267,18 +201,15 @@ public class ArchivedCustomer extends javax.swing.JFrame {
             );
             return;
         }
+        String customerID = customerTable.getValueAt(selectedRow,0).toString();
+        
+        int convertedCustomerID = Integer.parseInt(customerID.replace("CUST-", ""));
 
-        int customerID = Integer.parseInt(
-            customerTable.getValueAt(selectedRow, 0).toString()
-        );
+        String firstName = customerTable.getValueAt(selectedRow, 1).toString();
 
-        String firstName =
-            customerTable.getValueAt(selectedRow, 1).toString();
+        String lastName = customerTable.getValueAt(selectedRow, 2).toString();
 
-        String lastName =
-            customerTable.getValueAt(selectedRow, 2).toString();
-
-        int confirm = JOptionPane.showConfirmDialog(
+        int confirmation = JOptionPane.showConfirmDialog(
             this,
             "Are you sure you want to retrieve "
             + firstName + " " + lastName + "?",
@@ -286,42 +217,22 @@ public class ArchivedCustomer extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION,
             JOptionPane.WARNING_MESSAGE
         );
-
-        if(confirm == JOptionPane.YES_OPTION) {
-            String sql = "UPDATE tbl_customers "
-               + "SET ctm_archived = 0 "
-               + "WHERE ctm_id = ?";
-
-            try (Connection conn = DBConnection.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-                pstmt.setInt(1, customerID);
-
-                int updated = pstmt.executeUpdate();
-
-                if (updated > 0) {
-
-                    JOptionPane.showMessageDialog(
-                    this,
-                    "Customer retrieved successfully!"
-                    );
-
-                    loadCustomers();
-                }
+        
+        if(confirmation == JOptionPane.YES_OPTION) {
             
+            CustomerDAO cmtDAO = new CustomerDAO();
             
-            } catch (SQLException e) {
-
-                JOptionPane.showMessageDialog(
-                this,
-                "Error archiving customer: " + e.getMessage(),
-                "Database Error",
-                JOptionPane.ERROR_MESSAGE
-                );
+            boolean retrieved = cmtDAO.retrieveCustomer(convertedCustomerID);
+            
+            if(retrieved) {
+                JOptionPane.showMessageDialog(this,firstName + " has been retrieved successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
+                loadArchivedCustomers();
             }
-        } else if(confirm == JOptionPane.NO_OPTION) {
-            return;
-        }
+            else {
+                JOptionPane.showMessageDialog(this,"Error in retrieving customer.","Database error",JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        } 
     }//GEN-LAST:event_RetrieveButtonActionPerformed
 
     /**

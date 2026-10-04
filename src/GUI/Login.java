@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package printingservicemanagement;
+package GUI;
 
+import Database.DBConnection;
+import Database.UserDAO;
+import Session.userSession;
 import javax.swing.JOptionPane;
 import java.sql.*;
 
@@ -174,42 +177,37 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Password is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        Connection conn = DBConnection.connect();
-
+        
+        UserDAO usrDAO = new UserDAO();
+        
+        ResultSet rs = usrDAO.login(userField, passField);
+        
         try {
-            String sql = "SELECT * FROM tbl_users WHERE username= ? AND password = ?";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            pst.setString(1, userField);
-            pst.setString(2,passField);
-
-            ResultSet rs = pst.executeQuery();
-
-            if(rs.next()) { 
-                int userId = rs.getInt("user_id");
+            if(rs != null && rs.next()) {
+                
+                int userID = rs.getInt("user_id");
                 String userRoles = rs.getString("role");
-
-                userSession.setUser(userId, userField,userRoles);
-
+                
+                userSession.setUser(userID,userField,userRoles);
+                
                 switch(userRoles) {
                     case "Administrator":
-                    AdminAuthenticator adminAuth = new AdminAuthenticator(userField,userRoles);
-                    adminAuth.setVisible(true);
-                    this.dispose();
-                    break;
+                        AdminAuthenticator adminAuth = new AdminAuthenticator(userID,userField,userRoles);
+                        adminAuth.setVisible(true);
+                        this.dispose();
+                        break;
                     case "Worker":
-                    Dashboard staffDash = new Dashboard(userField,userRoles);
-                    staffDash.setVisible(true);
-                    this.dispose();
-                    break;
+                        Dashboard newDash = new Dashboard(userField,userRoles);
+                        newDash.setVisible(true);
+                        this.dispose();
+                        break;
                 }
             } else {
-                JOptionPane.showMessageDialog(this,"Invalid username or password");
+                JOptionPane.showMessageDialog(this,"Invalid username or password","Error!",JOptionPane.ERROR_MESSAGE);
+                return;
             }
-
-            conn.close();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this,"Error: " + e.getMessage());
+        } catch (SQLException error) {
+            JOptionPane.showMessageDialog(this,"Database erro: " + error.getMessage(),"Error!",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_loginButtonActionPerformed
 

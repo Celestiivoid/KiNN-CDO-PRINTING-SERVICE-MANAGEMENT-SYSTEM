@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package printingservicemanagement;
+package GUI;
 
+import Database.UserDAO;
+import GUI.Login;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,13 +15,15 @@ import javax.swing.JOptionPane;
 public class AdminAuthenticator extends javax.swing.JFrame {
     private String userRole;
     private String welcomeName;
+    private int userID;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AdminAuthenticator.class.getName());
 
     /**
      * Creates new form AdminAuthenticator
      */
-    public AdminAuthenticator(String welcomeName, String userRole) {
+    public AdminAuthenticator(int userID,String welcomeName, String userRole) {
+        this.userID = userID;
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         initComponents();
@@ -97,10 +101,21 @@ public class AdminAuthenticator extends javax.swing.JFrame {
     private void verifyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verifyButtonActionPerformed
         String passField = new String(passCode.getPassword());
         
-        if(passField.equals("127995121653$xD")) {
-            Dashboard newDashboard = new Dashboard(welcomeName,userRole);
-            newDashboard.setVisible(true);
+        
+        if(passField.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Please enter the PIN","Error!",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        UserDAO usrDAO = new UserDAO();
+        
+        if(usrDAO.verify(userID, passField)) {
+            
+            Dashboard newDash = new Dashboard(welcomeName,userRole);
+            newDash.setVisible(true);
             this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(this,"Incorrect PIN","Authentication Failed",JOptionPane.ERROR_MESSAGE);
+            return;
         }
         
     }//GEN-LAST:event_verifyButtonActionPerformed

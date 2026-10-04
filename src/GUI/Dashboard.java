@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package printingservicemanagement;
+package GUI;
 
+import GUI.AdminAuthenticator;
+import GUI.Login;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -11,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Random;
 import javax.swing.JOptionPane;
+import Utility.DateSimulationHandler;
 
 public class Dashboard extends javax.swing.JFrame {
     private String welcomeName;
@@ -84,9 +87,10 @@ public class Dashboard extends javax.swing.JFrame {
         accountRole.setEditable(false);
         
         
-        if(!welcomeName.equals("admin")) {
+        if(!userRole.equals("Administrator")) {
             creationButton.setEnabled(false);
             reportsButton.setEnabled(false);
+            viewArchive.setEnabled(false);
         }
     }
     
@@ -167,7 +171,13 @@ public class Dashboard extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         addCustomer = new javax.swing.JButton();
         newService = new javax.swing.JButton();
+        addCustomer1 = new javax.swing.JButton();
         welcomeMessage = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        searchCustomer = new javax.swing.JButton();
+        viewArchive = new javax.swing.JButton();
+        updateCustomer = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -209,7 +219,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel5)
                     .addComponent(totalOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -220,10 +230,10 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(totalOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 280, -1, -1));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(255, 102, 0));
 
@@ -250,7 +260,7 @@ public class Dashboard extends javax.swing.JFrame {
                     .addComponent(totalPending)
                     .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                     .addComponent(jLabel6))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,10 +271,10 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(totalPending, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 280, -1, -1));
+        getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 250, -1, -1));
 
         jPanel5.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -294,7 +304,7 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(totalCompleted)
                             .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -305,10 +315,10 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(totalCompleted, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 280, -1, -1));
+        getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(1210, 250, -1, -1));
 
         SimulationDate.setBackground(new java.awt.Color(255, 255, 255));
         SimulationDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -441,6 +451,17 @@ public class Dashboard extends javax.swing.JFrame {
         newService.setName(""); // NOI18N
         newService.addActionListener(this::newServiceActionPerformed);
 
+        addCustomer1.setBackground(new java.awt.Color(255, 255, 255));
+        addCustomer1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        addCustomer1.setForeground(new java.awt.Color(0, 0, 0));
+        addCustomer1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\users-267_32.png")); // NOI18N
+        addCustomer1.setText("Update Customer");
+        addCustomer1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        addCustomer1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        addCustomer1.setIconTextGap(15);
+        addCustomer1.setName(""); // NOI18N
+        addCustomer1.addActionListener(this::addCustomer1ActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -452,16 +473,20 @@ public class Dashboard extends javax.swing.JFrame {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(reportsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
                                         .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(loggedAccount, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(accountRole, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addComponent(Logout, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(reportsButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addGap(39, 39, 39)
+                                                .addComponent(loggedAccount, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(accountRole, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                                 .addComponent(addCustomer, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(newService, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(newService, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addCustomer1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(creationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ordersButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(ordersButton, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -481,7 +506,9 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(jLabel3)
                 .addGap(40, 40, 40)
                 .addComponent(addCustomer)
-                .addGap(19, 19, 19)
+                .addGap(18, 18, 18)
+                .addComponent(addCustomer1)
+                .addGap(18, 18, 18)
                 .addComponent(newService)
                 .addGap(18, 18, 18)
                 .addComponent(serviceButton1)
@@ -495,16 +522,18 @@ public class Dashboard extends javax.swing.JFrame {
                 .addComponent(reportsButton)
                 .addGap(18, 18, 18)
                 .addComponent(reportsButton1)
-                .addGap(46, 46, 46)
+                .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(loggedAccount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(accountRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel4))
-                .addGap(37, 37, 37)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel4)))
+                .addGap(18, 18, 18)
                 .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 310, 900));
@@ -513,7 +542,39 @@ public class Dashboard extends javax.swing.JFrame {
         welcomeMessage.setFont(new java.awt.Font("Segoe UI", 1, 27)); // NOI18N
         welcomeMessage.setForeground(new java.awt.Color(0, 0, 0));
         welcomeMessage.setBorder(null);
-        getContentPane().add(welcomeMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 140, 670, 70));
+        welcomeMessage.addActionListener(this::welcomeMessageActionPerformed);
+        getContentPane().add(welcomeMessage, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 140, 670, 70));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setText("Quick Actions");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 550, 300, 60));
+
+        searchCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        searchCustomer.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        searchCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        searchCustomer.setText("Search Customer");
+        searchCustomer.addActionListener(this::searchCustomerActionPerformed);
+        getContentPane().add(searchCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 640, 360, 70));
+
+        viewArchive.setBackground(new java.awt.Color(255, 255, 255));
+        viewArchive.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        viewArchive.setForeground(new java.awt.Color(0, 0, 0));
+        viewArchive.setText("View Customer Archive");
+        viewArchive.addActionListener(this::viewArchiveActionPerformed);
+        getContentPane().add(viewArchive, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 730, 360, 70));
+
+        updateCustomer.setBackground(new java.awt.Color(255, 255, 255));
+        updateCustomer.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        updateCustomer.setForeground(new java.awt.Color(0, 0, 0));
+        updateCustomer.setText("Search Order");
+        getContentPane().add(updateCustomer, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 640, 370, 70));
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(0, 0, 0));
+        jButton1.setText("View Order Archive");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 730, 370, 70));
 
         jLabel2.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\DASHBOARD BACKGROUNDS.png")); // NOI18N
         jLabel2.setText("jLabel2");
@@ -537,16 +598,9 @@ public class Dashboard extends javax.swing.JFrame {
         int logoutOption = JOptionPane.showConfirmDialog(this,"Are you sure you want to logout?","Logout",JOptionPane.YES_NO_OPTION);
         
         if(logoutOption == JOptionPane.YES_OPTION) {
-            if(userRole.equals("Administrator")) {
-                AdminAuthenticator backAuth = new AdminAuthenticator(welcomeName,userRole);
-                backAuth.setVisible(true);
-                this.dispose();
-            }
-            else if(userRole.equals("Worker")) {
-                Login backLogin = new Login();
-                backLogin.setVisible(true);
-                this.dispose();
-            }
+            Login backLogin = new Login();
+            backLogin.setVisible(true);
+            this.dispose();
         }
         else if(logoutOption == JOptionPane.NO_OPTION) {
             return;
@@ -582,9 +636,7 @@ public class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_reportsButtonActionPerformed
 
     private void ordersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordersButtonActionPerformed
-        OrdersSelection newSelection = new OrdersSelection(welcomeName);
-        newSelection.setVisible(true);
-        this.dispose();
+
     }//GEN-LAST:event_ordersButtonActionPerformed
 
     private void serviceButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceButton1ActionPerformed
@@ -605,6 +657,26 @@ public class Dashboard extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_newServiceActionPerformed
 
+    private void welcomeMessageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_welcomeMessageActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_welcomeMessageActionPerformed
+
+    private void searchCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerActionPerformed
+        CustomerSearch cmtSearch = new CustomerSearch(welcomeName,userRole);
+        cmtSearch.setVisible(true);
+    }//GEN-LAST:event_searchCustomerActionPerformed
+
+    private void viewArchiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewArchiveActionPerformed
+        ArchivedCustomer arcCustomer = new ArchivedCustomer(welcomeName,userRole);
+        arcCustomer.setVisible(true);
+    }//GEN-LAST:event_viewArchiveActionPerformed
+
+    private void addCustomer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomer1ActionPerformed
+        UpdateCustomer updateService = new UpdateCustomer(welcomeName,userRole);
+        updateService.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_addCustomer1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JDate;
@@ -613,7 +685,9 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JTextField Time;
     private javax.swing.JTextField accountRole;
     private javax.swing.JButton addCustomer;
+    private javax.swing.JButton addCustomer1;
     private javax.swing.JButton creationButton;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -623,6 +697,7 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -634,10 +709,13 @@ public class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton ordersButton1;
     private javax.swing.JButton reportsButton;
     private javax.swing.JButton reportsButton1;
+    private javax.swing.JButton searchCustomer;
     private javax.swing.JButton serviceButton1;
     private javax.swing.JTextField totalCompleted;
     private javax.swing.JTextField totalOrders;
     private javax.swing.JTextField totalPending;
+    private javax.swing.JButton updateCustomer;
+    private javax.swing.JButton viewArchive;
     private javax.swing.JTextField welcomeMessage;
     private javax.swing.JTextField welcomeText;
     // End of variables declaration//GEN-END:variables

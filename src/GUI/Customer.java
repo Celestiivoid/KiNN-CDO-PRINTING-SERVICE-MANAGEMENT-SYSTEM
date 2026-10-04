@@ -2,13 +2,14 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package printingservicemanagement;
+package GUI;
+import GUI.Dashboard;
+import Database.DBConnection;
+import Database.CustomerDAO;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import Utility.DateSimulationHandler;
 /**
  *
  * @author User
@@ -301,7 +302,7 @@ public class Customer extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 1090, 840));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setBackground(new java.awt.Color(153, 153, 153));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jButton1.setForeground(new java.awt.Color(0, 0, 0));
         jButton1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-arrow-7304_32.png")); // NOI18N
@@ -365,33 +366,21 @@ public class Customer extends javax.swing.JFrame {
             return;
         }
         
-        String sql = "INSERT INTO tbl_customers (ctm_ftName,ctm_ltName,ctm_phNumber,ctm_emAddress,ctm_Type) VALUES (?,?,?,?,?)";
+        CustomerDAO ctmDAO = new CustomerDAO();
         
-        try (Connection conn = DBConnection.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        String customerID = ctmDAO.addCustomer(firstName, lastName, phoneNumber, emailAddress, customerType);
+        
+        if(customerID != null) {
+            JOptionPane.showMessageDialog(this,"Customer added successfully!","Success!",JOptionPane.INFORMATION_MESSAGE);
             
-            if (conn != null) {
-                pstmt.setString(1, firstName);
-                pstmt.setString(2, lastName);
-                pstmt.setString(3, phoneNumber);
-                pstmt.setString(4, emailAddress);
-                pstmt.setString(5, customerType);
-                
-                int rowsInserted = pstmt.executeUpdate();
-                if (rowsInserted > 0) {
-                    JOptionPane.showMessageDialog(this, "Customer added successfully!");
-                    firstNameField.setText("");
-                    lastNameField.setText("");
-                    phoneNumberField.setText("");
-                    emailAddressField.setText("");
-                    customerTypeBox.setSelectedIndex(0);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to establish a database connection.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error inserting product: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            firstNameField.setText("");
+            lastNameField.setText("");
+            phoneNumberField.setText("");
+            emailAddressField.setText("");
+            customerTypeBox.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(this,"Add customer failure","Database error!",JOptionPane.ERROR_MESSAGE);
+            return;
         }
     }//GEN-LAST:event_saveCustomerActionPerformed
 
