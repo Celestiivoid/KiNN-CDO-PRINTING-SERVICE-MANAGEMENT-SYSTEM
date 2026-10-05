@@ -73,6 +73,11 @@ public class ArchivedCustomer extends javax.swing.JFrame {
         for(Object [] row : customers) {
             customerModel.addRow(row);
         }
+        
+        if(customers.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"There are no archived customer at the moment.","Archive",JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
 }
 
     /**

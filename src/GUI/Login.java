@@ -197,8 +197,8 @@ public class Login extends javax.swing.JFrame {
                         this.dispose();
                         break;
                     case "Worker":
-                        Dashboard newDash = new Dashboard(userField,userRoles);
-                        newDash.setVisible(true);
+                        MainMenuFrame mainFrame = new MainMenuFrame(userField,userRoles);
+                        mainFrame.setVisible(true);
                         this.dispose();
                         break;
                 }
