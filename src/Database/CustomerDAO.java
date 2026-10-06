@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Database;
-import GUI.UpdateCustomer;
+import GUI.UpdateCustomerFrame;
 import Utility.Customer;
 import java.sql.*;
 import java.util.ArrayList;

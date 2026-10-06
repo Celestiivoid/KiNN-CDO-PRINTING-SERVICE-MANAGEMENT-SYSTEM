@@ -196,7 +196,7 @@ public class Login extends javax.swing.JFrame {
                         adminAuth.setVisible(true);
                         this.dispose();
                         break;
-                    case "Worker":
+                    case "Staff":
                         MainMenuFrame mainFrame = new MainMenuFrame(userField,userRoles);
                         mainFrame.setVisible(true);
                         this.dispose();

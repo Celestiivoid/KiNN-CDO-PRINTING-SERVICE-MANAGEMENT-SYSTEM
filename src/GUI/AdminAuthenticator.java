@@ -109,6 +109,9 @@ public class AdminAuthenticator extends javax.swing.JFrame {
         UserDAO usrDAO = new UserDAO();
         
         if(usrDAO.verify(userID, passField)) {
+            MainMenuFrame mainFrame = new MainMenuFrame(welcomeName,userRole);
+            mainFrame.setVisible(true);
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this,"Incorrect PIN","Authentication Failed",JOptionPane.ERROR_MESSAGE);
             return;
