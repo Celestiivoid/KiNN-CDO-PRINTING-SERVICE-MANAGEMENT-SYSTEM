@@ -31,7 +31,7 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
     
     
     public void dashboardComponents() {
-        
+        currentTypeField.setEditable(false);
         localTime.setEditable(false);
         
         clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());

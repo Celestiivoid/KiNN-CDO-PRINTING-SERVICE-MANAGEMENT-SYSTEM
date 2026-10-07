@@ -65,6 +65,16 @@ public class MainMenuFrame extends javax.swing.JFrame {
         showFrame(svf);
     }
     
+    public void openUpdateServiceFrame() {
+        UpdateServiceFrame svfupd = new UpdateServiceFrame(welcomeName,userRole);
+        showFrame(svfupd);
+    }
+    
+    public void openNewOrderFrame() {
+        NewOrderFrame newOrder = new NewOrderFrame(welcomeName,userRole);
+        showFrame(newOrder);
+    }
+    
     public void dashboardComponents() {
         setLocationRelativeTo(null);
         welcomeNameLabel.setText(welcomeName);
@@ -462,7 +472,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ordersButtonActionPerformed
 
     private void newOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newOrderButtonActionPerformed
-        // TODO add your handling code here:
+        openNewOrderFrame();
     }//GEN-LAST:event_newOrderButtonActionPerformed
 
     private void serviceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceButtonActionPerformed
@@ -478,7 +488,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void updateServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateServiceButtonActionPerformed
-        // TODO add your handling code here:
+        openUpdateServiceFrame();
     }//GEN-LAST:event_updateServiceButtonActionPerformed
 
     private void updateOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderButtonActionPerformed

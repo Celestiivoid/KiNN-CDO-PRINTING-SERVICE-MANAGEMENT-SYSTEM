@@ -4,6 +4,7 @@
  */
 package Database;
 
+import Utility.Service;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -126,5 +127,74 @@ public class ServiceDAO {
             System.out.println("Error searching service: " + error.getMessage());
         }
         return services;
+    }
+    
+    public boolean updateService(
+           int serviceID,
+           String serviceName,
+           String serviceCategory,
+           String serviceUnit,
+           double servicePrice,
+           String serviceStatus) {
+        
+        String sql = "UPDATE tbl_service "
+                   + "SET service_name = ?, "
+                   + "service_category = ?, "
+                   + "service_unit = ?, "
+                   + "service_price = ?, "
+                   + "service_status = ? "
+                   + "WHERE service_id = ?";
+        
+        try(Connection conn = DBConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1,serviceName);
+            pstmt.setString(2, serviceCategory);
+            pstmt.setString(3, serviceUnit);
+            pstmt.setDouble(4, servicePrice);
+            pstmt.setString(5, serviceStatus);
+            pstmt.setInt(6, serviceID);
+            
+            int update = pstmt.executeUpdate();
+            
+            return update > 0;
+        } catch(SQLException error) {
+            System.out.println("Error updating service: " + error.getMessage());
+            return false;
+        }
+    }
+    
+    public Service getService(int serviceID) {
+        
+        String sql = "SELECT service_id, service_name, service_category, "
+                   + "service_unit, service_price, service_status "
+                   + "FROM tbl_service "
+                   + "WHERE service_id = ?";
+        
+        try(Connection conn = DBConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setInt(1, serviceID);
+            
+            try(ResultSet rs = pstmt.executeQuery()) {
+                
+                if(rs.next()) {
+                    
+                    Service svcSet = new Service();
+                    
+                    svcSet.setServiceID(rs.getInt("service_id"));
+                    svcSet.setServiceName(rs.getString("service_name"));
+                    svcSet.setServiceCategory(rs.getString("service_category"));
+                    svcSet.setServiceUnit(rs.getString("service_unit"));
+                    svcSet.setServicePrice(rs.getDouble("service_price"));
+                    svcSet.setServiceStatus(rs.getString("service_status"));
+                    
+                    return svcSet;
+                }
+            }
+        } catch (SQLException error) {
+            System.out.println("Error searching: " + error.getMessage());
+        }
+        return null;
     }
 }

@@ -207,7 +207,7 @@ public class CustomerDAO {
     public List<Object[]> searchArchivedCustomer(String search) {
         List<Object[]> customers = new ArrayList<>();
         
-        String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName "
+        String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
                    + "ctm_phNumber, ctm_emAddress, ctm_Type "
                    + "FROM tbl_customers "
                    + "WHERE ctm_archived = 1 "
