@@ -75,6 +75,11 @@ public class MainMenuFrame extends javax.swing.JFrame {
         showFrame(newOrder);
     }
     
+    public void openUpdateOrderFrame() {
+        UpdateOrder updateOrder = new UpdateOrder(welcomeName,userRole);
+        showFrame(updateOrder);
+    }
+    
     public void dashboardComponents() {
         setLocationRelativeTo(null);
         welcomeNameLabel.setText(welcomeName);
@@ -492,7 +497,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_updateServiceButtonActionPerformed
 
     private void updateOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderButtonActionPerformed
-        // TODO add your handling code here:
+        openUpdateOrderFrame();
     }//GEN-LAST:event_updateOrderButtonActionPerformed
 
 

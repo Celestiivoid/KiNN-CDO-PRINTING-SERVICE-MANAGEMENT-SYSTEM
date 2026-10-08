@@ -10,6 +10,7 @@ import Database.ServiceConnector;
 import Session.userSession;
 import Utility.Customer;
 import Utility.DateAndTimeHandler;
+import Utility.Order;
 import Utility.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +21,8 @@ import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class NewOrderFrame extends javax.swing.JInternalFrame {
+public class UpdateOrder extends javax.swing.JInternalFrame {
+    private int orderID;
     private int serviceID;
     private int customerID;
     private String welcomeName;
@@ -28,7 +30,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.Timer clockTimer;
 
     
-    public NewOrderFrame(String welcomeName, String userRole) {
+    public UpdateOrder(String welcomeName, String userRole) {
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         
@@ -197,9 +199,12 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         orderStatusBox = new javax.swing.JComboBox<>();
         paymentStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
-        customerListButton = new javax.swing.JButton();
         placeOrderButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
+        serviceLabel = new javax.swing.JLabel();
+        orderStatusLabel = new javax.swing.JLabel();
+        quantityLabel = new javax.swing.JLabel();
+        paymentStatusLabel = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -223,71 +228,87 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Place Order");
+        jLabel2.setText("Update Order");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 40, 270, 70));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("Customer Information");
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 22, 299, -1));
 
         searchField.setBackground(new java.awt.Color(255, 255, 255));
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchField.setForeground(new java.awt.Color(0, 0, 0));
         searchField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 110, 491, 40));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
         searchButton.setText("Search");
         searchButton.addActionListener(this::searchButtonActionPerformed);
+        jPanel3.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(522, 110, 150, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
         jLabel4.setText("First Name");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 168, 310, 39));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
         jLabel5.setText("Last Name");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 168, 310, 39));
 
         firstNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         firstNameLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(firstNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 213, 310, 35));
 
         lastNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         lastNameLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(lastNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 213, 310, 35));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Contact Number");
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 254, 310, 36));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Email Address");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 254, 310, 36));
 
         ctNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         ctNumberLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(ctNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 302, 310, 28));
 
         emAddressLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         emAddressLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(emAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 302, 310, 28));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("Select Service");
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 342, 310, 41));
 
         serviceBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         serviceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select service..." }));
         serviceBox.addActionListener(this::serviceBoxActionPerformed);
+        jPanel3.add(serviceBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 180, 47));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Quantity");
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 342, 310, 41));
 
         quantityField.setBackground(new java.awt.Color(255, 255, 255));
         quantityField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         quantityField.setForeground(new java.awt.Color(0, 0, 0));
         quantityField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 206, 47));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -397,156 +418,63 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                 .addGap(35, 35, 35))
         );
 
+        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(897, 110, -1, 313));
+
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Order Status");
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 448, 310, -1));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 0, 0));
         jLabel15.setText("Payment Status");
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 448, 337, -1));
 
         orderStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select order status...", "PENDING", "PROCESSING" }));
+        jPanel3.add(orderStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, -1, 45));
 
         paymentStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         paymentStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select payment status...", "PAID", "UNPAID" }));
+        jPanel3.add(paymentStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 210, 45));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel18.setText("Search Customer ID");
-
-        customerListButton.setBackground(new java.awt.Color(0, 153, 153));
-        customerListButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        customerListButton.setForeground(new java.awt.Color(255, 255, 255));
-        customerListButton.setText("Customer List");
-        customerListButton.addActionListener(this::customerListButtonActionPerformed);
+        jLabel18.setText("Search Order ID");
+        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 68, 215, 34));
 
         placeOrderButton.setBackground(new java.awt.Color(255, 153, 0));
         placeOrderButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         placeOrderButton.setForeground(new java.awt.Color(255, 255, 255));
-        placeOrderButton.setText("Place Order");
+        placeOrderButton.setText("Update Order");
         placeOrderButton.addActionListener(this::placeOrderButtonActionPerformed);
+        jPanel3.add(placeOrderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1064, 454, 155, 60));
 
         clearButton.setBackground(new java.awt.Color(251, 55, 55));
         clearButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         clearButton.setForeground(new java.awt.Color(255, 255, 255));
         clearButton.setText("Clear");
-        clearButton.addActionListener(this::clearButtonActionPerformed);
+        jPanel3.add(clearButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(897, 454, 155, 60));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(searchField, javax.swing.GroupLayout.PREFERRED_SIZE, 491, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(ctNumberLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(firstNameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE))
-                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(serviceBox, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(193, 193, 193))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(orderStatusBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(204, 204, 204)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                                .addComponent(emAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(quantityField))
-                            .addComponent(paymentStatusBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(48, 48, 48)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(29, 29, 29))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(8, 8, 8)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(searchField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                            .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lastNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(firstNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(ctNumberLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(emAddressLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(quantityField)
-                            .addComponent(serviceBox, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(paymentStatusBox, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(orderStatusBox)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
-        );
+        serviceLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        serviceLabel.setForeground(new java.awt.Color(0, 0, 0));
+        serviceLabel.setText("jLabel19");
+        jPanel3.add(serviceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 150, 47));
+
+        orderStatusLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        orderStatusLabel.setForeground(new java.awt.Color(0, 0, 0));
+        orderStatusLabel.setText("jLabel20");
+        jPanel3.add(orderStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 152, 45));
+
+        quantityLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        quantityLabel.setForeground(new java.awt.Color(0, 0, 0));
+        quantityLabel.setText("jLabel21");
+        jPanel3.add(quantityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 80, 47));
+
+        paymentStatusLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        paymentStatusLabel.setForeground(new java.awt.Color(0, 0, 0));
+        paymentStatusLabel.setText("jLabel22");
+        jPanel3.add(paymentStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 80, 45));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 146, 1250, 550));
 
@@ -556,49 +484,90 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        String customerIDText = searchField.getText().trim();
-        
+        String orderIDText = searchField.getText().trim();
+
+        if (orderIDText.isEmpty()) {
+            JOptionPane.showMessageDialog(
+                this,
+                "Please enter an Order ID.",
+                "Missing Order ID",
+                JOptionPane.WARNING_MESSAGE
+            );
+            return;
+        }
+
         try {
-            this.customerID = Integer.parseInt(customerIDText.replace("CUST-",""));
-            
-            CustomerConnector ctmDAO = new CustomerConnector();
-            
-            Customer ctm = ctmDAO.getCustomer(customerID);
-            
-            if(ctm != null) {
-                firstNameLabel.setText(ctm.getFirstName());
-                lastNameLabel.setText(ctm.getLastName());
-                ctNumberLabel.setText(ctm.getPhoneNumber());
-                emAddressLabel.setText(ctm.getEmailAddress());
-                discountTypeLabel.setText(ctm.getCustomerType());
-                
-                if(discountTypeLabel.getText().equals("Student")) {
-                    discountPercentageLabel.setText("10%");
-                }
-                else {
-                    discountPercentageLabel.setText("0");
-                    discountAmountLabel.setText("0.00");
-                }
-                orderCalculation();
-            }
-            else {
-                JOptionPane.showMessageDialog(this,"Customer not found!","Not found!",JOptionPane.WARNING_MESSAGE);
+
+            int orderID = Integer.parseInt(
+                orderIDText.replace("ORD-", "")
+            );
+
+            OrderConnector ordConn = new OrderConnector();
+            Order order = ordConn.getOrder(orderID);
+
+            if (order == null) {
+                JOptionPane.showMessageDialog(
+                    this,
+                    "Order not found.",
+                    "Search Result",
+                    JOptionPane.WARNING_MESSAGE
+                );
                 return;
             }
+
+            this.orderID = order.getOrderID();
+
+            firstNameLabel.setText(order.getFirstName());
+            lastNameLabel.setText(order.getLastName());
+            ctNumberLabel.setText(order.getPhoneNumber());
+            emAddressLabel.setText(order.getEmailAddress());
+
+            quantityField.setText(
+                String.valueOf(order.getQuantity())
+            );
+            
+            serviceLabel.setText(order.getServiceName() + " - " + order.getServiceSize());
+
+            orderStatusLabel.setText(order.getOrderStatus());
+            
+            paymentStatusLabel.setText(order.getPaymentStatus());
+            
+            priceUnitLabel.setText(
+                String.format("%.2f", order.getUnitPrice())
+            );
+            
+            discountTypeLabel.setText(order.getCustomerType());
+
+            subtotalLabel.setText(
+                String.format("%.2f", order.getSubtotal())
+            );
+
+            discountPercentageLabel.setText(
+                String.format("%.0f%%", order.getDiscountPercentage())
+            );
+
+            discountAmountLabel.setText(
+                String.format("%.2f", order.getDiscountAmount())
+            );
+
+            totalAfterDiscountLabel.setText(
+                String.format("%.2f", order.getTotalAmount())
+            );
+
         } catch (NumberFormatException error) {
-            JOptionPane.showMessageDialog(this,"Invalid customer ID! (CUST-XXXXX)","Invalid",JOptionPane.WARNING_MESSAGE);
-            return;
+
+            JOptionPane.showMessageDialog(
+                this,
+                "Invalid Order ID.\nExample: ORD-00015",
+                "Invalid Order ID",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void serviceBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_serviceBoxActionPerformed
-
-    private void customerListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerListButtonActionPerformed
-        CustomerSearch ctmSearch = new CustomerSearch(welcomeName,userRole);
-        ctmSearch.setVisible(true);
-    }//GEN-LAST:event_customerListButtonActionPerformed
 
     private void placeOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderButtonActionPerformed
         int convertedQuantity;
@@ -698,29 +667,10 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_placeOrderButtonActionPerformed
 
-    private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        searchField.setText("");
-        firstNameLabel.setText("");
-        lastNameLabel.setText("");
-        ctNumberLabel.setText("");
-        emAddressLabel.setText("");
-        serviceBox.setSelectedIndex(0);
-        orderStatusBox.setSelectedIndex(0);
-        paymentStatusBox.setSelectedIndex(0);
-        quantityField.setText("");
-        priceUnitLabel.setText("");
-        discountTypeLabel.setText("");
-        discountPercentageLabel.setText("");
-        discountAmountLabel.setText("");
-        subtotalLabel.setText("");
-        totalAfterDiscountLabel.setText("");
-    }//GEN-LAST:event_clearButtonActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
     private javax.swing.JLabel ctNumberLabel;
-    private javax.swing.JButton customerListButton;
     private javax.swing.JLabel discountAmountLabel;
     private javax.swing.JLabel discountPercentageLabel;
     private javax.swing.JLabel discountTypeLabel;
@@ -750,13 +700,17 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JTextField localTime;
     private javax.swing.JComboBox<String> orderStatusBox;
+    private javax.swing.JLabel orderStatusLabel;
     private javax.swing.JComboBox<String> paymentStatusBox;
+    private javax.swing.JLabel paymentStatusLabel;
     private javax.swing.JButton placeOrderButton;
     private javax.swing.JLabel priceUnitLabel;
     private javax.swing.JTextField quantityField;
+    private javax.swing.JLabel quantityLabel;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
     private javax.swing.JComboBox<String> serviceBox;
+    private javax.swing.JLabel serviceLabel;
     private javax.swing.JTextField simulatedDate;
     private javax.swing.JLabel subtotalLabel;
     private javax.swing.JLabel totalAfterDiscountLabel;
