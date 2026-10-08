@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import Utility.DateSimulationHandler;
+import Utility.DateAndTimeHandler;
 import Utility.FrameResizerRestriction;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -47,8 +47,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
     }
     
     public void dashboardDate() {
-        DateSimulation.setDate(
-        java.sql.Date.valueOf(DateSimulationHandler.getDate())
+        DateSimulation.setDate(java.sql.Date.valueOf(DateAndTimeHandler.getDate())
     );
 
     DateSimulation.getDateEditor()
@@ -65,7 +64,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
                         .atZone(ZoneId.systemDefault())
                         .toLocalDate();
 
-                    DateSimulationHandler.setDate(selectDate);
+                    DateAndTimeHandler.setDate(selectDate);
                     
                     displayDateTime();
                 }
@@ -75,8 +74,7 @@ public class Dashboard extends javax.swing.JInternalFrame {
     
      private void displayDateTime() {
         
-        simulatedDate.setText(
-        DateSimulationHandler.getDate().format(
+        simulatedDate.setText(DateAndTimeHandler.getDate().format(
             DateTimeFormatter.ofPattern("MMMM dd, yyyy")
          )
     );

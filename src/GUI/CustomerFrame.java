@@ -4,8 +4,8 @@
  */
 package GUI;
 
-import Database.CustomerDAO;
-import Utility.DateSimulationHandler;
+import Database.CustomerConnector;
+import Utility.DateAndTimeHandler;
 import Utility.FrameResizerRestriction;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -40,8 +40,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
     
      private void displayDateTime() {
         
-        simulatedDate.setText(
-        DateSimulationHandler.getDate().format(
+        simulatedDate.setText(DateAndTimeHandler.getDate().format(
             DateTimeFormatter.ofPattern("MMMM dd, yyyy")
             )
         );
@@ -379,7 +378,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
             return;
         }
         
-        CustomerDAO ctmDAO = new CustomerDAO();
+        CustomerConnector ctmDAO = new CustomerConnector();
         
         String customerID = ctmDAO.addCustomer(firstName, lastName, contactNumber, emailAddress, customerType);
         

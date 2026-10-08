@@ -4,7 +4,7 @@
  */
 package GUI;
 
-import Database.UserDAO;
+import Database.UserConnector;
 import GUI.Login;
 import javax.swing.JOptionPane;
 
@@ -106,7 +106,7 @@ public class AdminAuthenticator extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this,"Please enter the PIN","Error!",JOptionPane.ERROR_MESSAGE);
             return;
         }
-        UserDAO usrDAO = new UserDAO();
+        UserConnector usrDAO = new UserConnector();
         
         if(usrDAO.verify(userID, passField)) {
             MainMenuFrame mainFrame = new MainMenuFrame(welcomeName,userRole);

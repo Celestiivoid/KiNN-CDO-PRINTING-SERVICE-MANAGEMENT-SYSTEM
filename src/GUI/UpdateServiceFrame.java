@@ -4,9 +4,9 @@
  */
 package GUI;
 
-import Database.CustomerDAO;
-import Database.ServiceDAO;
-import Utility.DateSimulationHandler;
+import Database.CustomerConnector;
+import Database.ServiceConnector;
+import Utility.DateAndTimeHandler;
 import Utility.FrameResizerRestriction;
 import Utility.Service;
 import java.time.LocalTime;
@@ -37,9 +37,6 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
     public void dashboardComponents() {
         simulatedDate.setEditable(false);
         localTime.setEditable(false);
-        categoryField.setEditable(false);
-        unitField.setEditable(false);
-        statusField.setEditable(false);
         
         clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
         clockTimer.start();
@@ -49,8 +46,7 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
     
      private void displayDateTime() {
         
-        simulatedDate.setText(
-        DateSimulationHandler.getDate().format(
+        simulatedDate.setText(DateAndTimeHandler.getDate().format(
             DateTimeFormatter.ofPattern("MMMM dd, yyyy")
             )
         );
@@ -62,7 +58,7 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
     localTime.setText(currentTime.format(timeFormatter));
 }
      public void loadService() {
-        ServiceDAO svcDAO = new ServiceDAO();
+        ServiceConnector svcDAO = new ServiceConnector();
          
         List<Object[]> services = svcDAO.loadServices();
         
@@ -85,7 +81,7 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
              return;
          }
          
-         ServiceDAO svcDAO = new ServiceDAO();
+         ServiceConnector svcDAO = new ServiceConnector();
          
          List<Object[]> services = svcDAO.searchService(search);
          
@@ -135,12 +131,16 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         searchIDField = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         searchIDButton = new javax.swing.JButton();
-        categoryField = new javax.swing.JTextField();
-        unitField = new javax.swing.JTextField();
-        statusField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
+        sizeBox = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        categoryLabelField = new javax.swing.JLabel();
+        sizeLabelField = new javax.swing.JLabel();
+        unitLabelField = new javax.swing.JLabel();
+        statusLabelField = new javax.swing.JLabel();
+        priceLabelField = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
+        viewAll = new javax.swing.JButton();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -148,13 +148,13 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         simulatedDate.setBackground(new java.awt.Color(255, 255, 255));
-        simulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        simulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         simulatedDate.setForeground(new java.awt.Color(0, 153, 153));
         simulatedDate.setBorder(null);
         jPanel1.add(simulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 20, 225, 50));
 
         localTime.setBackground(new java.awt.Color(255, 255, 255));
-        localTime.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        localTime.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         localTime.setForeground(new java.awt.Color(255, 153, 0));
         localTime.setBorder(null);
         jPanel1.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 80, 225, 50));
@@ -164,7 +164,7 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Service ID", "Service Name", "Category", "Unit", "Price", "Status"
+                "Service ID", "Name", "Category", "Size", "Unit", "Price", "Status"
             }
         ));
         jScrollPane1.setViewportView(serviceTable);
@@ -254,15 +254,30 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         searchIDButton.setText("Search");
         searchIDButton.addActionListener(this::searchIDButtonActionPerformed);
 
-        categoryField.setBackground(new java.awt.Color(255, 255, 255));
-        categoryField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        sizeBox.setBackground(new java.awt.Color(255, 255, 255));
+        sizeBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        sizeBox.setForeground(new java.awt.Color(0, 0, 0));
+        sizeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select size...", "A4", "A3", "Letter", "Legal", "A5", "A6", "1x1", "2x2", "3R", "4R", "5R", "6R", "8R" }));
+        sizeBox.addActionListener(this::sizeBoxActionPerformed);
 
-        unitField.setBackground(new java.awt.Color(255, 255, 255));
-        unitField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        unitField.addActionListener(this::unitFieldActionPerformed);
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Size:");
 
-        statusField.setBackground(new java.awt.Color(255, 255, 255));
-        statusField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        categoryLabelField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        categoryLabelField.setForeground(new java.awt.Color(0, 0, 0));
+
+        sizeLabelField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        sizeLabelField.setForeground(new java.awt.Color(0, 0, 0));
+
+        unitLabelField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        unitLabelField.setForeground(new java.awt.Color(0, 0, 0));
+
+        statusLabelField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        statusLabelField.setForeground(new java.awt.Color(0, 0, 0));
+
+        priceLabelField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        priceLabelField.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -270,47 +285,54 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(6, 6, 6)
-                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(statusBox, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(117, 117, 117)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(searchIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(searchIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel3)
-                            .addGap(5, 5, 5)
-                            .addComponent(serviceNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(statusLabelField, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(priceLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statusBox, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(categoryLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(categoryField, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(categoryLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(unitField)))
+                                .addComponent(unitLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(sizeLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(unitBox, 0, 176, Short.MAX_VALUE)
+                            .addComponent(categoryBox, 0, 176, Short.MAX_VALUE)
+                            .addComponent(sizeBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(unitBox, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(categoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(16, 16, 16))
+                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(serviceNameField)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(searchIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(29, 29, 29))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,64 +346,65 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGap(51, 51, 51)
                         .addComponent(searchIDButton, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
-                        .addComponent(jLabel3))
-                    .addComponent(serviceNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(serviceNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(categoryLabel)
+                    .addComponent(categoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(categoryLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(sizeBox, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(sizeLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(categoryLabel))
-                    .addComponent(categoryBox, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(categoryField))
-                .addGap(33, 33, 33)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel5))
                     .addComponent(unitBox, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(unitField))
-                .addGap(32, 32, 32)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel6))
-                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
+                    .addComponent(jLabel5)
+                    .addComponent(unitLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6))
+                    .addComponent(priceLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(statusBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7))
-                    .addComponent(statusBox, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
-                    .addComponent(statusField))
-                .addGap(45, 45, 45)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(statusLabelField, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(47, 47, 47)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(saveChangeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(101, 101, 101))
         );
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 460, 530));
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Search:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 90, 50));
 
         searchField.setBackground(new java.awt.Color(255, 255, 255));
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchField.setForeground(new java.awt.Color(0, 0, 0));
         searchField.addActionListener(this::searchFieldActionPerformed);
-        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 260, 50));
+        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 260, 50));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
         searchButton.setText("Search");
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 100, 120, 50));
+        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 120, 50));
+
+        viewAll.setBackground(new java.awt.Color(0, 153, 153));
+        viewAll.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        viewAll.setForeground(new java.awt.Color(255, 255, 255));
+        viewAll.setText("View All");
+        viewAll.addActionListener(this::viewAllActionPerformed);
+        jPanel1.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 740));
 
@@ -391,6 +414,7 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
     private void saveChangeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveChangeButtonActionPerformed
         String serviceName = serviceNameField.getText();
         String category = (String) categoryBox.getSelectedItem();
+        String size = (String) sizeBox.getSelectedItem();
         String unit = (String) unitBox.getSelectedItem();
         String price = priceField.getText();
         String status = (String) statusBox.getSelectedItem();
@@ -428,9 +452,9 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
             return;
         }
         
-        ServiceDAO svcDAO = new ServiceDAO();
+        ServiceConnector svcDAO = new ServiceConnector();
         
-        boolean updated = svcDAO.updateService(servicesID, serviceName, category, unit, convertedPrice, status);
+        boolean updated = svcDAO.updateService(servicesID, serviceName, category, size, unit, convertedPrice, status);
         
         if(updated) {
             JOptionPane.showMessageDialog(this,"Successfully updated service!","Success!",JOptionPane.INFORMATION_MESSAGE);
@@ -439,10 +463,12 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
             unitBox.setSelectedIndex(0);
             priceField.setText("");
             statusBox.setSelectedIndex(0);
+            sizeBox.setSelectedIndex(0);
             searchIDField.setText("");
-            categoryField.setText("");
-            unitField.setText("");
-            statusField.setText("");
+            categoryLabelField.setText("");
+            unitLabelField.setText("");
+            sizeLabelField.setText("");
+            statusLabelField.setText("");
             loadService();
         } else {
             JOptionPane.showMessageDialog(this,"Error updating service","Error",JOptionPane.ERROR_MESSAGE);
@@ -456,6 +482,10 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         unitBox.setSelectedIndex(0);
         priceField.setText("");
         statusBox.setSelectedIndex(0);
+        categoryLabelField.setText("");
+        unitLabelField.setText("");
+        sizeLabelField.setText("");
+        statusLabelField.setText("");
         searchIDField.setText("");
     }//GEN-LAST:event_clearButtonActionPerformed
 
@@ -477,16 +507,17 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         try {
             this.servicesID = Integer.parseInt(serviceIDText.replace("SVC-",""));
             
-            ServiceDAO svcDAO = new ServiceDAO();
+            ServiceConnector svcDAO = new ServiceConnector();
             
             Service svc = svcDAO.getService(servicesID);
             
-            if(svc != null) {
+            if(svc != null) {   
                 serviceNameField.setText(svc.getServiceName());
-                categoryField.setText(svc.getServiceCategory());
-                unitField.setText(svc.getServiceUnit());
-                priceField.setText(String.valueOf(svc.getServicePrice()));
-                statusField.setText(svc.getServiceStatus());
+                categoryLabelField.setText(svc.getServiceCategory());
+                sizeLabelField.setText(svc.getServiceSize());
+                unitLabelField.setText(svc.getServiceUnit());
+                priceLabelField.setText(String.valueOf(svc.getServicePrice()));
+                statusLabelField.setText(svc.getServiceStatus());
             } else {
                 JOptionPane.showMessageDialog(this,"Service not found!","Not found!",JOptionPane.WARNING_MESSAGE);
                 return;
@@ -497,29 +528,35 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_searchIDButtonActionPerformed
 
-    private void unitFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unitFieldActionPerformed
+    private void sizeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sizeBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_unitFieldActionPerformed
+    }//GEN-LAST:event_sizeBoxActionPerformed
+
+    private void viewAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAllActionPerformed
+        searchField.setText("");
+        loadService();
+    }//GEN-LAST:event_viewAllActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> categoryBox;
-    private javax.swing.JTextField categoryField;
     private javax.swing.JLabel categoryLabel;
+    private javax.swing.JLabel categoryLabelField;
     private javax.swing.JButton clearButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField localTime;
     private javax.swing.JTextField priceField;
+    private javax.swing.JLabel priceLabelField;
     private javax.swing.JButton saveChangeButton;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
@@ -528,9 +565,12 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextField serviceNameField;
     private javax.swing.JTable serviceTable;
     private javax.swing.JTextField simulatedDate;
+    private javax.swing.JComboBox<String> sizeBox;
+    private javax.swing.JLabel sizeLabelField;
     private javax.swing.JComboBox<String> statusBox;
-    private javax.swing.JTextField statusField;
+    private javax.swing.JLabel statusLabelField;
     private javax.swing.JComboBox<String> unitBox;
-    private javax.swing.JTextField unitField;
+    private javax.swing.JLabel unitLabelField;
+    private javax.swing.JButton viewAll;
     // End of variables declaration//GEN-END:variables
 }

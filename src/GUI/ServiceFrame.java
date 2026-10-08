@@ -4,9 +4,9 @@
  */
 package GUI;
 
-import Database.CustomerDAO;
-import Database.ServiceDAO;
-import Utility.DateSimulationHandler;
+import Database.CustomerConnector;
+import Database.ServiceConnector;
+import Utility.DateAndTimeHandler;
 import Utility.FrameResizerRestriction;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -44,8 +44,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
     
      private void displayDateTime() {
         
-        simulatedDate.setText(
-        DateSimulationHandler.getDate().format(
+        simulatedDate.setText(DateAndTimeHandler.getDate().format(
             DateTimeFormatter.ofPattern("MMMM dd, yyyy")
             )
         );
@@ -57,7 +56,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
     localTime.setText(currentTime.format(timeFormatter));
 }
      public void loadService() {
-        ServiceDAO svcDAO = new ServiceDAO();
+        ServiceConnector svcDAO = new ServiceConnector();
          
         List<Object[]> services = svcDAO.loadServices();
         
@@ -80,7 +79,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
              return;
          }
          
-         ServiceDAO svcDAO = new ServiceDAO();
+         ServiceConnector svcDAO = new ServiceConnector();
          
          List<Object[]> services = svcDAO.searchService(search);
          
@@ -128,6 +127,8 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         clearButton = new javax.swing.JButton();
         addServiceButton = new javax.swing.JButton();
         removeButton = new javax.swing.JButton();
+        sizeBox = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -154,7 +155,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Service ID", "Service Name", "Category", "Unit", "Price", "Status"
+                "Service ID", "Name", "Category", "Size", "Unit", "Price", "Status"
             }
         ));
         jScrollPane1.setViewportView(serviceTable);
@@ -233,6 +234,15 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         removeButton.setForeground(new java.awt.Color(255, 255, 255));
         removeButton.setText("Remove ");
 
+        sizeBox.setBackground(new java.awt.Color(255, 255, 255));
+        sizeBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        sizeBox.setForeground(new java.awt.Color(0, 0, 0));
+        sizeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select size...", "A4", "A3", "Letter", "Legal", "A5", "A6", "1x1", "2x2", "3R", "4R", "5R", "8R" }));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Size:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -262,7 +272,11 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(statusBox, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(addServiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(addServiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(sizeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addContainerGap(29, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -282,6 +296,10 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
                     .addComponent(categoryBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
                 .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sizeBox, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(unitBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5))
@@ -293,9 +311,9 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(statusBox, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(addServiceButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -322,7 +340,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         searchButton.addActionListener(this::searchButtonActionPerformed);
         jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 100, 120, 50));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 740));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 720));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -333,6 +351,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         String unit = (String) unitBox.getSelectedItem();
         String unitPrice = priceField.getText();
         String status = (String) statusBox.getSelectedItem();
+        String size = (String) sizeBox.getSelectedItem();
         double convertedPrice;
         
         if(serviceName.isEmpty() && unitPrice.isEmpty()) {
@@ -366,9 +385,9 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Select status.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        ServiceDAO svcDAO = new ServiceDAO();
+        ServiceConnector svcDAO = new ServiceConnector();
             
-        String serviceID = svcDAO.addService(serviceName,category,unit,convertedPrice,status);
+        String serviceID = svcDAO.addService(serviceName,category,size,unit,convertedPrice,status);
             
         if(serviceID != null) {
             JOptionPane.showMessageDialog(this,"Service added successfully!","Success!",JOptionPane.INFORMATION_MESSAGE);
@@ -414,6 +433,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -425,6 +445,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextField serviceNameField;
     private javax.swing.JTable serviceTable;
     private javax.swing.JTextField simulatedDate;
+    private javax.swing.JComboBox<String> sizeBox;
     private javax.swing.JComboBox<String> statusBox;
     private javax.swing.JComboBox<String> unitBox;
     // End of variables declaration//GEN-END:variables

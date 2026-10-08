@@ -5,7 +5,7 @@
 package GUI;
 
 import Database.DBConnection;
-import Database.CustomerDAO;
+import Database.CustomerConnector;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -48,7 +48,7 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
             return;
         }
         
-        CustomerDAO ctmDAO = new CustomerDAO();
+        CustomerConnector ctmDAO = new CustomerConnector();
         
         List<Object[]> customers = ctmDAO.searchArchivedCustomer(search);
         
@@ -67,7 +67,7 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
     }
     
     public void loadArchivedCustomers() {
-        CustomerDAO ctmDAO = new CustomerDAO();
+        CustomerConnector ctmDAO = new CustomerConnector();
         
         List<Object[]> customers = ctmDAO.loadarchivedCustomer();
         
@@ -223,7 +223,7 @@ int selectedRow = customerTable.getSelectedRow();
         
         if(confirmation == JOptionPane.YES_OPTION) {
             
-            CustomerDAO cmtDAO = new CustomerDAO();
+            CustomerConnector cmtDAO = new CustomerConnector();
             
             boolean retrieved = cmtDAO.retrieveCustomer(convertedCustomerID);
             

@@ -5,7 +5,7 @@
 package Database;
 import java.sql.*;
 
-public class UserDAO {
+public class UserConnector {
      public ResultSet login(String username, String password) {
 
         Connection conn = DBConnection.connect();

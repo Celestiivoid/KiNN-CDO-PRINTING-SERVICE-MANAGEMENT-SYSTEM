@@ -6,7 +6,7 @@ package Utility;
 
 import java.time.LocalDate;
 
-public class DateSimulationHandler {
+public class DateAndTimeHandler {
     private static LocalDate currentDate = LocalDate.now();
 
     public static LocalDate getDate() {

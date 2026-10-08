@@ -12,6 +12,7 @@ public class Service {
     private int serviceID;
     private String serviceName;
     private String serviceCategory;
+    private String serviceSize;
     private String serviceUnit;
     private double servicePrice;
     private String serviceStatus;
@@ -28,6 +29,10 @@ public class Service {
         this.serviceCategory = serviceCategory;
     }
     
+    public void setServiceSize(String serviceSize) {
+        this.serviceSize = serviceSize;
+    }
+    
     public void setServiceUnit(String serviceUnit) {
         this.serviceUnit = serviceUnit;
     }
@@ -40,12 +45,20 @@ public class Service {
         this.serviceStatus = serviceStatus;
     }
     
+    public int getServiceID() {
+        return serviceID;
+    }
+    
     public String getServiceName() {
         return serviceName;
     }
     
     public String getServiceCategory() {
         return serviceCategory;
+    }
+    
+    public String getServiceSize() {
+        return serviceSize;
     }
     
     public String getServiceUnit() {

@@ -5,7 +5,7 @@
 package GUI;
 
 import Database.DBConnection;
-import Database.UserDAO;
+import Database.UserConnector;
 import Session.userSession;
 import javax.swing.JOptionPane;
 import java.sql.*;
@@ -178,7 +178,7 @@ public class Login extends javax.swing.JFrame {
             return;
         }
         
-        UserDAO usrDAO = new UserDAO();
+        UserConnector usrDAO = new UserConnector();
         
         ResultSet rs = usrDAO.login(userField, passField);
         

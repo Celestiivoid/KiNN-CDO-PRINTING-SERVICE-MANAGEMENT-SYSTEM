@@ -9,26 +9,28 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceDAO {
+public class ServiceConnector {
     
     public String addService(
            String serviceName,
            String serviceCategory,
+           String serviceSize,
            String serviceUnit,
            double servicePrice,
            String serviceStatus) {
         
         String sql = "INSERT INTO tbl_service "
-                   + "(service_name,service_Category,service_unit,service_price,service_status) "
-                   + "VALUES (?,?,?,?,?)";
+                   + "(service_name,service_category,service_size,service_unit,service_price,service_status) "
+                   + "VALUES (?,?,?,?,?,?)";
         
         try(Connection conn = DBConnection.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, serviceName);
             pstmt.setString(2, serviceCategory);
-            pstmt.setString(3, serviceUnit);
-            pstmt.setDouble(4, servicePrice);
-            pstmt.setString(5, serviceStatus);
+            pstmt.setString(3, serviceSize);
+            pstmt.setString(4, serviceUnit);
+            pstmt.setDouble(5, servicePrice);
+            pstmt.setString(6, serviceStatus);
             
             int rowsInserted = pstmt.executeUpdate();
             
@@ -54,7 +56,7 @@ public class ServiceDAO {
         
         List<Object[]> services = new ArrayList<>();
         
-        String sql = "SELECT service_id, service_name, service_category, "
+        String sql = "SELECT service_id, service_name, service_category, service_size, "
                    + "service_unit, service_price, service_status "
                    + "FROM tbl_service";
         
@@ -71,6 +73,7 @@ public class ServiceDAO {
                     serviceID,
                     rs.getString("service_name"),
                     rs.getString("service_category"),
+                    rs.getString("service_size"),
                     rs.getString("service_unit"),
                     rs.getString("service_price"),
                     rs.getString("service_status")
@@ -88,7 +91,7 @@ public class ServiceDAO {
         
         List<Object[]> services = new ArrayList<>();
         
-        String sql = "SELECT service_id, service_name, service_category, "
+        String sql = "SELECT service_id, service_name, service_category, service_size, "
                    + "service_unit, service_price, service_status "
                    + "FROM tbl_service "
                    + "WHERE (service_name LIKE ? "
@@ -115,6 +118,7 @@ public class ServiceDAO {
                         serviceID,
                         rs.getString("service_name"),
                         rs.getString("service_category"),
+                        rs.getString("service_size"),
                         rs.getString("service_unit"),
                         rs.getString("service_price"),
                         rs.getString("service_status")
@@ -133,6 +137,7 @@ public class ServiceDAO {
            int serviceID,
            String serviceName,
            String serviceCategory,
+           String serviceSize,
            String serviceUnit,
            double servicePrice,
            String serviceStatus) {
@@ -140,6 +145,7 @@ public class ServiceDAO {
         String sql = "UPDATE tbl_service "
                    + "SET service_name = ?, "
                    + "service_category = ?, "
+                   + "service_size = ?, "
                    + "service_unit = ?, "
                    + "service_price = ?, "
                    + "service_status = ? "
@@ -150,10 +156,11 @@ public class ServiceDAO {
             
             pstmt.setString(1,serviceName);
             pstmt.setString(2, serviceCategory);
-            pstmt.setString(3, serviceUnit);
-            pstmt.setDouble(4, servicePrice);
-            pstmt.setString(5, serviceStatus);
-            pstmt.setInt(6, serviceID);
+            pstmt.setString(3, serviceSize);
+            pstmt.setString(4, serviceUnit);
+            pstmt.setDouble(5, servicePrice);
+            pstmt.setString(6, serviceStatus);
+            pstmt.setInt(7, serviceID);
             
             int update = pstmt.executeUpdate();
             
@@ -166,7 +173,7 @@ public class ServiceDAO {
     
     public Service getService(int serviceID) {
         
-        String sql = "SELECT service_id, service_name, service_category, "
+        String sql = "SELECT service_id, service_name, service_category, service_size, "
                    + "service_unit, service_price, service_status "
                    + "FROM tbl_service "
                    + "WHERE service_id = ?";
@@ -185,6 +192,7 @@ public class ServiceDAO {
                     svcSet.setServiceID(rs.getInt("service_id"));
                     svcSet.setServiceName(rs.getString("service_name"));
                     svcSet.setServiceCategory(rs.getString("service_category"));
+                    svcSet.setServiceSize(rs.getString("service_size"));
                     svcSet.setServiceUnit(rs.getString("service_unit"));
                     svcSet.setServicePrice(rs.getDouble("service_price"));
                     svcSet.setServiceStatus(rs.getString("service_status"));
@@ -196,5 +204,34 @@ public class ServiceDAO {
             System.out.println("Error searching: " + error.getMessage());
         }
         return null;
+    }
+    
+    public List<Service> loadServiceName() {
+        
+        List<Service> service = new ArrayList<>();
+        
+        String sql = "SELECT service_id, service_name, service_size, service_price "
+                   + "FROM tbL_service "
+                   + "WHERE service_status = 'Active'";
+        
+        try(Connection conn = DBConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                ResultSet rs = pstmt.executeQuery()) {
+            
+            while(rs.next()) {
+                
+                Service svc = new Service();
+                
+                svc.setServiceID(rs.getInt("service_id"));
+                svc.setServiceName(rs.getString("service_name"));
+                svc.setServiceSize(rs.getString("service_size"));
+                svc.setServicePrice(rs.getDouble("service_price"));
+                
+                service.add(svc);
+            }
+        } catch (SQLException error) {
+            System.out.println("Error loading service names: " + error.getMessage());
+        }
+        return service;
     }
 }
