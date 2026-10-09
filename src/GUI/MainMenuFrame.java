@@ -80,6 +80,11 @@ public class MainMenuFrame extends javax.swing.JFrame {
         showFrame(updateOrder);
     }
     
+    public void openOrderListFrame() {
+        OrderList odrList = new OrderList(welcomeName,userRole);
+        showFrame(odrList);
+    }
+    
     public void dashboardComponents() {
         setLocationRelativeTo(null);
         welcomeNameLabel.setText(welcomeName);
@@ -473,7 +478,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_reportsButtonActionPerformed
 
     private void ordersButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ordersButtonActionPerformed
-
+        openOrderListFrame();
     }//GEN-LAST:event_ordersButtonActionPerformed
 
     private void newOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newOrderButtonActionPerformed

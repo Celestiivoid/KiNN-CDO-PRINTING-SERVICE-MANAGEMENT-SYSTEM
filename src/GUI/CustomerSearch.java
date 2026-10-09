@@ -32,10 +32,6 @@ public class CustomerSearch extends javax.swing.JFrame {
     
     public void dashboardComponents() {
         setLocationRelativeTo(null);
-        if(!userRole.equals("Administrator")) {
-            viewArchive.setEnabled(false);
-            archiveButton.setEnabled(false);
-        }
     }
     
     public void frameComponents() {
@@ -207,30 +203,36 @@ public class CustomerSearch extends javax.swing.JFrame {
         loadCustomers();
     }//GEN-LAST:event_displayAllActionPerformed
 
+    private void viewArchiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewArchiveActionPerformed
+        ArchivedCustomerFrame viewArch = new ArchivedCustomerFrame(welcomeName,userRole);
+        viewArch.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_viewArchiveActionPerformed
+
     private void archiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveButtonActionPerformed
         int selectedRow = customerTable.getSelectedRow();
-        
+
         if(selectedRow == -1) {
             JOptionPane.showMessageDialog(this,"Please select a customer to archive.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
+
         String customerID = customerTable.getValueAt(selectedRow, 0).toString();
-        
+
         int convertedCustomerID = Integer.parseInt(customerID.replace("CUST-", ""));
-        
+
         String firstName = customerTable.getValueAt(selectedRow, 1).toString();
-        
+
         String lastName = customerTable.getValueAt(selectedRow, 2).toString();
-        
+
         int confirmation = JOptionPane.showConfirmDialog(this,"Are you sure you want to archive " + firstName + " " + lastName + "?","Archive confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
-        
+
         if(confirmation == JOptionPane.YES_OPTION) {
-            
+
             CustomerConnector cmtDAO = new CustomerConnector();
-            
+
             boolean archived = cmtDAO.archiveCustomer(convertedCustomerID);
-            
+
             if(archived) {
                 JOptionPane.showMessageDialog(this,firstName + " has been archived successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
                 loadCustomers();
@@ -241,12 +243,6 @@ public class CustomerSearch extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_archiveButtonActionPerformed
-
-    private void viewArchiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewArchiveActionPerformed
-        ArchivedCustomerFrame viewArch = new ArchivedCustomerFrame(welcomeName,userRole);
-        viewArch.setVisible(true);
-        this.hide();
-    }//GEN-LAST:event_viewArchiveActionPerformed
 
     /**
      * @param args the command line arguments

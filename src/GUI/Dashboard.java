@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import Database.OrderConnector;
 import Utility.DateAndTimeHandler;
 import Utility.FrameResizerRestriction;
 import java.time.LocalDate;
@@ -11,7 +12,8 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 public class Dashboard extends javax.swing.JInternalFrame {
     private String welcomeName;
@@ -26,13 +28,11 @@ public class Dashboard extends javax.swing.JInternalFrame {
         
         displayDateTime();
         dashboardComponents();
-        dashboardDate();
-        timerSetter();
+        loadTable();
     }
     
     
     public void dashboardComponents() {
-        localTime.setEditable(false);
         totalOrdersField.setEditable(false);
         totalPendingField.setEditable(false);
         totalCompletedField.setEditable(false);
@@ -41,50 +41,36 @@ public class Dashboard extends javax.swing.JInternalFrame {
         clockTimer.start();
         
     }
-        public void timerSetter() {
-        clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
-        clockTimer.start();
-    }
     
-    public void dashboardDate() {
-        DateSimulation.setDate(java.sql.Date.valueOf(DateAndTimeHandler.getDate())
-    );
-
-    DateSimulation.getDateEditor()
-        .addPropertyChangeListener(evt -> {
-
-            if ("date".equals(evt.getPropertyName())) {
-
-                Date selectedDate =
-                    DateSimulation.getDate();
-
-                if (selectedDate != null) {
-
-                    LocalDate selectDate = selectedDate.toInstant()
-                        .atZone(ZoneId.systemDefault())
-                        .toLocalDate();
-
-                    DateAndTimeHandler.setDate(selectDate);
-                    
-                    displayDateTime();
-                }
-            }
-        });
-    }
     
      private void displayDateTime() {
         
-        simulatedDate.setText(DateAndTimeHandler.getDate().format(
-            DateTimeFormatter.ofPattern("MMMM dd, yyyy")
-         )
-    );
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+        
+        LocalDate currentDate = LocalDate.now();
+        
+        localDateLabel.setText(currentDate.format(dateFormatter));
+        
         LocalTime currentTime = LocalTime.now();
 
-        DateTimeFormatter timeFormatter =
-        DateTimeFormatter.ofPattern("hh:mm:ss a");
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss a");
 
-    localTime.setText(currentTime.format(timeFormatter));
-}
+        localTimeLabel.setText(currentTime.format(timeFormatter));
+    }
+     
+     private void loadTable() {
+         DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
+         
+         orderModel.setRowCount(0);
+         
+         OrderConnector odrConn = new OrderConnector();
+         
+         List<Object[]> orders = odrConn.displayedOrders();
+         
+         for(Object[] order : orders) {
+             orderModel.addRow(order);
+         }
+     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -95,9 +81,11 @@ public class Dashboard extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        DateSimulation = new com.toedter.calendar.JDateChooser();
-        simulatedDate = new javax.swing.JTextField();
-        localTime = new javax.swing.JTextField();
+        jPanel4 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        totalCompletedField = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         totalPendingField = new javax.swing.JTextField();
@@ -106,107 +94,14 @@ public class Dashboard extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         totalOrdersField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        totalCompletedField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        orderTable = new javax.swing.JTable();
+        localDateLabel = new javax.swing.JLabel();
+        localTimeLabel = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(DateSimulation, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 10, 240, 50));
 
-        simulatedDate.setBackground(new java.awt.Color(255, 255, 255));
-        simulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        simulatedDate.setForeground(new java.awt.Color(0, 153, 153));
-        simulatedDate.setBorder(null);
-        getContentPane().add(simulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 70, 240, 50));
-
-        localTime.setBackground(new java.awt.Color(255, 255, 255));
-        localTime.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        localTime.setForeground(new java.awt.Color(255, 153, 0));
-        localTime.setBorder(null);
-        getContentPane().add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 130, 240, 50));
-
-        jPanel1.setBackground(new java.awt.Color(255, 153, 51));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Total Pending");
-
-        totalPendingField.setBackground(new java.awt.Color(255, 153, 0));
-        totalPendingField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        totalPendingField.setForeground(new java.awt.Color(255, 255, 255));
-        totalPendingField.setText("0");
-        totalPendingField.setBorder(null);
-        totalPendingField.addActionListener(this::totalPendingFieldActionPerformed);
-
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\processing-6093_64 (1).png")); // NOI18N
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5)
-                    .addComponent(totalPendingField, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(totalPendingField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 290, 260));
-
-        jPanel2.setBackground(new java.awt.Color(255, 51, 51));
-
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Total Orders");
-
-        totalOrdersField.setBackground(new java.awt.Color(255, 51, 51));
-        totalOrdersField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        totalOrdersField.setForeground(new java.awt.Color(255, 255, 255));
-        totalOrdersField.setText("0");
-        totalOrdersField.setBorder(null);
-
-        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\test-document-checkmarks-and-pencil-black-outline-17446_64.png")); // NOI18N
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel3)
-                    .addComponent(totalOrdersField, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(totalOrdersField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
-        );
-
-        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 250, 290, 260));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(0, 153, 153));
 
@@ -247,19 +142,140 @@ public class Dashboard extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18))
         );
 
-        getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 250, 290, 260));
+        jPanel1.setBackground(new java.awt.Color(255, 153, 51));
 
-        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Today's Pending");
+
+        totalPendingField.setBackground(new java.awt.Color(255, 153, 51));
+        totalPendingField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        totalPendingField.setForeground(new java.awt.Color(255, 255, 255));
+        totalPendingField.setText("0");
+        totalPendingField.setBorder(null);
+        totalPendingField.addActionListener(this::totalPendingFieldActionPerformed);
+
+        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\processing-6093_64 (1).png")); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(totalPendingField, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalPendingField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
+        );
+
+        jPanel2.setBackground(new java.awt.Color(255, 51, 51));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Today's Order");
+
+        totalOrdersField.setBackground(new java.awt.Color(255, 51, 51));
+        totalOrdersField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        totalOrdersField.setForeground(new java.awt.Color(255, 255, 255));
+        totalOrdersField.setText("0");
+        totalOrdersField.setBorder(null);
+
+        jLabel6.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\test-document-checkmarks-and-pencil-black-outline-17446_64.png")); // NOI18N
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel3)
+                    .addComponent(totalOrdersField, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jLabel6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(totalOrdersField, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(16, 16, 16))
+        );
+
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Order ID", "First Name", "Last Name", "Service", "Size", "Quantity", "Total", "Order Status"
+            }
+        ));
+        jScrollPane1.setViewportView(orderTable);
+
+        localDateLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        localDateLabel.setForeground(new java.awt.Color(0, 153, 153));
+
+        localTimeLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        localTimeLabel.setForeground(new java.awt.Color(255, 153, 51));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1270, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(73, 73, 73)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 126, Short.MAX_VALUE)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(125, 125, 125)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(76, 76, 76))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(localTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+                    .addComponent(localDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 770, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(localDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(localTimeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
         );
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 770));
@@ -277,7 +293,6 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser DateSimulation;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -288,8 +303,10 @@ public class Dashboard extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField localTime;
-    private javax.swing.JTextField simulatedDate;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel localDateLabel;
+    private javax.swing.JLabel localTimeLabel;
+    private javax.swing.JTable orderTable;
     private javax.swing.JTextField totalCompletedField;
     private javax.swing.JTextField totalOrdersField;
     private javax.swing.JTextField totalPendingField;
