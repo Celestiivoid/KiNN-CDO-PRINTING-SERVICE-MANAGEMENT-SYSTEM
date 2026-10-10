@@ -10,26 +10,36 @@ package Session;
  */
 public class userSession {
     private static int userId;
-    private static String username;
+    private static String firstName;
+    private static String lastName;
     private static String userRole;
     
-    public static void setUser(int id, String user, String role) {
+    public static void setUser(int id, String fName,String lName, String role) {
         userId = id;
-        username = user;
+        firstName = fName;
+        lastName = lName;
         userRole = role;
     }
     
     public static int getUserId() {
         return userId;
     }
-    public static String getUsername() {
-        return username;
+    
+    public static String getFirstName() {
+        return firstName;
     }
+    
+    public static String getLastName() {
+        return lastName;
+    }
+    
     public static String getUserRole() {
         return userRole;
     }
+    
     public static void clearSection() {
         userId = 0;
-        username = null;
+        firstName = null;
+        lastName = null;
     }
 }

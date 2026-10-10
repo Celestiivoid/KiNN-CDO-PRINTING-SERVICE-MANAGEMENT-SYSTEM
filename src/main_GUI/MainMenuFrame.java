@@ -2,11 +2,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package main_GUI;
 
-import GUI.AdminAuthenticator;
+import order_GUI.UpdateOrder;
+import order_GUI.OrderList;
+import order_GUI.NewOrderFrame;
+import service_GUI.UpdateServiceFrame;
+import service_GUI.ServiceFrame;
+import customer_GUI.UpdateCustomerFrame;
+import customer_GUI.CustomerFrame;
+import Login_GUI.AdminAuthenticator;
 import Utility.FrameResizerRestriction;
-import GUI.Login;
+import Login_GUI.Login;
+import Login_GUI.Login;
+import order_GUI.Payment;
+import AdminAccess_GUI.ReportsFrame;
+import AdminAccess_GUI.TransactionHistory;
+import AdminAccess_GUI.UserManagement;
 import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.JDesktopPane;

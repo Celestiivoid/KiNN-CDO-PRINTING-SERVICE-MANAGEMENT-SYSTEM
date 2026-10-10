@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package GUI;
+package customer_GUI;
 
 import Database.DBConnection;
 import Database.CustomerConnector;
@@ -14,20 +14,20 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author User
  */
-public class ArchivedCustomerFrame extends javax.swing.JFrame {
+public class CustomerSearch extends javax.swing.JFrame {
     private String userRole;
     private String welcomeName;
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ArchivedCustomerFrame.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(CustomerSearch.class.getName());
 
-    public ArchivedCustomerFrame(String welcomeName, String userRole) {
+    public CustomerSearch(String welcomeName, String userRole) {
         this.userRole = userRole;
         this.welcomeName = welcomeName;
         
         initComponents();
         frameComponents();
         dashboardComponents();
-        loadArchivedCustomers();
+        loadCustomers();
     }
     
     public void dashboardComponents() {
@@ -41,6 +41,7 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
     }
     
     private void searchCustomers() {
+        
         String search = searchField.getText().trim();
         
         if(search.isEmpty()) {
@@ -50,7 +51,7 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
         
         CustomerConnector ctmDAO = new CustomerConnector();
         
-        List<Object[]> customers = ctmDAO.searchArchivedCustomer(search);
+        List<Object[]> customers = ctmDAO.searchCustomer(search);
         
         DefaultTableModel customerModel = (DefaultTableModel) customerTable.getModel();
         
@@ -66,19 +67,20 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
         }
     }
     
-    public void loadArchivedCustomers() {
-        CustomerConnector ctmDAO = new CustomerConnector();
-        
-        List<Object[]> customers = ctmDAO.loadarchivedCustomer();
-        
-        DefaultTableModel customerModel = (DefaultTableModel) customerTable.getModel();
-        
-        customerModel.setRowCount(0);
-        
-        for(Object [] row : customers) {
-            customerModel.addRow(row);
-        }
+    private void loadCustomers() {
+       CustomerConnector ctmDAO = new CustomerConnector();
+       
+       List<Object[]> customers = ctmDAO.loadCustomers();
+       
+       DefaultTableModel customerModel = (DefaultTableModel) customerTable.getModel();
+       
+       customerModel.setRowCount(0);
+       
+       for(Object[] row : customers) {
+           customerModel.addRow(row);
+       }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,13 +92,14 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
+        searchButton = new javax.swing.JButton();
+        displayAll = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         customerTable = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         archiveButton = new javax.swing.JButton();
-        displayAll = new javax.swing.JButton();
-        searchButton = new javax.swing.JButton();
-        backButton = new javax.swing.JButton();
+        viewArchive = new javax.swing.JButton();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -109,12 +112,41 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchField.setForeground(new java.awt.Color(0, 0, 0));
         searchField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        searchField.addActionListener(this::searchFieldActionPerformed);
-        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 310, 50));
+        getContentPane().add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 270, 50));
+
+        searchButton.setBackground(new java.awt.Color(255, 255, 255));
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(0, 0, 0));
+        searchButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\search-2904_32.png")); // NOI18N
+        searchButton.setText("Search");
+        searchButton.setIconTextGap(15);
+        searchButton.addActionListener(this::searchButtonActionPerformed);
+        getContentPane().add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 10, 160, 50));
+
+        displayAll.setBackground(new java.awt.Color(255, 255, 255));
+        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        displayAll.setForeground(new java.awt.Color(0, 0, 0));
+        displayAll.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\client-5251_32.png")); // NOI18N
+        displayAll.setText("Display All");
+        displayAll.setIconTextGap(15);
+        displayAll.addActionListener(this::displayAllActionPerformed);
+        getContentPane().add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 10, 160, 50));
+
+        backButton.setBackground(new java.awt.Color(153, 153, 153));
+        backButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 0, 0));
+        backButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-arrow-7304_32.png")); // NOI18N
+        backButton.setText("Back");
+        backButton.setIconTextGap(15);
+        backButton.addActionListener(this::backButtonActionPerformed);
+        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 10, 170, 50));
 
         customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
                 "Customer ID", "First Name", "Last Name", "Contact Number", "Email Address", "Customer Type"
@@ -138,39 +170,20 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
         archiveButton.setBackground(new java.awt.Color(255, 255, 255));
         archiveButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         archiveButton.setForeground(new java.awt.Color(0, 0, 0));
-        archiveButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-curved-arrow-7982_32.png")); // NOI18N
-        archiveButton.setText("Retrieve");
+        archiveButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\remove-folder-11486_32.png")); // NOI18N
+        archiveButton.setText("Archive");
         archiveButton.setIconTextGap(15);
         archiveButton.addActionListener(this::archiveButtonActionPerformed);
-        jPanel1.add(archiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 160, 50));
+        jPanel1.add(archiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 10, 160, 50));
 
-        displayAll.setBackground(new java.awt.Color(255, 255, 255));
-        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        displayAll.setForeground(new java.awt.Color(0, 0, 0));
-        displayAll.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\client-5251_32.png")); // NOI18N
-        displayAll.setText("Display All");
-        displayAll.setIconTextGap(15);
-        displayAll.addActionListener(this::displayAllActionPerformed);
-        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 10, 160, 50));
-
-        searchButton.setBackground(new java.awt.Color(255, 255, 255));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        searchButton.setForeground(new java.awt.Color(0, 0, 0));
-        searchButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\search-2904_32.png")); // NOI18N
-        searchButton.setText("Search");
-        searchButton.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        searchButton.setIconTextGap(15);
-        searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, 160, 50));
-
-        backButton.setBackground(new java.awt.Color(153, 153, 153));
-        backButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        backButton.setForeground(new java.awt.Color(0, 0, 0));
-        backButton.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\left-arrow-7304_32.png")); // NOI18N
-        backButton.setText("Back");
-        backButton.setIconTextGap(15);
-        backButton.addActionListener(this::backButtonActionPerformed);
-        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 10, 170, 50));
+        viewArchive.setBackground(new java.awt.Color(255, 255, 255));
+        viewArchive.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        viewArchive.setForeground(new java.awt.Color(0, 0, 0));
+        viewArchive.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\eye-12109_32.png")); // NOI18N
+        viewArchive.setText("View Archive");
+        viewArchive.setIconTextGap(5);
+        viewArchive.addActionListener(this::viewArchiveActionPerformed);
+        jPanel1.add(viewArchive, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 10, 160, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1280, 750));
 
@@ -182,65 +195,54 @@ public class ArchivedCustomerFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        CustomerSearch ctmSearch = new CustomerSearch(welcomeName,userRole);
-        ctmSearch.setVisible(true);
-        this.dispose();
+        this.hide();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void displayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayAllActionPerformed
         searchField.setText("");
-        loadArchivedCustomers();
+        loadCustomers();
     }//GEN-LAST:event_displayAllActionPerformed
 
-    private void archiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveButtonActionPerformed
-int selectedRow = customerTable.getSelectedRow();
+    private void viewArchiveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewArchiveActionPerformed
+        ArchivedCustomerFrame viewArch = new ArchivedCustomerFrame(welcomeName,userRole);
+        viewArch.setVisible(true);
+        this.hide();
+    }//GEN-LAST:event_viewArchiveActionPerformed
 
-        if (selectedRow == -1) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Please select a customer to retrieve.",
-                "No Customer Selected",
-            JOptionPane.WARNING_MESSAGE
-            );
+    private void archiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveButtonActionPerformed
+        int selectedRow = customerTable.getSelectedRow();
+
+        if(selectedRow == -1) {
+            JOptionPane.showMessageDialog(this,"Please select a customer to archive.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        String customerID = customerTable.getValueAt(selectedRow,0).toString();
-        
+
+        String customerID = customerTable.getValueAt(selectedRow, 0).toString();
+
         int convertedCustomerID = Integer.parseInt(customerID.replace("CUST-", ""));
 
         String firstName = customerTable.getValueAt(selectedRow, 1).toString();
 
         String lastName = customerTable.getValueAt(selectedRow, 2).toString();
 
-        int confirmation = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure you want to retrieve "
-            + firstName + " " + lastName + "?",
-            "Retrieve Customer",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.WARNING_MESSAGE
-        );
-        
+        int confirmation = JOptionPane.showConfirmDialog(this,"Are you sure you want to archive " + firstName + " " + lastName + "?","Archive confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+
         if(confirmation == JOptionPane.YES_OPTION) {
-            
+
             CustomerConnector cmtDAO = new CustomerConnector();
-            
-            boolean retrieved = cmtDAO.retrieveCustomer(convertedCustomerID);
-            
-            if(retrieved) {
-                JOptionPane.showMessageDialog(this,firstName + " has been retrieved successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
-                loadArchivedCustomers();
+
+            boolean archived = cmtDAO.archiveCustomer(convertedCustomerID);
+
+            if(archived) {
+                JOptionPane.showMessageDialog(this,firstName + " has been archived successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
+                loadCustomers();
             }
             else {
-                JOptionPane.showMessageDialog(this,"Error in retrieving customer.","Database error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,"Error in archiving customer.","Database error",JOptionPane.ERROR_MESSAGE);
                 return;
             }
-        } 
+        }
     }//GEN-LAST:event_archiveButtonActionPerformed
-
-    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
-        
-    }//GEN-LAST:event_searchFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,5 +257,6 @@ int selectedRow = customerTable.getSelectedRow();
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JButton viewArchive;
     // End of variables declaration//GEN-END:variables
 }

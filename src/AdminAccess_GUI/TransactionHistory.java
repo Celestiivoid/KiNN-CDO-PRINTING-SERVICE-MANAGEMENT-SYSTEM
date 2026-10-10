@@ -2,54 +2,82 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package GUI;
+package AdminAccess_GUI;
 
 import Database.OrderConnector;
+import Database.PaymentConnector;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class OrderList extends javax.swing.JInternalFrame {
+public class TransactionHistory extends javax.swing.JInternalFrame {
 
     private String welcomeName;
     private String userRole;
 
     
-    public OrderList(String welcomeName, String userRole) {
+    public TransactionHistory(String welcomeName, String userRole) {
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         
         initComponents();
-        loadTable();
+        loadTransactionHistory();
     }
     
-    public void loadTable() {
-        DefaultTableModel orderModel = (DefaultTableModel) orderTable.getModel();
-        
-        orderModel.setRowCount(0);
-        
-        OrderConnector odrConn = new OrderConnector();
-        
-        List<Object[]> orders = odrConn.orderList();
-        
-        for(Object[] order : orders) {
-            orderModel.addRow(order);
-        }
-    }
-    
-    private void searchOrdersTable() {
+    private void displayAllTransactions() {
 
-        String search = searchField.getText().trim();
+        PaymentConnector connector = new PaymentConnector();
 
-        DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
+        List<Object[]> transactions = connector.getTransactionHistory();
+
+        DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
 
         model.setRowCount(0);
 
-        OrderConnector ordConn = new OrderConnector();
+        for (Object[] transaction : transactions) {
+            model.addRow(transaction);
+        }
+        searchField.setText("");
+    }
+    
+    private void searchTransaction() {
 
-        List<Object[]> orders = ordConn.searchOrder(search);
+        String search = searchField.getText().trim();
 
-        for (Object[] order : orders) {
-            model.addRow(order);
+        if (search.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Please enter a transaction ID, order ID, or customer name.","Empty Search",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        PaymentConnector connector = new PaymentConnector();
+
+        List<Object[]> transactions = connector.searchTransaction(search);
+
+        DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+
+        model.setRowCount(0);
+
+        for (Object[] transaction : transactions) {
+            model.addRow(transaction);
+        }
+
+        if (transactions.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"No matching transactions found.","Search Results",JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    
+    private void loadTransactionHistory() {
+
+        DefaultTableModel model = (DefaultTableModel) transactionTable.getModel();
+
+        model.setRowCount(0);
+
+        PaymentConnector connector = new PaymentConnector();
+
+        List<Object[]> transactions = connector.getTransactionHistory();
+
+        for (Object[] transaction : transactions) {
+            model.addRow(transaction);
         }
     }
 
@@ -65,7 +93,7 @@ public class OrderList extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        orderTable = new javax.swing.JTable();
+        transactionTable = new javax.swing.JTable();
         searchButton = new javax.swing.JButton();
         displayAll = new javax.swing.JButton();
 
@@ -80,7 +108,7 @@ public class OrderList extends javax.swing.JInternalFrame {
         searchField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 620, 50));
 
-        orderTable.setModel(new javax.swing.table.DefaultTableModel(
+        transactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null, null},
@@ -88,10 +116,10 @@ public class OrderList extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Order ID", "First Name", "Last Name", "Service", "Size", "Unit Price", "Quantity", "Total", "Order Status", "Payment Status"
+                "Transaction ID", "Order ID", "First Name", "Last Name", "Service", "Size", "Quantity", "Total", "Order Date", "Payment Date"
             }
         ));
-        jScrollPane1.setViewportView(orderTable);
+        jScrollPane1.setViewportView(transactionTable);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1230, 610));
 
@@ -115,11 +143,11 @@ public class OrderList extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void displayAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displayAllActionPerformed
-        loadTable();
+        displayAllTransactions();
     }//GEN-LAST:event_displayAllActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        searchOrdersTable();
+        searchTransaction();
     }//GEN-LAST:event_searchButtonActionPerformed
 
 
@@ -127,8 +155,8 @@ public class OrderList extends javax.swing.JInternalFrame {
     private javax.swing.JButton displayAll;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable orderTable;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JTable transactionTable;
     // End of variables declaration//GEN-END:variables
 }

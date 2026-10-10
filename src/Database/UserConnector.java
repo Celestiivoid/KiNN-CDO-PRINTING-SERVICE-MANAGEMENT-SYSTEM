@@ -6,17 +6,18 @@ package Database;
 import java.sql.*;
 
 public class UserConnector {
-     public ResultSet login(String username, String password) {
+     public ResultSet login(String firstName, String lastName, String password) {
 
         Connection conn = DBConnection.connect();
 
         try {
-            String sql = "SELECT * FROM tbl_users WHERE username = ? AND password = ?";
+            String sql = "SELECT * FROM tbl_users WHERE first_name = ? AND last_name = ? AND password = ?";
 
             PreparedStatement pst = conn.prepareStatement(sql);
 
-            pst.setString(1, username);
-            pst.setString(2, password);
+            pst.setString(1, firstName);
+            pst.setString(2, lastName);
+            pst.setString(3, password);
 
             return pst.executeQuery();
 
