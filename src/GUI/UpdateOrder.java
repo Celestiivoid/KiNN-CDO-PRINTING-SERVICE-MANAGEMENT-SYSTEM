@@ -197,7 +197,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         orderStatusBox = new javax.swing.JComboBox<>();
-        paymentStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         updateOrder = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
@@ -308,7 +307,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         quantityField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         quantityField.setForeground(new java.awt.Color(0, 0, 0));
         quantityField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 206, 47));
+        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 190, 47));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -431,12 +430,8 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 448, 337, -1));
 
         orderStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select order status...", "PENDING", "PROCESSING" }));
-        jPanel3.add(orderStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, -1, 45));
-
-        paymentStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        paymentStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select payment status...", "PAID", "UNPAID" }));
-        jPanel3.add(paymentStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 480, 210, 45));
+        orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Select Status ---", "PENDING", "PROCESSING", "COMPLETED", "CANCELLED" }));
+        jPanel3.add(orderStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, 180, 45));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
@@ -470,7 +465,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         paymentStatusLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         paymentStatusLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(paymentStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 80, 45));
+        jPanel3.add(paymentStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 290, 45));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 146, 1250, 550));
 
@@ -557,7 +552,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         String totalAmount = totalAfterDiscountLabel.getText();
         String service = (String) serviceBox.getSelectedItem();
         String orderStatus = (String) orderStatusBox.getSelectedItem();
-        String paymentStatus = (String) paymentStatusBox.getSelectedItem();
+        String paymentStatus = (String) paymentStatusLabel.getText();
         LocalDate orderDate = DateAndTimeHandler.getDate();
         LocalTime orderTime = LocalTime.now();
         LocalDateTime orderDateTime = LocalDateTime.of(orderDate, orderTime);
@@ -614,8 +609,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
                 convertedDiscountAmount, 
                 convertedTotalAmount, 
                 orderStatus, 
-                paymentStatus, 
-                orderDateTime);
+                paymentStatus);
         
         if(updated) {
             JOptionPane.showMessageDialog(this,"Successfully updated order!","Success!",JOptionPane.INFORMATION_MESSAGE);
@@ -625,7 +619,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
             emAddressLabel.setText("");
             serviceBox.setSelectedIndex(0);
             orderStatusBox.setSelectedIndex(0);
-            paymentStatusBox.setSelectedIndex(0);
             quantityField.setText("");
             priceUnitLabel.setText("");
             discountTypeLabel.setText("");
@@ -677,7 +670,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
     private javax.swing.JTextField localTime;
     private javax.swing.JComboBox<String> orderStatusBox;
     private javax.swing.JLabel orderStatusLabel;
-    private javax.swing.JComboBox<String> paymentStatusBox;
     private javax.swing.JLabel paymentStatusLabel;
     private javax.swing.JLabel priceUnitLabel;
     private javax.swing.JTextField quantityField;

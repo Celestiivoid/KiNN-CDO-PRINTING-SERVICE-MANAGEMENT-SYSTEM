@@ -193,9 +193,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         subtotalLabel = new javax.swing.JLabel();
         totalAfterDiscountLabel = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         orderStatusBox = new javax.swing.JComboBox<>();
-        paymentStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         customerListButton = new javax.swing.JButton();
         placeOrderButton = new javax.swing.JButton();
@@ -401,15 +399,8 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Order Status");
 
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel15.setText("Payment Status");
-
         orderStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select order status...", "PENDING", "PROCESSING" }));
-
-        paymentStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        paymentStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select payment status...", "PAID", "UNPAID" }));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
@@ -466,17 +457,14 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(orderStatusBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(204, 204, 204)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                                .addComponent(emAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(quantityField))
-                            .addComponent(paymentStatusBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(48, 48, 48)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                            .addComponent(emAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(quantityField))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -532,13 +520,9 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                             .addComponent(quantityField)
                             .addComponent(serviceBox, javax.swing.GroupLayout.DEFAULT_SIZE, 47, Short.MAX_VALUE))
                         .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel14))
+                        .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(paymentStatusBox, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(orderStatusBox)))
+                        .addComponent(orderStatusBox, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(31, 31, 31)
@@ -617,8 +601,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         String totalAmount = totalAfterDiscountLabel.getText();
         String service = (String) serviceBox.getSelectedItem();
         String orderStatus = (String) orderStatusBox.getSelectedItem();
-        String paymentStatus = (String) paymentStatusBox.getSelectedItem();
-        LocalDate orderDate = DateAndTimeHandler.getDate();
+        LocalDate orderDate = LocalDate.now();
         LocalTime orderTime = LocalTime.now();
         LocalDateTime orderDateTime = LocalDateTime.of(orderDate, orderTime);
         
@@ -629,11 +612,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         
         if(orderStatus.equals("Select order status...")) {
             JOptionPane.showMessageDialog(this,"Please select order status.","Select order",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if(paymentStatus.equals("Select payment status...")) {
-            JOptionPane.showMessageDialog(this,"Please select payment status.","Select payment",JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -673,7 +651,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                 convertedDiscountAmount,
                 convertedTotalAmount,
                 orderStatus,
-                paymentStatus,
+                "UNPAID",
                 orderDateTime);
         
         if(added) {
@@ -684,7 +662,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
             emAddressLabel.setText("");
             serviceBox.setSelectedIndex(0);
             orderStatusBox.setSelectedIndex(0);
-            paymentStatusBox.setSelectedIndex(0);
             quantityField.setText("");
             priceUnitLabel.setText("");
             discountTypeLabel.setText("");
@@ -706,7 +683,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         emAddressLabel.setText("");
         serviceBox.setSelectedIndex(0);
         orderStatusBox.setSelectedIndex(0);
-        paymentStatusBox.setSelectedIndex(0);
         quantityField.setText("");
         priceUnitLabel.setText("");
         discountTypeLabel.setText("");
@@ -732,7 +708,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -750,7 +725,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel lastNameLabel;
     private javax.swing.JTextField localTime;
     private javax.swing.JComboBox<String> orderStatusBox;
-    private javax.swing.JComboBox<String> paymentStatusBox;
     private javax.swing.JButton placeOrderButton;
     private javax.swing.JLabel priceUnitLabel;
     private javax.swing.JTextField quantityField;
