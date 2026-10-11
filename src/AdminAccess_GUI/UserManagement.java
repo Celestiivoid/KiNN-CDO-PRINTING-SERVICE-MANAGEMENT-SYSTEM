@@ -6,6 +6,7 @@ package AdminAccess_GUI;
 
 import Database.OrderConnector;
 import Database.PaymentConnector;
+import Database.UserConnector;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,6 +22,39 @@ public class UserManagement extends javax.swing.JInternalFrame {
         this.userRole = userRole;
         
         initComponents();
+        loadUsers();
+    }
+    
+    
+    public void loadUsers() {
+        
+        UserConnector user = new UserConnector();
+        
+        List<Object[]> users = user.loadUsers();
+        
+        DefaultTableModel userModel = (DefaultTableModel) accountTable.getModel();
+        
+        userModel.setRowCount(0);
+        
+        for(Object[] row : users) {
+            userModel.addRow(row);
+        }
+    }
+    
+    public void searchUser() {
+        String search = searchField.getText().trim();
+        
+        UserConnector user = new UserConnector();
+        
+        List<Object []> users = user.searchCustomer(search);
+        
+        DefaultTableModel userModel = (DefaultTableModel) accountTable.getModel();
+        
+        userModel.setRowCount(0);
+         
+        for(Object [] row : users) {
+            userModel.addRow(row);
+        } 
     }
 
     /**
@@ -37,25 +71,25 @@ public class UserManagement extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        accountTable = new javax.swing.JTable();
         searchButton = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        firstNameField = new javax.swing.JTextField();
+        lastNameField = new javax.swing.JTextField();
+        ctNumberField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        roleLabel = new javax.swing.JLabel();
+        generateRole = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        statusBox = new javax.swing.JComboBox<>();
+        createButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        manageAccountButton = new javax.swing.JButton();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -78,18 +112,18 @@ public class UserManagement extends javax.swing.JInternalFrame {
         searchField.addActionListener(this::searchFieldActionPerformed);
         jPanel2.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, 490, 50));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        accountTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "User ID", "First Name", "Last Name", "Password", "Contact Number", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(accountTable);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 660, 450));
 
@@ -124,57 +158,63 @@ public class UserManagement extends javax.swing.JInternalFrame {
         jLabel5.setText("Contact Number");
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 230, 40));
 
-        jTextField1.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 480, 40));
+        firstNameField.setBackground(new java.awt.Color(255, 255, 255));
+        firstNameField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        firstNameField.setForeground(new java.awt.Color(0, 0, 0));
+        firstNameField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(firstNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 480, 40));
 
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 480, 40));
+        lastNameField.setBackground(new java.awt.Color(255, 255, 255));
+        lastNameField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lastNameField.setForeground(new java.awt.Color(0, 0, 0));
+        lastNameField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(lastNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 480, 40));
 
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 230, 40));
+        ctNumberField.setBackground(new java.awt.Color(255, 255, 255));
+        ctNumberField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        ctNumberField.setForeground(new java.awt.Color(0, 0, 0));
+        ctNumberField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(ctNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 230, 40));
 
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(0, 0, 0));
-        jTextField4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 240, 40));
+        passwordField.setBackground(new java.awt.Color(255, 255, 255));
+        passwordField.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        passwordField.setForeground(new java.awt.Color(0, 0, 0));
+        passwordField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel3.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 240, 40));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Role");
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 70, 40));
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 150, 40));
 
-        jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Generate Role");
-        jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 230, 40));
+        roleLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        roleLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel3.add(roleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 150, 40));
+
+        generateRole.setBackground(new java.awt.Color(0, 153, 153));
+        generateRole.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        generateRole.setForeground(new java.awt.Color(255, 255, 255));
+        generateRole.setText("Generate Role");
+        generateRole.addActionListener(this::generateRoleActionPerformed);
+        jPanel3.add(generateRole, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 230, 40));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Account Status");
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 230, 40));
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Select Status ---", "ACTIVE", "INACTIVE" }));
-        jPanel3.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 240, 40));
+        statusBox.setBackground(new java.awt.Color(255, 255, 255));
+        statusBox.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        statusBox.setForeground(new java.awt.Color(0, 0, 0));
+        statusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Select Status ---", "ACTIVE", "INACTIVE" }));
+        jPanel3.add(statusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 370, 240, 40));
 
-        jButton2.setBackground(new java.awt.Color(255, 102, 0));
-        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Create");
-        jPanel3.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 210, 60));
+        createButton.setBackground(new java.awt.Color(255, 102, 0));
+        createButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        createButton.setForeground(new java.awt.Color(255, 255, 255));
+        createButton.setText("Create");
+        createButton.addActionListener(this::createButtonActionPerformed);
+        jPanel3.add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 210, 60));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 520, 510));
 
@@ -183,11 +223,11 @@ public class UserManagement extends javax.swing.JInternalFrame {
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-profile-management-settings-black-outline-22585_128.png"))); // NOI18N
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 140, 130));
 
-        jButton3.setBackground(new java.awt.Color(0, 153, 153));
-        jButton3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Manage Accounts");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, 280, 60));
+        manageAccountButton.setBackground(new java.awt.Color(0, 153, 153));
+        manageAccountButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageAccountButton.setForeground(new java.awt.Color(255, 255, 255));
+        manageAccountButton.setText("Manage Accounts");
+        jPanel1.add(manageAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, 280, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
 
@@ -195,38 +235,68 @@ public class UserManagement extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        
+        searchUser();
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
         
     }//GEN-LAST:event_searchFieldActionPerformed
 
+    private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        String firstName = firstNameField.getText();
+        String lastName = lastNameField.getText();
+        String contactNumber = ctNumberField.getText();
+        String password = passwordField.getText();
+        String role = roleLabel.getText();
+        String status = (String) statusBox.getSelectedItem();
+        
+        UserConnector usr = new UserConnector();
+        
+        String userID = usr.addUser(firstName, lastName, password, contactNumber, role, status);
+        
+        if(userID != null) {
+            JOptionPane.showMessageDialog(this, "Successfully assigned " + firstName + " " + lastName + " as " + role + "!");
+            firstNameField.setText("");
+            lastNameField.setText("");
+            ctNumberField.setText("");
+            passwordField.setText("");
+            roleLabel.setText("");
+            statusBox.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(this, "Error adding user!","Error!",JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_createButtonActionPerformed
+
+    private void generateRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateRoleActionPerformed
+        roleLabel.setText("Staff");
+    }//GEN-LAST:event_generateRoleActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JTable accountTable;
+    private javax.swing.JButton createButton;
+    private javax.swing.JTextField ctNumberField;
+    private javax.swing.JTextField firstNameField;
+    private javax.swing.JButton generateRole;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField lastNameField;
+    private javax.swing.JButton manageAccountButton;
+    private javax.swing.JTextField passwordField;
+    private javax.swing.JLabel roleLabel;
     private javax.swing.JButton searchButton;
     private javax.swing.JTextField searchField;
+    private javax.swing.JComboBox<String> statusBox;
     // End of variables declaration//GEN-END:variables
 }

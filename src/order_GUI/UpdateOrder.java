@@ -24,7 +24,8 @@ import javax.swing.event.DocumentListener;
 public class UpdateOrder extends javax.swing.JInternalFrame {
     private int orderID;
     private int serviceID;
-    private int customerID;
+    private Integer customerID;
+    private Integer companyID;
     private String welcomeName;
     private String userRole;
     private javax.swing.Timer clockTimer;
@@ -65,10 +66,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         simulatedDate.setEditable(false);
         localTime.setEditable(false);
         priceUnitLabel.setText("0.00");
-        discountTypeLabel.setText("");
-        discountPercentageLabel.setText("0" + "%");
-        discountAmountLabel.setText("0.00");
-        subtotalLabel.setText("0.00");
         totalAfterDiscountLabel.setText("0.00");
         
         clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
@@ -130,23 +127,16 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
      private void orderCalculation() {
          String serviceUnit = priceUnitLabel.getText();
          String serviceQuantity = quantityField.getText();
-         String discountPercentage = discountPercentageLabel.getText().replace("%","");
          
          try {
              double convertedUnit = Double.parseDouble(serviceUnit);
              int convertedQuantity = Integer.parseInt(serviceQuantity);
-             double convertedPercentage = Double.parseDouble(discountPercentage);
              
-             double subtotal = convertedUnit * convertedQuantity;
-             double discountAmount = subtotal * (convertedPercentage / 100);
-             double finalTotal = subtotal - discountAmount;
-               
-             subtotalLabel.setText(String.format("%.2f", subtotal));
-             discountAmountLabel.setText(String.format("%.2f", discountAmount));
-             totalAfterDiscountLabel.setText(String.format("%.2f",finalTotal));
+             double total = convertedUnit * convertedQuantity;
+             
+             totalAfterDiscountLabel.setText(String.format("%.2f",total));
          } catch (NumberFormatException error) {
              System.out.println("Error calculating: " + error.getMessage());
-             subtotalLabel.setText("0.00");
              return;
          }
      }
@@ -183,19 +173,10 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         quantityField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         priceUnitLabel = new javax.swing.JLabel();
-        discountTypeLabel = new javax.swing.JLabel();
-        discountPercentageLabel = new javax.swing.JLabel();
-        discountAmountLabel = new javax.swing.JLabel();
-        subtotalLabel = new javax.swing.JLabel();
         totalAfterDiscountLabel = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
         orderStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         updateOrder = new javax.swing.JButton();
@@ -203,7 +184,8 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         serviceLabel = new javax.swing.JLabel();
         orderStatusLabel = new javax.swing.JLabel();
         quantityLabel = new javax.swing.JLabel();
-        paymentStatusLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        companyLabel = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -273,20 +255,20 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("Contact Number");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 254, 310, 36));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 310, 36));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
         jLabel9.setText("Email Address");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 254, 310, 36));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, 310, 36));
 
         ctNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         ctNumberLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(ctNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 302, 310, 28));
+        jPanel3.add(ctNumberLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 300, 310, 28));
 
         emAddressLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         emAddressLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(emAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 302, 310, 28));
+        jPanel3.add(emAddressLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 310, 28));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
@@ -301,13 +283,13 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
         jLabel13.setText("Quantity");
-        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 342, 310, 41));
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 310, 41));
 
         quantityField.setBackground(new java.awt.Color(255, 255, 255));
         quantityField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         quantityField.setForeground(new java.awt.Color(0, 0, 0));
         quantityField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 390, 190, 47));
+        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 190, 47));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -316,40 +298,12 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Price/Unit:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Discount amount:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Discount type:");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Discount percentage:");
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Subtotal:");
-
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Total after discount:");
 
         priceUnitLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         priceUnitLabel.setForeground(new java.awt.Color(0, 0, 0));
-
-        discountTypeLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        discountTypeLabel.setForeground(new java.awt.Color(0, 0, 0));
-
-        discountPercentageLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        discountPercentageLabel.setForeground(new java.awt.Color(51, 255, 51));
-
-        discountAmountLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        discountAmountLabel.setForeground(new java.awt.Color(251, 55, 55));
-
-        subtotalLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        subtotalLabel.setForeground(new java.awt.Color(0, 0, 0));
 
         totalAfterDiscountLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         totalAfterDiscountLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -366,25 +320,9 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(priceUnitLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(discountTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(subtotalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(totalAfterDiscountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(12, 12, 12)
-                        .addComponent(discountAmountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(discountPercentageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
+                        .addComponent(totalAfterDiscountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -394,23 +332,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(priceUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(discountTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(discountPercentageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(discountAmountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(subtotalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(217, 217, 217)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
                     .addComponent(totalAfterDiscountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -423,11 +345,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
         jLabel14.setText("Order Status");
         jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 448, 310, -1));
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel15.setText("Payment Status");
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 448, 337, -1));
 
         orderStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Select Status ---", "PENDING", "PROCESSING", "COMPLETED", "CANCELLED" }));
@@ -461,11 +378,17 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         quantityLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         quantityLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(quantityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 390, 80, 47));
+        jPanel3.add(quantityLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 480, 80, 47));
 
-        paymentStatusLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        paymentStatusLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(paymentStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 480, 290, 45));
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setText("Company Name");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+
+        companyLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        companyLabel.setForeground(new java.awt.Color(0, 0, 0));
+        companyLabel.setToolTipText("");
+        jPanel3.add(companyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 340, 40));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 146, 1250, 550));
 
@@ -478,56 +401,52 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         String orderIDText = searchField.getText().trim();
 
         if (orderIDText.isEmpty()) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Please enter an Order ID.",
-                "Missing Order ID",
-                JOptionPane.WARNING_MESSAGE
-            );
+            JOptionPane.showMessageDialog(this,"Please enter an Order ID.","Missing Order ID",JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        try {
+            try {
 
-            int orderID = Integer.parseInt(
-                orderIDText.replace("ORD-", "")
-            );
+                int orderID = Integer.parseInt(
+                orderIDText.toUpperCase().replace("ORD-", ""));
 
-            OrderConnector ordConn = new OrderConnector();
-            Order order = ordConn.getOrder(orderID);
+                OrderConnector ordConn = new OrderConnector();
+                Order order = ordConn.getOrder(orderID);
 
-            if (order == null) {
-                JOptionPane.showMessageDialog(
-                    this,
-                    "Order not found.",
-                    "Search Result",
-                    JOptionPane.WARNING_MESSAGE
-                );
-                return;
-            }
+                if (order == null) {
+                    JOptionPane.showMessageDialog(this,"Order not found.","Search Result",JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
 
             this.orderID = order.getOrderID();
             this.customerID = order.getCustomerID();
             this.serviceID = order.getServiceID();
+            this.companyID = order.getCompanyID();
+            
+            if (order.getCompanyID() != null) {
 
-            firstNameLabel.setText(order.getFirstName());
-            lastNameLabel.setText(order.getLastName());
-            ctNumberLabel.setText(order.getPhoneNumber());
-            emAddressLabel.setText(order.getEmailAddress());
+                firstNameLabel.setText("");
+                lastNameLabel.setText("");
+
+                companyLabel.setText(order.getCompanyName());
+
+            } else {
+
+
+                firstNameLabel.setText(order.getFirstName());
+                lastNameLabel.setText(order.getLastName());
+
+                companyLabel.setText("");
+            }
+
             quantityLabel.setText(String.valueOf(order.getQuantity()));
             serviceLabel.setText(order.getServiceName() + " - " + order.getServiceSize());
             orderStatusLabel.setText(order.getOrderStatus());
-            paymentStatusLabel.setText(order.getPaymentStatus());
             priceUnitLabel.setText(String.format("%.2f", order.getUnitPrice()));
-            discountTypeLabel.setText(order.getCustomerType());
-            subtotalLabel.setText(String.format("%.2f", order.getSubtotal()));
-            discountPercentageLabel.setText(String.format("%.0f%%", order.getDiscountPercentage()));
-            discountAmountLabel.setText(String.format("%.2f", order.getDiscountAmount()));
             totalAfterDiscountLabel.setText(String.format("%.2f", order.getTotalAmount()));
 
         } catch (NumberFormatException error) {
-
-            JOptionPane.showMessageDialog(this,"Invalid Order ID (ORD-XXXXX)","Invalid Order ID",JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Invalid Order ID (ORD-XXXXX).","Invalid Order ID",JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -538,37 +457,25 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
     private void updateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderActionPerformed
         int convertedQuantity;
         double convertedPrice;
-        double convertedSubtotal;
-        double convertedPercentage;
-        double convertedDiscountAmount;
         double convertedTotalAmount;
         
         int userID = userSession.getUserId();
         String quantity = quantityField.getText();
         String unitPrice = priceUnitLabel.getText();
-        String subtotal = subtotalLabel.getText();
-        String discountPercentage = discountPercentageLabel.getText().replace("%", "");
-        String discountAmount = discountAmountLabel.getText();
         String totalAmount = totalAfterDiscountLabel.getText();
         String service = (String) serviceBox.getSelectedItem();
         String orderStatus = (String) orderStatusBox.getSelectedItem();
-        String paymentStatus = (String) paymentStatusLabel.getText();
         LocalDate orderDate = DateAndTimeHandler.getDate();
         LocalTime orderTime = LocalTime.now();
         LocalDateTime orderDateTime = LocalDateTime.of(orderDate, orderTime);
         
-        if(service.equals("Select service...")) {
+        if(service.equals("--- Select service ---")) {
             JOptionPane.showMessageDialog(this,"Please select a service.","Select service",JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        if(orderStatus.equals("Select order status...")) {
+        if(orderStatus.equals("--- Select Status ---")) {
             JOptionPane.showMessageDialog(this,"Please select order status.","Select order",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        if(paymentStatus.equals("Select payment status...")) {
-            JOptionPane.showMessageDialog(this,"Please select payment status.","Select payment",JOptionPane.WARNING_MESSAGE);
             return;
         }
         
@@ -579,9 +486,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         
         try {
             convertedPrice = Double.parseDouble(unitPrice);
-            convertedSubtotal = Double.parseDouble(subtotal);
-            convertedPercentage = Double.parseDouble(discountPercentage);
-            convertedDiscountAmount = Double.parseDouble(discountAmount);
             convertedTotalAmount = Double.parseDouble(totalAmount);
         } catch (NumberFormatException error) {
             JOptionPane.showMessageDialog(this,"Unexpected error!","Idk what may cause this lol",JOptionPane.ERROR_MESSAGE);
@@ -600,16 +504,14 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         boolean updated = updConn.updateOrder(
                 orderID, 
                 userID, 
-                customerID, 
-                serviceID, 
+                customerID,
+                companyID,
+                serviceID,
                 convertedQuantity, 
                 convertedPrice, 
-                convertedSubtotal, 
-                convertedPercentage, 
-                convertedDiscountAmount, 
                 convertedTotalAmount, 
                 orderStatus, 
-                paymentStatus);
+                "UNPAID");
         
         if(updated) {
             JOptionPane.showMessageDialog(this,"Successfully updated order!","Success!",JOptionPane.INFORMATION_MESSAGE);
@@ -621,15 +523,11 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
             orderStatusBox.setSelectedIndex(0);
             quantityField.setText("");
             priceUnitLabel.setText("");
-            discountTypeLabel.setText("");
-            discountPercentageLabel.setText("");
-            discountAmountLabel.setText("");
-            subtotalLabel.setText("");
             totalAfterDiscountLabel.setText("");
             serviceLabel.setText("");
             quantityLabel.setText("");
             orderStatusLabel.setText("");
-            paymentStatusLabel.setText("");
+            companyLabel.setText("");
         } else {
             JOptionPane.showMessageDialog(this,"Error updating order.","Error",JOptionPane.ERROR_MESSAGE);
             return;
@@ -639,19 +537,14 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
+    private javax.swing.JLabel companyLabel;
     private javax.swing.JLabel ctNumberLabel;
-    private javax.swing.JLabel discountAmountLabel;
-    private javax.swing.JLabel discountPercentageLabel;
-    private javax.swing.JLabel discountTypeLabel;
     private javax.swing.JLabel emAddressLabel;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -660,7 +553,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -670,7 +562,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
     private javax.swing.JTextField localTime;
     private javax.swing.JComboBox<String> orderStatusBox;
     private javax.swing.JLabel orderStatusLabel;
-    private javax.swing.JLabel paymentStatusLabel;
     private javax.swing.JLabel priceUnitLabel;
     private javax.swing.JTextField quantityField;
     private javax.swing.JLabel quantityLabel;
@@ -679,7 +570,6 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
     private javax.swing.JComboBox<String> serviceBox;
     private javax.swing.JLabel serviceLabel;
     private javax.swing.JTextField simulatedDate;
-    private javax.swing.JLabel subtotalLabel;
     private javax.swing.JLabel totalAfterDiscountLabel;
     private javax.swing.JButton updateOrder;
     // End of variables declaration//GEN-END:variables

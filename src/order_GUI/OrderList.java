@@ -82,13 +82,13 @@ public class OrderList extends javax.swing.JInternalFrame {
 
         orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Order ID", "First Name", "Last Name", "Service", "Size", "Unit Price", "Quantity", "Total", "Order Status", "Payment Status"
+                "Order ID", "Company Name", "First Name", "Last Name", "Service", "Size", "Unit Price", "Quantity", "Total", "Order Status", "Payment Status"
             }
         ));
         jScrollPane1.setViewportView(orderTable);

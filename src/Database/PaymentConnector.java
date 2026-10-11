@@ -137,11 +137,12 @@ public int getNextFIFOOrderID() {
 
         List<Object[]> transactions = new ArrayList<>();
 
-        String sql ="SELECT "
+        String sql = "SELECT "
             + "p.payment_id, "
             + "o.order_id, "
             + "c.ctm_ftName, "
             + "c.ctm_ltName, "
+            + "co.company_name, "
             + "s.service_name, "
             + "s.service_size, "
             + "o.quantity, "
@@ -149,26 +150,34 @@ public int getNextFIFOOrderID() {
             + "o.order_date, "
             + "p.payment_date "
             + "FROM tbl_orders o "
-            + "JOIN tbl_customers c ON o.customer_id = c.ctm_id "
-            + "JOIN tbl_service s ON o.service_id = s.service_id "
-            + "JOIN tbl_payments p ON o.order_id = p.order_id "
+            + "LEFT JOIN tbl_customers c "
+            + "ON o.customer_id = c.ctm_id "
+            + "LEFT JOIN tbl_companies co "
+            + "ON o.company_id = co.company_id "
+            + "JOIN tbl_service s "
+            + "ON o.service_id = s.service_id "
+            + "JOIN tbl_payments p "
+            + "ON o.order_id = p.order_id "
             + "WHERE o.order_status = 'Completed' "
             + "AND o.payment_status = 'Paid' "
             + "ORDER BY p.payment_date DESC, p.payment_id DESC";
 
         try (Connection conn = DBConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()) {
+                ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
 
-                String transactionID = String.format("TRX-%05d", rs.getInt("payment_id"));
+                String transactionID = String.format(
+                "TRX-%05d", rs.getInt("payment_id"));
 
-                String orderID = String.format("ORD-%05d", rs.getInt("order_id"));
+                String orderID = String.format(
+                "ORD-%05d", rs.getInt("order_id"));
 
                 Object[] row = {
                     transactionID,
                     orderID,
+                    rs.getString("company_name"),
                     rs.getString("ctm_ftName"),
                     rs.getString("ctm_ltName"),
                     rs.getString("service_name"),
@@ -178,26 +187,25 @@ public int getNextFIFOOrderID() {
                     rs.getTimestamp("order_date"),
                     rs.getTimestamp("payment_date")
                 };
-
-            transactions.add(row);
+                transactions.add(row);
             }
 
         } catch (SQLException error) {
             System.out.println("Error loading transaction history: " + error.getMessage());
         }
-        return transactions;
-    }
+    return transactions;
+}
     
     public List<Object[]> searchTransaction(String keyword) {
 
         List<Object[]> transactions = new ArrayList<>();
 
-        String sql =
-            "SELECT "
+        String sql = "SELECT "
             + "p.payment_id, "
             + "o.order_id, "
             + "c.ctm_ftName, "
             + "c.ctm_ltName, "
+            + "co.company_name, "
             + "s.service_name, "
             + "s.service_size, "
             + "o.quantity, "
@@ -205,9 +213,14 @@ public int getNextFIFOOrderID() {
             + "o.order_date, "
             + "p.payment_date "
             + "FROM tbl_orders o "
-            + "JOIN tbl_customers c ON o.customer_id = c.ctm_id "
-            + "JOIN tbl_service s ON o.service_id = s.service_id "
-            + "JOIN tbl_payments p ON o.order_id = p.order_id "
+            + "LEFT JOIN tbl_customers c "
+            + "ON o.customer_id = c.ctm_id "
+            + "LEFT JOIN tbl_companies co "
+            + "ON o.company_id = co.company_id "
+            + "JOIN tbl_service s "
+            + "ON o.service_id = s.service_id "
+            + "JOIN tbl_payments p "
+            + "ON o.order_id = p.order_id "
             + "WHERE o.order_status = 'Completed' "
             + "AND o.payment_status = 'Paid' "
             + "AND ( "
@@ -215,6 +228,7 @@ public int getNextFIFOOrderID() {
             + "OR CONCAT('ORD-', LPAD(o.order_id, 5, '0')) LIKE ? "
             + "OR c.ctm_ftName LIKE ? "
             + "OR c.ctm_ltName LIKE ? "
+            + "OR co.company_name LIKE ? "
             + ") "
             + "ORDER BY p.payment_date DESC, p.payment_id DESC";
 
@@ -227,6 +241,7 @@ public int getNextFIFOOrderID() {
             pstmt.setString(2, searchValue);
             pstmt.setString(3, searchValue);
             pstmt.setString(4, searchValue);
+            pstmt.setString(5, searchValue);
 
             try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -237,6 +252,7 @@ public int getNextFIFOOrderID() {
                         rs.getInt("payment_id")),
                         String.format("ORD-%05d",
                         rs.getInt("order_id")),
+                        rs.getString("company_name"),
                         rs.getString("ctm_ftName"),
                         rs.getString("ctm_ltName"),
                         rs.getString("service_name"),
@@ -245,8 +261,7 @@ public int getNextFIFOOrderID() {
                         rs.getBigDecimal("total_amount"),
                         rs.getTimestamp("order_date"),
                         rs.getTimestamp("payment_date")
-                        };
-
+                    };
                     transactions.add(row);
                 }
             }

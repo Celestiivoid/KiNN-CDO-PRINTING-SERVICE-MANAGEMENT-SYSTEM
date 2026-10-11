@@ -7,25 +7,31 @@ package customer_GUI;
 import Database.CustomerConnector;
 import Utility.DateAndTimeHandler;
 import Utility.FrameResizerRestriction;
+import company_GUI.CompanyFrame;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import main_GUI.MainMenuFrame;
 
 
 public class CustomerFrame extends javax.swing.JInternalFrame {
     private String welcomeName;
     private String userRole;
     private javax.swing.Timer clockTimer;
+    private CompanyFrame companyFrame;
+    private MainMenuFrame mainMenuFrame;
 
     
-    public CustomerFrame(String welcomeName, String userRole) {
+    public CustomerFrame(String welcomeName, String userRole, MainMenuFrame mainMenuFrame) {
         this.welcomeName = welcomeName;
         this.userRole = userRole;
-        
+        this.mainMenuFrame = mainMenuFrame;
         initComponents();
         displayDateTime();
         dashboardComponents();
     }
+    
+    
     
     
     public void dashboardComponents() {
@@ -76,12 +82,12 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         contactNumberField = new javax.swing.JTextField();
         emailAddressField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        customerTypeBox = new javax.swing.JComboBox<>();
         resetButton = new javax.swing.JButton();
         saveCustomerButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         searchCustomerButton = new javax.swing.JButton();
+        addCompanyButton = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -151,17 +157,6 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
         emailAddressField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         emailAddressField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-question-11889_32.png")); // NOI18N
-        jLabel8.setText("Customer Type");
-        jLabel8.setIconTextGap(15);
-
-        customerTypeBox.setBackground(new java.awt.Color(255, 255, 255));
-        customerTypeBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        customerTypeBox.setForeground(new java.awt.Color(0, 0, 0));
-        customerTypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pick customer type", "Regular", "Student" }));
-
         resetButton.setBackground(new java.awt.Color(255, 51, 51));
         resetButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         resetButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -202,7 +197,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(contactNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                                     .addComponent(emailAddressField)))
@@ -210,16 +205,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
                                 .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(saveCustomerButton)))
-                        .addGap(24, 24, 24))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(265, 265, 265)
-                                .addComponent(jLabel8))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(214, 214, 214)
-                                .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 233, Short.MAX_VALUE))))
+                        .addGap(24, 24, 24))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,11 +228,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(emailAddressField, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(contactNumberField))
-                .addGap(27, 27, 27)
-                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(121, 121, 121)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(saveCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
                     .addComponent(resetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -264,6 +246,16 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
         searchCustomerButton.setText("Search Customer");
         searchCustomerButton.addActionListener(this::searchCustomerButtonActionPerformed);
 
+        addCompanyButton.setBackground(new java.awt.Color(0, 153, 153));
+        addCompanyButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        addCompanyButton.setForeground(new java.awt.Color(255, 255, 255));
+        addCompanyButton.setText("Add Company");
+        addCompanyButton.addActionListener(this::addCompanyButtonActionPerformed);
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setText("Company based?");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -273,13 +265,17 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(10, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(searchCustomerButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(searchCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addCompanyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(19, 19, 19))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -292,7 +288,11 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(14, 14, 14)
-                                .addComponent(searchCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(searchCustomerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(addCompanyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(32, 32, 32)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -306,7 +306,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(249, Short.MAX_VALUE)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -341,7 +341,6 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
         String lastName = lastNameField.getText();
         String contactNumber = contactNumberField.getText();
         String emailAddress = emailAddressField.getText();
-        String customerType = (String) customerTypeBox.getSelectedItem();
         
         if(firstName.isEmpty() && lastName.isEmpty() && contactNumber.isEmpty() && emailAddress.isEmpty()) {
             JOptionPane.showMessageDialog(this,"All fields are required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
@@ -373,14 +372,9 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
             return;
         }
         
-        if(customerType.equals("Pick customer type")) {
-            JOptionPane.showMessageDialog(this,"Please pick a customer type.","Warning!",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
         CustomerConnector ctmDAO = new CustomerConnector();
         
-        String customerID = ctmDAO.addCustomer(firstName, lastName, contactNumber, emailAddress, customerType);
+        String customerID = ctmDAO.addCustomer(firstName, lastName, contactNumber, emailAddress);
         
         if(customerID != null) {
             JOptionPane.showMessageDialog(this,"Customer added successfully!","Success!",JOptionPane.INFORMATION_MESSAGE);
@@ -389,7 +383,6 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
             lastNameField.setText("");
             contactNumberField.setText("");
             emailAddressField.setText("");
-            customerTypeBox.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(this,"Add customer failure","Database error!",JOptionPane.ERROR_MESSAGE);
             return;
@@ -401,18 +394,22 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
         lastNameField.setText("");
         contactNumberField.setText("");
         emailAddressField.setText("");
-        customerTypeBox.setSelectedIndex(0);
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void searchCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerButtonActionPerformed
-        CustomerSearch ctmSearch = new CustomerSearch(welcomeName,userRole);
-        ctmSearch.setVisible(true);
+        CustomerList ctm = new CustomerList(welcomeName,userRole,mainMenuFrame);
+        mainMenuFrame.showFrame(ctm);
     }//GEN-LAST:event_searchCustomerButtonActionPerformed
+
+    private void addCompanyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCompanyButtonActionPerformed
+        CompanyFrame companyFrame = new CompanyFrame(welcomeName,userRole,mainMenuFrame);
+        mainMenuFrame.showFrame(companyFrame);
+    }//GEN-LAST:event_addCompanyButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addCompanyButton;
     private javax.swing.JTextField contactNumberField;
-    private javax.swing.JComboBox<String> customerTypeBox;
     private javax.swing.JTextField emailAddressField;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel jLabel1;
@@ -422,7 +419,7 @@ public class CustomerFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

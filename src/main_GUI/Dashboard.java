@@ -20,11 +20,12 @@ public class Dashboard extends javax.swing.JInternalFrame {
     private String welcomeName;
     private String userRole;
     private javax.swing.Timer clockTimer;
+    private MainMenuFrame mainFrame;
 
     
-    public Dashboard(String userRole) {
+    public Dashboard(String userRole,MainMenuFrame mainFrame) {
         initComponents();
-        
+        this.mainFrame = mainFrame;
         this.userRole = userRole;
         
         displayDateTime();
@@ -220,14 +221,14 @@ public class Dashboard extends javax.swing.JInternalFrame {
 
         orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Order ID", "First Name", "Last Name", "Service", "Size", "Quantity", "Total", "Order Status"
+                "Order ID", "Company Name", "First Name", "Last Name", "Service", "Size", "Quantity", "Total", "Order Status"
             }
         ));
         jScrollPane1.setViewportView(orderTable);

@@ -110,8 +110,14 @@ public class Payment extends javax.swing.JInternalFrame {
     orderNumberLabel.setText(
             String.format("ORD-%05d", order.getOrderID()));
 
-    customerNameLabel.setText(
-            order.getFirstName() + " " + order.getLastName());
+    if (order.getCompanyID() != null) {
+
+        customerNameLabel.setText(order.getCompanyName());
+    
+    } else {
+
+        customerNameLabel.setText(order.getFirstName() + " " + order.getLastName());
+    }
 
     serviceNameLabel.setText(
             order.getServiceName() + " - "

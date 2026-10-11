@@ -9,8 +9,9 @@ import java.time.LocalDateTime;
 public class Order {
     private int orderID;
     private int userID;
-    private int customerID;
+    private Integer customerID;
     private int serviceID;
+    private Integer companyID;
 
     private int quantity;
 
@@ -34,6 +35,9 @@ public class Order {
 
     private LocalDateTime orderDate;
     
+    private String companyName;
+    private String contactNumber;
+    private String companyEmailAddress;
     
     public int getOrderID() {
         return orderID;
@@ -43,12 +47,16 @@ public class Order {
         return userID;
     }
     
-    public int getCustomerID() {
+    public Integer getCustomerID() {
         return customerID;
     }
     
     public int getServiceID() {
         return serviceID;
+    }
+    
+    public Integer getCompanyID() {
+        return companyID;
     }
     
     public int getQuantity() {
@@ -115,6 +123,18 @@ public class Order {
         return orderDate;
     }
     
+    public String getCompanyName() {
+        return companyName;
+    }
+    
+    public String getCompanyNumber() {
+        return contactNumber;
+    }
+    
+    public String getCompanyEmail() {
+        return companyEmailAddress;
+    }
+    
     public void setOrderID(int orderID) {
         this.orderID = orderID;
     }
@@ -123,12 +143,16 @@ public class Order {
         this.userID = userID;
     }
     
-    public void setCustomerID(int customerID) {
+    public void setCustomerID(Integer customerID) {
         this.customerID = customerID;
     }
     
     public void setServiceID(int serviceID) {
         this.serviceID = serviceID;
+    }
+    
+    public void setCompanyID(Integer companyID) {
+        this.companyID = companyID;
     }
     
     public void setQuantity(int quantity) {
@@ -193,5 +217,17 @@ public class Order {
     
     public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
+    }
+    
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+    
+    public void setCompanyNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
+    }
+    
+    public void setCompanyEmail(String companyEmailAddress) {
+        this.companyEmailAddress = companyEmailAddress;
     }
 }

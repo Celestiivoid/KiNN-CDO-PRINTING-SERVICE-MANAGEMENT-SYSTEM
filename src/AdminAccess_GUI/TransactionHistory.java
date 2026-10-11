@@ -110,13 +110,13 @@ public class TransactionHistory extends javax.swing.JInternalFrame {
 
         transactionTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Transaction ID", "Order ID", "First Name", "Last Name", "Service", "Size", "Quantity", "Total", "Order Date", "Payment Date"
+                "Transaction ID", "Order ID", "Company Name", "First Name", "Last Name", "Service", "Size", "Quantity", "Total", "Order Date", "Payment Date"
             }
         ));
         jScrollPane1.setViewportView(transactionTable);

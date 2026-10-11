@@ -46,7 +46,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
         FrameResizerRestriction.setupDesktopPane(desktopPane);
     }
     
-    private void showFrame(JInternalFrame frame) {
+    public void showFrame(JInternalFrame frame) {
         desktopPane.removeAll();
         FrameResizerRestriction.setupInternalFrame(frame);
         desktopPane.add(frame);
@@ -58,17 +58,17 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }
     
     public void openDashboard() {
-        Dashboard openDash = new Dashboard(userRole);
+        Dashboard openDash = new Dashboard(userRole,this);
         showFrame(openDash);
     }
     
     public void openCustomerFrame() {
-        CustomerFrame ctmFrame = new CustomerFrame(welcomeName,userRole);
+        CustomerFrame ctmFrame = new CustomerFrame(welcomeName,userRole,this);
         showFrame(ctmFrame);
     }
     
     public void openUpdateFrame() {
-        UpdateCustomerFrame updCtm = new UpdateCustomerFrame(welcomeName,userRole);
+        UpdateCustomerFrame updCtm = new UpdateCustomerFrame(welcomeName,userRole,this);
         showFrame(updCtm);
     }
     
@@ -83,7 +83,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }
     
     public void openNewOrderFrame() {
-        NewOrderFrame newOrder = new NewOrderFrame(welcomeName,userRole);
+        NewOrderFrame newOrder = new NewOrderFrame(welcomeName,userRole,this);
         showFrame(newOrder);
     }
     
@@ -229,7 +229,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-3295_64.png")); // NOI18N
 
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\Screenshot 2026-09-27 212113 (2).png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Client_logo_noBG (2).png"))); // NOI18N
 
         welcomeText.setBackground(new java.awt.Color(255, 153, 0));
         welcomeText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -246,9 +246,9 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addGap(73, 73, 73)
+                .addGap(75, 75, 75)
                 .addComponent(jLabel3)
-                .addGap(97, 97, 97)
+                .addGap(95, 95, 95)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(welcomeText)
                     .addComponent(welcomeMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE))
@@ -266,11 +266,17 @@ public class MainMenuFrame extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(14, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addContainerGap()
+                .addComponent(jLabel3)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addContainerGap())
+                        .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(welcomeMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(66, 66, 66))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -280,13 +286,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
-                        .addComponent(welcomeText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(welcomeMessage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(15, 15, 15))))
         );
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1600, 170));

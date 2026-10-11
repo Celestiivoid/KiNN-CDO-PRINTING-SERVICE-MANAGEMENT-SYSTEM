@@ -4,7 +4,6 @@
  */
 package order_GUI;
 
-import customer_GUI.CustomerSearch;
 import Database.CustomerConnector;
 import Database.OrderConnector;
 import Database.ServiceConnector;
@@ -12,6 +11,9 @@ import Session.userSession;
 import Utility.Customer;
 import Utility.DateAndTimeHandler;
 import Utility.Service;
+import company_GUI.CompanyOrderFrame;
+import company_GUI.CustomerListOrder;
+import customer_GUI.CustomerList;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -20,6 +22,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import main_GUI.MainMenuFrame;
 
 public class NewOrderFrame extends javax.swing.JInternalFrame {
     private int serviceID;
@@ -27,9 +30,11 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private String welcomeName;
     private String userRole;
     private javax.swing.Timer clockTimer;
+    private MainMenuFrame mainFrame;
 
     
-    public NewOrderFrame(String welcomeName, String userRole) {
+    public NewOrderFrame(String welcomeName, String userRole, MainMenuFrame mainFrame) {
+        this.mainFrame = mainFrame;
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         
@@ -64,11 +69,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         simulatedDate.setEditable(false);
         localTime.setEditable(false);
         priceUnitLabel.setText("0.00");
-        discountTypeLabel.setText("");
-        discountPercentageLabel.setText("0" + "%");
-        discountAmountLabel.setText("0.00");
-        subtotalLabel.setText("0.00");
-        totalAfterDiscountLabel.setText("0.00");
+        totalLabel.setText("0.00");
         
         clockTimer = new javax.swing.Timer(1000, e -> displayDateTime());
         clockTimer.start();
@@ -129,23 +130,16 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
      private void orderCalculation() {
          String serviceUnit = priceUnitLabel.getText();
          String serviceQuantity = quantityField.getText();
-         String discountPercentage = discountPercentageLabel.getText().replace("%","");
          
          try {
              double convertedUnit = Double.parseDouble(serviceUnit);
              int convertedQuantity = Integer.parseInt(serviceQuantity);
-             double convertedPercentage = Double.parseDouble(discountPercentage);
              
-             double subtotal = convertedUnit * convertedQuantity;
-             double discountAmount = subtotal * (convertedPercentage / 100);
-             double finalTotal = subtotal - discountAmount;
+             double total = convertedUnit * convertedQuantity;
                
-             subtotalLabel.setText(String.format("%.2f", subtotal));
-             discountAmountLabel.setText(String.format("%.2f", discountAmount));
-             totalAfterDiscountLabel.setText(String.format("%.2f",finalTotal));
+             totalLabel.setText(String.format("%.2f",total));
          } catch (NumberFormatException error) {
              System.out.println("Error calculating: " + error.getMessage());
-             subtotalLabel.setText("0.00");
              return;
          }
      }
@@ -182,23 +176,17 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         quantityField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         priceUnitLabel = new javax.swing.JLabel();
-        discountTypeLabel = new javax.swing.JLabel();
-        discountPercentageLabel = new javax.swing.JLabel();
-        discountAmountLabel = new javax.swing.JLabel();
-        subtotalLabel = new javax.swing.JLabel();
-        totalAfterDiscountLabel = new javax.swing.JLabel();
+        totalLabel = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         orderStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
         customerListButton = new javax.swing.JButton();
         placeOrderButton = new javax.swing.JButton();
         clearButton = new javax.swing.JButton();
+        companyButton = new javax.swing.JButton();
+        jLabel15 = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -295,22 +283,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Price/Unit:");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel6.setText("Discount amount:");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel7.setText("Discount type:");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel10.setText("Discount percentage:");
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel11.setText("Subtotal:");
-
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Total after discount:");
@@ -318,20 +290,8 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         priceUnitLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         priceUnitLabel.setForeground(new java.awt.Color(0, 0, 0));
 
-        discountTypeLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        discountTypeLabel.setForeground(new java.awt.Color(0, 0, 0));
-
-        discountPercentageLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        discountPercentageLabel.setForeground(new java.awt.Color(51, 255, 51));
-
-        discountAmountLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        discountAmountLabel.setForeground(new java.awt.Color(251, 55, 55));
-
-        subtotalLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        subtotalLabel.setForeground(new java.awt.Color(0, 0, 0));
-
-        totalAfterDiscountLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        totalAfterDiscountLabel.setForeground(new java.awt.Color(0, 0, 0));
+        totalLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        totalLabel.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -345,25 +305,9 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(priceUnitLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel7)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(discountTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel11)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(subtotalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(totalAfterDiscountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(12, 12, 12)
-                        .addComponent(discountAmountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(discountPercentageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
+                        .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -373,26 +317,10 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(priceUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(discountTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel10)
-                    .addComponent(discountPercentageLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(21, 21, 21)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(discountAmountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel11)
-                    .addComponent(subtotalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(217, 217, 217)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel17)
-                    .addComponent(totalAfterDiscountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35))
         );
 
@@ -424,6 +352,16 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         clearButton.setForeground(new java.awt.Color(255, 255, 255));
         clearButton.setText("Clear");
         clearButton.addActionListener(this::clearButtonActionPerformed);
+
+        companyButton.setBackground(new java.awt.Color(0, 153, 153));
+        companyButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        companyButton.setForeground(new java.awt.Color(255, 255, 255));
+        companyButton.setText("Place as Company");
+        companyButton.addActionListener(this::companyButtonActionPerformed);
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel15.setText("Company based?");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -466,28 +404,33 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(quantityField))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(3, 3, 3))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(companyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(29, 29, 29))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(16, 16, 16)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(8, 8, 8)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
+                        .addComponent(companyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(8, 8, 8)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -530,7 +473,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 146, 1250, 550));
@@ -555,15 +498,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                 lastNameLabel.setText(ctm.getLastName());
                 ctNumberLabel.setText(ctm.getPhoneNumber());
                 emAddressLabel.setText(ctm.getEmailAddress());
-                discountTypeLabel.setText(ctm.getCustomerType());
-                
-                if(discountTypeLabel.getText().equals("Student")) {
-                    discountPercentageLabel.setText("10%");
-                }
-                else {
-                    discountPercentageLabel.setText("0");
-                    discountAmountLabel.setText("0.00");
-                }
                 orderCalculation();
             }
             else {
@@ -581,8 +515,8 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_serviceBoxActionPerformed
 
     private void customerListButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerListButtonActionPerformed
-        CustomerSearch ctmSearch = new CustomerSearch(welcomeName,userRole);
-        ctmSearch.setVisible(true);
+        CustomerListOrder ctm = new CustomerListOrder(welcomeName,userRole,mainFrame);
+        mainFrame.showFrame(ctm);
     }//GEN-LAST:event_customerListButtonActionPerformed
 
     private void placeOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderButtonActionPerformed
@@ -596,10 +530,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         int userID = userSession.getUserId();
         String quantity = quantityField.getText();
         String unitPrice = priceUnitLabel.getText();
-        String subtotal = subtotalLabel.getText();
-        String discountPercentage = discountPercentageLabel.getText().replace("%", "");
-        String discountAmount = discountAmountLabel.getText();
-        String totalAmount = totalAfterDiscountLabel.getText();
+        String totalAmount = totalLabel.getText();
         String service = (String) serviceBox.getSelectedItem();
         String orderStatus = (String) orderStatusBox.getSelectedItem();
         LocalDate orderDate = LocalDate.now();
@@ -623,9 +554,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         
         try {
             convertedPrice = Double.parseDouble(unitPrice);
-            convertedSubtotal = Double.parseDouble(subtotal);
-            convertedPercentage = Double.parseDouble(discountPercentage);
-            convertedDiscountAmount = Double.parseDouble(discountAmount);
             convertedTotalAmount = Double.parseDouble(totalAmount);
         } catch (NumberFormatException error) {
             JOptionPane.showMessageDialog(this,"Unexpected error!","Idk what may cause this lol",JOptionPane.ERROR_MESSAGE);
@@ -647,9 +575,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                 serviceID,
                 convertedQuantity,
                 convertedPrice,
-                convertedSubtotal,
-                convertedPercentage,
-                convertedDiscountAmount,
                 convertedTotalAmount,
                 orderStatus,
                 "UNPAID",
@@ -665,11 +590,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
             orderStatusBox.setSelectedIndex(0);
             quantityField.setText("");
             priceUnitLabel.setText("");
-            discountTypeLabel.setText("");
-            discountPercentageLabel.setText("");
-            discountAmountLabel.setText("");
-            subtotalLabel.setText("");
-            totalAfterDiscountLabel.setText("");
+            totalLabel.setText("");
         } else {
             JOptionPane.showMessageDialog(this,"Error placing order.","Error",JOptionPane.ERROR_MESSAGE);
             return;
@@ -686,29 +607,27 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         orderStatusBox.setSelectedIndex(0);
         quantityField.setText("");
         priceUnitLabel.setText("");
-        discountTypeLabel.setText("");
-        discountPercentageLabel.setText("");
-        discountAmountLabel.setText("");
-        subtotalLabel.setText("");
-        totalAfterDiscountLabel.setText("");
+        totalLabel.setText("");
     }//GEN-LAST:event_clearButtonActionPerformed
+
+    private void companyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_companyButtonActionPerformed
+        CompanyOrderFrame cmp = new CompanyOrderFrame(welcomeName,userRole,mainFrame);
+        mainFrame.showFrame(cmp);
+    }//GEN-LAST:event_companyButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton clearButton;
+    private javax.swing.JButton companyButton;
     private javax.swing.JLabel ctNumberLabel;
     private javax.swing.JButton customerListButton;
-    private javax.swing.JLabel discountAmountLabel;
-    private javax.swing.JLabel discountPercentageLabel;
-    private javax.swing.JLabel discountTypeLabel;
     private javax.swing.JLabel emAddressLabel;
     private javax.swing.JLabel firstNameLabel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -716,8 +635,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -733,7 +650,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.JTextField searchField;
     private javax.swing.JComboBox<String> serviceBox;
     private javax.swing.JTextField simulatedDate;
-    private javax.swing.JLabel subtotalLabel;
-    private javax.swing.JLabel totalAfterDiscountLabel;
+    private javax.swing.JLabel totalLabel;
     // End of variables declaration//GEN-END:variables
 }

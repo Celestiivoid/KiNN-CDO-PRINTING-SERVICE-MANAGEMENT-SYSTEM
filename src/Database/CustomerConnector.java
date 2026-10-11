@@ -15,12 +15,11 @@ public class CustomerConnector {
            String firstName,
            String lastName,
            String phoneNumber,
-           String emailAddress,
-           String customerType) {
+           String emailAddress) {
         
         String sql = "INSERT INTO tbl_customers "
-                + "(ctm_ftName,ctm_ltName,ctm_phNumber,ctm_emAddress,ctm_Type) "
-                + "VALUES (?,?,?,?,?)";
+                + "(ctm_ftName,ctm_ltName,ctm_phNumber,ctm_emAddress) "
+                + "VALUES (?,?,?,?)";
         
         try(Connection conn = DBConnection.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -29,7 +28,6 @@ public class CustomerConnector {
             pstmt.setString(2, lastName);
             pstmt.setString(3, phoneNumber);
             pstmt.setString(4, emailAddress);
-            pstmt.setString(5, customerType);
             
             int rowsInserted = pstmt.executeUpdate();
             
@@ -56,15 +54,13 @@ public class CustomerConnector {
            String firstName,
            String lastName,
            String phoneNumber,
-           String emailAddress,
-           String customerType) {
+           String emailAddress) {
         
         String sql = "UPDATE tbl_customers "
                    + "SET ctm_ftName = ?, "
                    + "ctm_ltName = ?, "
                    + "ctm_phNumber = ?, "
-                   + "ctm_emAddress = ?, "
-                   + "ctm_Type = ? "
+                   + "ctm_emAddress = ? "
                    + "WHERE ctm_id = ?";
         
         try(Connection conn = DBConnection.connect();
@@ -74,8 +70,7 @@ public class CustomerConnector {
             pstmt.setString(2, lastName);
             pstmt.setString(3, phoneNumber);
             pstmt.setString(4, emailAddress);
-            pstmt.setString(5, customerType);
-            pstmt.setInt(6, customerID);
+            pstmt.setInt(5, customerID);
             
             int update = pstmt.executeUpdate();
             
@@ -91,7 +86,7 @@ public class CustomerConnector {
         List<Object[]> customers = new ArrayList<>();
 
         String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-               + "ctm_phNumber, ctm_emAddress, ctm_Type "
+               + "ctm_phNumber, ctm_emAddress "
                + "FROM tbl_customers "
                + "WHERE ctm_archived = 0";
 
@@ -109,8 +104,7 @@ public class CustomerConnector {
                     rs.getString("ctm_ftName"),
                     rs.getString("ctm_ltName"),
                     rs.getString("ctm_phNumber"),
-                    rs.getString("ctm_emAddress"),
-                    rs.getString("ctm_Type")
+                    rs.getString("ctm_emAddress")
                 };
 
                 customers.add(row);
@@ -127,7 +121,7 @@ public class CustomerConnector {
         List<Object[]> customers = new ArrayList<>();
         
         String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-                   + "ctm_phNumber, ctm_emAddress, ctm_Type "
+                   + "ctm_phNumber, ctm_emAddress "
                    + "FROM tbl_customers "
                    + "WHERE ctm_archived = 1";
         
@@ -145,8 +139,7 @@ public class CustomerConnector {
                     rs.getString("ctm_ftName"),
                     rs.getString("ctm_ltName"),
                     rs.getString("ctm_phNumber"),
-                    rs.getString("ctm_emAddress"),
-                    rs.getString("ctm_Type")
+                    rs.getString("ctm_emAddress")
                 };
                 
                 customers.add(row);
@@ -162,7 +155,7 @@ public class CustomerConnector {
         List<Object[]> customers = new ArrayList<>();
         
         String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-           + "ctm_phNumber, ctm_emAddress, ctm_Type "
+           + "ctm_phNumber, ctm_emAddress "
            + "FROM tbl_customers "
            + "WHERE ctm_archived = 0 "
            + "AND (ctm_ftName LIKE ? "
@@ -190,8 +183,7 @@ public class CustomerConnector {
                         rs.getString("ctm_ftName"),
                         rs.getString("ctm_ltName"),
                         rs.getString("ctm_phNumber"),
-                        rs.getString("ctm_emAddress"),
-                        rs.getString("ctm_Type")
+                        rs.getString("ctm_emAddress")
                     };
                     
                     customers.add(row);
@@ -208,7 +200,7 @@ public class CustomerConnector {
         List<Object[]> customers = new ArrayList<>();
         
         String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-                   + "ctm_phNumber, ctm_emAddress, ctm_Type "
+                   + "ctm_phNumber, ctm_emAddress "
                    + "FROM tbl_customers "
                    + "WHERE ctm_archived = 1 "
                    + "AND (ctm_ftName LIKE ? "
@@ -236,8 +228,7 @@ public class CustomerConnector {
                         rs.getString("ctm_ftName"),
                         rs.getString("ctm_ltName"),
                         rs.getString("ctm_phNumber"),
-                        rs.getString("ctm_emAddress"),
-                        rs.getString("ctm_Type")
+                        rs.getString("ctm_emAddress")
                     };
                     
                     customers.add(row);
@@ -292,7 +283,7 @@ public class CustomerConnector {
     public Customer getCustomer(int customerID) {
         
         String sql = "SELECT ctm_id, ctm_ftName, ctm_ltName, "
-                   + "ctm_phNumber, ctm_emAddress, ctm_Type "
+                   + "ctm_phNumber, ctm_emAddress "
                    + "FROM tbl_customers "
                    + "WHERE ctm_id = ? AND ctm_archived = 0";
         
@@ -312,7 +303,6 @@ public class CustomerConnector {
                     ctmSet.setLastName(rs.getString("ctm_ltName"));
                     ctmSet.setPhoneNumber(rs.getString("ctm_phNumber"));
                     ctmSet.setEmailAddress(rs.getString("ctm_emAddress"));
-                    ctmSet.setCustomerType(rs.getString("ctm_Type"));
                     
                     return ctmSet;
                 }

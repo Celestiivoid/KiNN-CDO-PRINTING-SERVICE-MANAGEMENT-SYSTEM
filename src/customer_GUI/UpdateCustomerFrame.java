@@ -4,7 +4,6 @@
  */
 package customer_GUI;
 
-import customer_GUI.CustomerSearch;
 import Database.CustomerConnector;
 import Utility.Customer;
 import Utility.DateAndTimeHandler;
@@ -12,6 +11,7 @@ import Utility.FrameResizerRestriction;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
+import main_GUI.MainMenuFrame;
 
 
 public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
@@ -19,9 +19,11 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
     private String welcomeName;
     private String userRole;
     private javax.swing.Timer clockTimer;
+    private MainMenuFrame mainFrame;
 
     
-    public UpdateCustomerFrame(String welcomeName, String userRole) {
+    public UpdateCustomerFrame(String welcomeName, String userRole,MainMenuFrame mainFrame) {
+        this.mainFrame = mainFrame;
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         
@@ -77,15 +79,11 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
         jLabel7 = new javax.swing.JLabel();
         contactNumberField = new javax.swing.JTextField();
         emailAddressField = new javax.swing.JTextField();
-        jLabel8 = new javax.swing.JLabel();
-        customerTypeBox = new javax.swing.JComboBox<>();
         resetButton = new javax.swing.JButton();
         saveChangesButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         searchIDField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
         searchButton = new javax.swing.JButton();
-        currentTypeLabel = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         searchCustomerButton = new javax.swing.JButton();
 
@@ -153,17 +151,6 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
         emailAddressField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         emailAddressField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\user-question-11889_32.png")); // NOI18N
-        jLabel8.setText("Customer Type");
-        jLabel8.setIconTextGap(15);
-
-        customerTypeBox.setBackground(new java.awt.Color(255, 255, 255));
-        customerTypeBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        customerTypeBox.setForeground(new java.awt.Color(0, 0, 0));
-        customerTypeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pick customer type", "Regular", "Student" }));
-
         resetButton.setBackground(new java.awt.Color(255, 51, 51));
         resetButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         resetButton.setForeground(new java.awt.Color(255, 255, 255));
@@ -189,19 +176,11 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
         searchIDField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchIDField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel3.setText("Current Type");
-
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
         searchButton.setText("Search");
         searchButton.addActionListener(this::searchButtonActionPerformed);
-
-        currentTypeLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        currentTypeLabel.setForeground(new java.awt.Color(0, 0, 0));
-        currentTypeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -211,19 +190,6 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(searchIDField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(saveChangesButton))
@@ -231,36 +197,39 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE)
                             .addComponent(contactNumberField, javax.swing.GroupLayout.DEFAULT_SIZE, 252, Short.MAX_VALUE))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(emailAddressField)
+                            .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(firstNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 178, Short.MAX_VALUE)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(emailAddressField)
-                                    .addComponent(lastNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(30, 30, 30)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(currentTypeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(searchIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(searchButton)
+                        .addGap(141, 141, 141)))
                 .addGap(24, 24, 24))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap(31, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(searchIDField, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(customerTypeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(searchIDField, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -276,11 +245,7 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(emailAddressField, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
                     .addComponent(contactNumberField))
-                .addGap(7, 7, 7)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(currentTypeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(115, 115, 115)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(resetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(saveChangesButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -375,7 +340,6 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
         String lastName = lastNameField.getText();
         String phoneNumber = contactNumberField.getText();
         String emailAddress = emailAddressField.getText();
-        String customerType = (String) customerTypeBox.getSelectedItem();
         
         if(firstName.isEmpty() && lastName.isEmpty() && phoneNumber.isEmpty() && emailAddress.isEmpty()) {
             JOptionPane.showMessageDialog(this,"All fields are required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
@@ -406,15 +370,9 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this,"Email address field is required to be filled out.","Warning!",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        
-        if(customerType.equals("Pick customer type")) {
-            JOptionPane.showMessageDialog(this,"Please pick a customer type.","Warning!",JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
         CustomerConnector ctmDAO = new CustomerConnector();
         
-        boolean updated = ctmDAO.updateCustomer(customerID, firstName, lastName, phoneNumber, emailAddress, customerType);
+        boolean updated = ctmDAO.updateCustomer(customerID, firstName, lastName, phoneNumber, emailAddress);
         
         if(updated) {
             JOptionPane.showMessageDialog(this,"Successfully saved changes!","Success!",JOptionPane.INFORMATION_MESSAGE);
@@ -422,9 +380,7 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
             lastNameField.setText("");
             contactNumberField.setText("");
             emailAddressField.setText("");
-            currentTypeLabel.setText("");
             searchIDField.setText("");
-            customerTypeBox.setSelectedIndex(0);
         } else {
             JOptionPane.showMessageDialog(this,"Update customer failure!","Database error",JOptionPane.ERROR_MESSAGE);
         }
@@ -435,12 +391,11 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
         lastNameField.setText("");
         contactNumberField.setText("");
         emailAddressField.setText("");
-        customerTypeBox.setSelectedIndex(0);
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void searchCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchCustomerButtonActionPerformed
-        CustomerSearch ctmSearch = new CustomerSearch(welcomeName,userRole);
-        ctmSearch.setVisible(true);
+        CustomerListUpdate ctm = new CustomerListUpdate(welcomeName,userRole,mainFrame);
+        mainFrame.showFrame(ctm);
     }//GEN-LAST:event_searchCustomerButtonActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
@@ -458,7 +413,6 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
                 lastNameField.setText(ctm.getLastName());
                 contactNumberField.setText(ctm.getPhoneNumber());
                 emailAddressField.setText(ctm.getEmailAddress());
-                currentTypeLabel.setText(ctm.getCustomerType());
             } else {
                 JOptionPane.showMessageDialog(this,"Customer not found!","Invalid search",JOptionPane.WARNING_MESSAGE);
             }
@@ -471,18 +425,14 @@ public class UpdateCustomerFrame extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField contactNumberField;
-    private javax.swing.JLabel currentTypeLabel;
-    private javax.swing.JComboBox<String> customerTypeBox;
     private javax.swing.JTextField emailAddressField;
     private javax.swing.JTextField firstNameField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
