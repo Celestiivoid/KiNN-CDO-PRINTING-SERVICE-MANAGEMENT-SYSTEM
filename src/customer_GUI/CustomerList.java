@@ -188,7 +188,7 @@ public class CustomerList extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_archiveButtonActionPerformed
 
     private void viewArchiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewArchiveButtonActionPerformed
-        ArchivedCompanyList arc = new ArchivedCompanyList(welcomeName,userRole,mainFrame);
+        ArchivedCustomerList arc = new ArchivedCustomerList(welcomeName,userRole,mainFrame);
         mainFrame.showFrame(arc);
     }//GEN-LAST:event_viewArchiveButtonActionPerformed
 

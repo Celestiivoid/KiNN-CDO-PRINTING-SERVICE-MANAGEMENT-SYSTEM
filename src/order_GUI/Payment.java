@@ -374,7 +374,7 @@ public class Payment extends javax.swing.JInternalFrame {
         changeLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel3.add(changeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 150, 50));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 660, 510));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 660, 510));
 
         searchField.setBackground(new java.awt.Color(255, 255, 255));
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -391,12 +391,10 @@ public class Payment extends javax.swing.JInternalFrame {
 
         dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         dateLabel.setForeground(new java.awt.Color(255, 153, 0));
-        dateLabel.setText("jLabel15");
         jPanel1.add(dateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 20, 200, 30));
 
         timeLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         timeLabel.setForeground(new java.awt.Color(0, 153, 153));
-        timeLabel.setText("jLabel16");
         jPanel1.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 60, 200, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));

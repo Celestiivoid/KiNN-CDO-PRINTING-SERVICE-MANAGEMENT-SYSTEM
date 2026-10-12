@@ -10,14 +10,17 @@ import Database.UserConnector;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import main_GUI.MainMenuFrame;
 
 public class UserManagement extends javax.swing.JInternalFrame {
 
     private String welcomeName;
     private String userRole;
+    private MainMenuFrame mainFrame;
 
     
-    public UserManagement(String welcomeName, String userRole) {
+    public UserManagement(String welcomeName, String userRole,MainMenuFrame mainFrame) {
+        this.mainFrame = mainFrame;
         this.welcomeName = welcomeName;
         this.userRole = userRole;
         
@@ -46,7 +49,7 @@ public class UserManagement extends javax.swing.JInternalFrame {
         
         UserConnector user = new UserConnector();
         
-        List<Object []> users = user.searchCustomer(search);
+        List<Object []> users = user.searchUser(search);
         
         DefaultTableModel userModel = (DefaultTableModel) accountTable.getModel();
         
@@ -226,7 +229,8 @@ public class UserManagement extends javax.swing.JInternalFrame {
         manageAccountButton.setBackground(new java.awt.Color(0, 153, 153));
         manageAccountButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         manageAccountButton.setForeground(new java.awt.Color(255, 255, 255));
-        manageAccountButton.setText("Manage Accounts");
+        manageAccountButton.setText("Update Accounts");
+        manageAccountButton.addActionListener(this::manageAccountButtonActionPerformed);
         jPanel1.add(manageAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, 280, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
@@ -271,6 +275,11 @@ public class UserManagement extends javax.swing.JInternalFrame {
     private void generateRoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateRoleActionPerformed
         roleLabel.setText("Staff");
     }//GEN-LAST:event_generateRoleActionPerformed
+
+    private void manageAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAccountButtonActionPerformed
+        UpdateAccounts upd = new UpdateAccounts(welcomeName,userRole,mainFrame);
+        mainFrame.showFrame(upd);
+    }//GEN-LAST:event_manageAccountButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

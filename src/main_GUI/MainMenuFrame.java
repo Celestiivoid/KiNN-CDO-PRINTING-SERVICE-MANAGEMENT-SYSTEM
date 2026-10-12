@@ -113,7 +113,7 @@ public class MainMenuFrame extends javax.swing.JFrame {
     }
     
     public void openUserManagementFrame() {
-        UserManagement user = new UserManagement(welcomeName,userRole);
+        UserManagement user = new UserManagement(welcomeName,userRole,this);
         showFrame(user);
     }
     

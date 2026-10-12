@@ -213,8 +213,14 @@ public class Login extends javax.swing.JFrame {
                 
                 int userID = rs.getInt("user_id");
                 String userRoles = rs.getString("role");
+                String status = rs.getString("account_status");
                 
-                userSession.setUser(userID,firstName,lastName,userRoles);
+                if(status.equals("INACTIVE")) {
+                    JOptionPane.showMessageDialog(this,"This account is currently inactive. \nPlease contact the owner to reactivate the account.","Warning!",JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+               
+                userSession.setUser(userID,firstName,lastName,userRoles,status);
                 
                 switch(userRoles) {
                     case "Administrator":

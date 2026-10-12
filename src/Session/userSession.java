@@ -13,12 +13,14 @@ public class userSession {
     private static String firstName;
     private static String lastName;
     private static String userRole;
+    private static String accountStatus;
     
-    public static void setUser(int id, String fName,String lName, String role) {
+    public static void setUser(int id, String fName,String lName, String role, String status) {
         userId = id;
         firstName = fName;
         lastName = lName;
         userRole = role;
+        accountStatus = status;
     }
     
     public static int getUserId() {
@@ -35,6 +37,10 @@ public class userSession {
     
     public static String getUserRole() {
         return userRole;
+    }
+    
+    public static String getStatus() {
+        return accountStatus;
     }
     
     public static void clearSection() {

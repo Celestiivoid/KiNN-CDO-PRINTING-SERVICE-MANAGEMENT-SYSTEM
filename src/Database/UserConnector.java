@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Database;
+import Utility.User;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,7 +131,7 @@ public class UserConnector {
          return users;
      }
      
-    public List<Object[]> searchCustomer(String search) {
+    public List<Object[]> searchUser(String search) {
         
         List<Object[]> customers = new ArrayList<>();
         
@@ -176,4 +177,76 @@ public class UserConnector {
         }
         return customers;
     }
+    
+    
+    public boolean updateUser(
+        int userID,
+        String firstName,
+        String lastName,
+        String password,
+        String contactNumber,
+        String accountStatus) {
+
+            String sql = "UPDATE tbl_users "
+               + "SET first_name = ?, "
+               + "last_name = ?, "
+               + "password = ?, "
+               + "contactNumber = ?, "
+               + "account_status = ? "
+               + "WHERE user_id = ?";
+
+        try (Connection conn = DBConnection.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, firstName);
+            pstmt.setString(2, lastName);
+            pstmt.setString(3, password);
+            pstmt.setString(4, contactNumber);
+            pstmt.setString(5, accountStatus);
+            pstmt.setInt(6, userID);
+
+            int rowsUpdated = pstmt.executeUpdate();
+
+            return rowsUpdated > 0;
+
+        } catch (SQLException error) {
+            System.out.println("Error updating user: " + error.getMessage());
+            return false;
+    }
+}
+
+    public User getUser(int userID) {
+
+    String sql = "SELECT user_id, first_name, last_name, "
+               + "contactNumber, password, role, account_status "
+               + "FROM tbl_users "
+               + "WHERE user_id = ?";
+
+    try (Connection conn = DBConnection.connect();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userID);
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                User user = new User();
+
+                user.setUserID(rs.getInt("user_id"));
+                user.setFirstName(rs.getString("first_name"));
+                user.setLastName(rs.getString("last_name"));
+                user.setContactNumber(rs.getString("contactNumber"));
+                user.setPassword(rs.getString("password"));
+                user.setRole(rs.getString("role"));
+                user.setAccountStatus(rs.getString("account_status"));
+
+                return user;
+            }
+        }
+
+    } catch (SQLException error) {
+        System.out.println("Error loading user: " + error.getMessage());
+    }
+
+    return null;
+}
 }
