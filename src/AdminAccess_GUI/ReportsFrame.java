@@ -120,15 +120,18 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
         jPanel6 = new javax.swing.JPanel();
         overallOrdersLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         salesTable = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         revenueLabel = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         overallCompletedLabel = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         generatedSalesLabel = new javax.swing.JLabel();
@@ -183,6 +186,9 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
         jLabel6.setText("Overall Orders");
         jPanel6.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 360, 30));
 
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/boxes-11430_64.png"))); // NOI18N
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 70, 80));
+
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 500, 130));
 
         salesTable.setModel(new javax.swing.table.DefaultTableModel(
@@ -201,9 +207,11 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 148, 629, 410));
 
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/management-9649_32 (1).png"))); // NOI18N
         jButton1.setText("Generate Report");
+        jButton1.setIconTextGap(10);
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel3.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 70, 200, 60));
 
@@ -220,6 +228,9 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
         jLabel4.setText("Overall Revenue");
         jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 350, 40));
 
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/budget-income-and-money-coins-18872_64.png"))); // NOI18N
+        jPanel7.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 70, 70));
+
         jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 148, 500, 130));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -234,6 +245,9 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Overall Completed");
         jPanel8.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 360, 30));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/test-document-green-checkmarks-and-yellow-pencil-17447_64.png"))); // NOI18N
+        jPanel8.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 70, 70));
 
         jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 432, 500, 130));
 
@@ -256,12 +270,10 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
 
         dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         dateLabel.setForeground(new java.awt.Color(255, 153, 0));
-        dateLabel.setText("jLabel15");
         jPanel1.add(dateLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 20, 200, 30));
 
         timeLabel.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         timeLabel.setForeground(new java.awt.Color(0, 153, 153));
-        timeLabel.setText("jLabel16");
         jPanel1.add(timeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 60, 200, 30));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
@@ -280,12 +292,15 @@ public class ReportsFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel generatedSalesLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

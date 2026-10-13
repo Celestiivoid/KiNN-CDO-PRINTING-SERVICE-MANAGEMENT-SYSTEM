@@ -7,11 +7,21 @@ package order_GUI;
 import Database.OrderConnector;
 import Database.PaymentConnector;
 import Utility.Order;
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.openpdf.text.Document;
+import org.openpdf.text.Element;
+import org.openpdf.text.Font;
+import org.openpdf.text.FontFactory;
+import org.openpdf.text.Image;
+import org.openpdf.text.Paragraph;
+import org.openpdf.text.Rectangle;
+import org.openpdf.text.pdf.PdfWriter;
 
 public class Payment extends javax.swing.JInternalFrame {
     private javax.swing.Timer clockTimer;
@@ -52,85 +62,60 @@ public class Payment extends javax.swing.JInternalFrame {
             }
 
         } catch (NumberFormatException error) {
-            JOptionPane.showMessageDialog(
-                this,
-                "Enter a valid Order ID, such as ORD-00001."
-            );
+            JOptionPane.showMessageDialog(this,"Enter a valid Order ID, such as ORD-00001.");
             return;
+        }
+
+        PaymentConnector paymentConn = new PaymentConnector();
+
+        int nextOrderID = paymentConn.getNextFIFOOrderID();
+
+        if (nextOrderID == -1) {
+            JOptionPane.showMessageDialog(this,"There are no unpaid orders in the queue.");
+            return;
+        }
+
+        if (searchedID != nextOrderID) {
+            JOptionPane.showMessageDialog(this,"FIFO rule: Please handle order "+ String.format("ORD-%05d", nextOrderID)+ " first.","Order Queue",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        OrderConnector orderConn = new OrderConnector();
+        Order order = orderConn.getOrder(searchedID);
+
+        if (order == null) {
+            JOptionPane.showMessageDialog(this,"Order not found.");
+            return;
+        }
+
+        if (!"Completed".equalsIgnoreCase(order.getOrderStatus())) {
+            JOptionPane.showMessageDialog(this,"This is the next order in the FIFO queue, "+ "but it must be completed before payment.");
+            return;
+        }
+
+        currentOrderID = order.getOrderID();
+
+        orderNumberLabel.setText(String.format("ORD-%05d", order.getOrderID()));
+
+        if (order.getCompanyID() != null) {
+            
+            customerNameLabel.setText(order.getCompanyName());
+            
+        } else {
+            
+            customerNameLabel.setText(order.getFirstName() + " " + order.getLastName());
+            
+        }
+
+        serviceNameLabel.setText(order.getServiceName() + " - "+ order.getServiceSize());
+
+        quantityLabel.setText(String.valueOf(order.getQuantity()) + " " + order.getUnitType());
+
+        totalAmountLabel.setText(String.format("₱%.2f", order.getTotalAmount()));
+
+        payButton.setEnabled(true);
     }
-
-    PaymentConnector paymentConn = new PaymentConnector();
-
-    int nextOrderID = paymentConn.getNextFIFOOrderID();
-
-    if (nextOrderID == -1) {
-        JOptionPane.showMessageDialog(
-                this,
-                "There are no unpaid orders in the queue."
-        );
-        return;
-    }
-
-    if (searchedID != nextOrderID) {
-        JOptionPane.showMessageDialog(
-                this,
-                "FIFO rule: Please handle order "
-                + String.format("ORD-%05d", nextOrderID)
-                + " first.",
-                "Order Queue",
-                JOptionPane.WARNING_MESSAGE
-        );
-        return;
-    }
-
-    OrderConnector orderConn = new OrderConnector();
-    Order order = orderConn.getOrder(searchedID);
-
-    if (order == null) {
-        JOptionPane.showMessageDialog(
-                this,
-                "Order not found."
-        );
-        return;
-    }
-
-    if (!"Completed".equalsIgnoreCase(
-            order.getOrderStatus())) {
-
-        JOptionPane.showMessageDialog(
-                this,
-                "This is the next order in the FIFO queue, "
-                + "but it must be completed before payment."
-        );
-        return;
-    }
-
-    currentOrderID = order.getOrderID();
-
-    orderNumberLabel.setText(
-            String.format("ORD-%05d", order.getOrderID()));
-
-    if (order.getCompanyID() != null) {
-
-        customerNameLabel.setText(order.getCompanyName());
     
-    } else {
-
-        customerNameLabel.setText(order.getFirstName() + " " + order.getLastName());
-    }
-
-    serviceNameLabel.setText(
-            order.getServiceName() + " - "
-            + order.getServiceSize());
-
-    quantityLabel.setText(
-            String.valueOf(order.getQuantity()));
-
-    totalAmountLabel.setText(
-            String.format("₱%.2f", order.getTotalAmount()));
-
-    payButton.setEnabled(true);
-}
     public void displayDateTime() {
         
         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
@@ -177,6 +162,107 @@ public class Payment extends javax.swing.JInternalFrame {
         }
     }
     
+    private Paragraph centeredText(String text, Font font) {
+    Paragraph paragraph = new Paragraph(text, font);
+    paragraph.setAlignment(Element.ALIGN_CENTER);
+    return paragraph;
+}
+    
+    private void generateTally() {
+    LocalDate localDate = LocalDate.now();
+    LocalTime localTime = LocalTime.now();
+    LocalDateTime paymentDateTime = LocalDateTime.of(localDate, localTime);    
+    OrderConnector conn = new OrderConnector();
+    Order order = conn.getOrder(currentOrderID);
+    
+    
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setDialogTitle("Save Receipt");
+
+    String orderID = orderNumberLabel.getText();
+
+    fileChooser.setSelectedFile(new java.io.File("Receipt_" + orderID + ".pdf"));
+
+    int result = fileChooser.showSaveDialog(this);
+
+    if (result != JFileChooser.APPROVE_OPTION) {
+        return;
+    }
+
+    java.io.File file = fileChooser.getSelectedFile();
+
+    if (!file.getName().toLowerCase().endsWith(".pdf")) {
+        file = new java.io.File(file.getAbsolutePath() + ".pdf");
+    }
+
+    float width = 210 * 2.83465f;
+    float height = 297 * 2.83465f;
+
+    Rectangle tallySize = new Rectangle(width, height);
+
+    Document document = new Document(tallySize,10,10,10,10);
+
+    try {
+
+        PdfWriter.getInstance(
+            document,
+            new FileOutputStream(file)
+        );
+
+        document.open();
+        
+        Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD,16);
+
+        Font normalFont = FontFactory.getFont(FontFactory.HELVETICA,9);
+
+        Font smallFont = FontFactory.getFont(FontFactory.HELVETICA,8);
+
+        Font totalFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD,12);
+
+        Image logo = Image.getInstance("src/images/client_logo_noBG (2).png");
+
+        logo.scaleToFit(70, 70);
+        logo.setAlignment(Element.ALIGN_CENTER);
+
+        document.add(logo);
+
+        document.add(centeredText("KiNN CDO PRINTING SERVICE", titleFont));
+
+        document.add(centeredText("Official Receipt", normalFont));
+
+        document.add(centeredText("================================", smallFont));
+
+        document.add(centeredText("Order ID: " + orderNumberLabel.getText(), normalFont));
+
+        document.add(centeredText("Customer: " + customerNameLabel.getText(), normalFont));
+
+        document.add(centeredText("Date: " + paymentDateTime.toLocalDate(), normalFont));
+
+        document.add(centeredText("Service: " + order.getServiceName(), normalFont));
+
+        document.add(centeredText("Quantity: " + order.getQuantity(), normalFont));
+
+
+        document.add(centeredText("--------------------------------", smallFont));
+
+        document.add(centeredText("TOTAL", totalFont));
+
+        document.add(centeredText("₱" + order.getTotalAmount(), normalFont));
+
+        document.add(centeredText("================================", smallFont));
+
+        document.add(centeredText("THANK YOU FOR YOUR ORDER!", normalFont));
+
+        document.add(centeredText("Please come again.", smallFont));
+        document.close();
+
+        JOptionPane.showMessageDialog(this,"Tally saved successfully!","Tally Generated",JOptionPane.INFORMATION_MESSAGE);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,"Error generating tally:\n"+ e.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+    }
+}
+    
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -208,7 +294,7 @@ public class Payment extends javax.swing.JInternalFrame {
         jLabel14 = new javax.swing.JLabel();
         amountField = new javax.swing.JTextField();
         payButton = new javax.swing.JButton();
-        printReceiptButton = new javax.swing.JButton();
+        generateTallyButton = new javax.swing.JButton();
         changeLabel = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
@@ -238,33 +324,41 @@ public class Payment extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel4.setText("Customer");
+        jLabel4.setIconTextGap(10);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repairing-service-black-outline-22670_32.png"))); // NOI18N
         jLabel5.setText("Service");
+        jLabel5.setIconTextGap(10);
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/packages-3358_32.png"))); // NOI18N
         jLabel6.setText("Quantity");
+        jLabel6.setIconTextGap(10);
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/budget-calculator-and-dollar-sign-black-outline-18854_32.png"))); // NOI18N
         jLabel7.setText("Total Amount");
+        jLabel7.setIconTextGap(10);
 
-        orderNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        orderNumberLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         orderNumberLabel.setForeground(new java.awt.Color(0, 0, 0));
 
-        customerNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        customerNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         customerNameLabel.setForeground(new java.awt.Color(0, 0, 0));
 
-        serviceNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        serviceNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         serviceNameLabel.setForeground(new java.awt.Color(0, 0, 0));
 
-        quantityLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        quantityLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quantityLabel.setForeground(new java.awt.Color(0, 0, 0));
 
-        totalAmountLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        totalAmountLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         totalAmountLabel.setForeground(new java.awt.Color(0, 0, 0));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -273,26 +367,26 @@ public class Payment extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(totalAmountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quantityLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(serviceNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE)
-                                .addComponent(customerNameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(orderNumberLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(totalAmountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(serviceNameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                                .addComponent(quantityLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(customerNameLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(orderNumberLabel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 23, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,9 +422,11 @@ public class Payment extends javax.swing.JInternalFrame {
         jPanel3.setForeground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/transaction-14855_32.png"))); // NOI18N
         jLabel13.setText("Change");
+        jLabel13.setIconTextGap(10);
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 170, -1, 50));
 
         receiptTextArea.setBackground(new java.awt.Color(255, 255, 255));
@@ -341,13 +437,15 @@ public class Payment extends javax.swing.JInternalFrame {
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 20, 260, 300));
 
-        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/coin-dollar-2534_32.png"))); // NOI18N
         jLabel14.setText("Enter Amount");
+        jLabel14.setIconTextGap(10);
         jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, -1, 60));
 
         amountField.setBackground(new java.awt.Color(255, 255, 255));
-        amountField.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        amountField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         amountField.setForeground(new java.awt.Color(0, 0, 0));
         amountField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         amountField.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -360,21 +458,26 @@ public class Payment extends javax.swing.JInternalFrame {
         payButton.setBackground(new java.awt.Color(255, 153, 0));
         payButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         payButton.setForeground(new java.awt.Color(255, 255, 255));
+        payButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/money-dollar-6365_32.png"))); // NOI18N
         payButton.setText("Pay");
+        payButton.setIconTextGap(20);
         payButton.addActionListener(this::payButtonActionPerformed);
         jPanel3.add(payButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 240, 80));
 
-        printReceiptButton.setBackground(new java.awt.Color(0, 153, 153));
-        printReceiptButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        printReceiptButton.setForeground(new java.awt.Color(255, 255, 255));
-        printReceiptButton.setText("Print Receipt");
-        jPanel3.add(printReceiptButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 260, 80));
+        generateTallyButton.setBackground(new java.awt.Color(0, 153, 153));
+        generateTallyButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        generateTallyButton.setForeground(new java.awt.Color(255, 255, 255));
+        generateTallyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/printer-1434_32.png"))); // NOI18N
+        generateTallyButton.setText("Print Tally");
+        generateTallyButton.setIconTextGap(20);
+        generateTallyButton.addActionListener(this::generateTallyButtonActionPerformed);
+        jPanel3.add(generateTallyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 360, 260, 80));
 
-        changeLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        changeLabel.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         changeLabel.setForeground(new java.awt.Color(0, 0, 0));
         jPanel3.add(changeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 150, 50));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 660, 510));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 130, 660, 500));
 
         searchField.setBackground(new java.awt.Color(255, 255, 255));
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -383,9 +486,11 @@ public class Payment extends javax.swing.JInternalFrame {
         jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 280, 50));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
         jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(840, 50, 160, 50));
 
@@ -497,12 +602,17 @@ public class Payment extends javax.swing.JInternalFrame {
         calculateChange();
     }//GEN-LAST:event_amountFieldKeyReleased
 
+    private void generateTallyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generateTallyButtonActionPerformed
+       generateTally();
+    }//GEN-LAST:event_generateTallyButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField amountField;
     private javax.swing.JLabel changeLabel;
     private javax.swing.JLabel customerNameLabel;
     private javax.swing.JLabel dateLabel;
+    private javax.swing.JButton generateTallyButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -518,7 +628,6 @@ public class Payment extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel orderNumberLabel;
     private javax.swing.JButton payButton;
-    private javax.swing.JButton printReceiptButton;
     private javax.swing.JLabel quantityLabel;
     private javax.swing.JTextArea receiptTextArea;
     private javax.swing.JButton searchButton;

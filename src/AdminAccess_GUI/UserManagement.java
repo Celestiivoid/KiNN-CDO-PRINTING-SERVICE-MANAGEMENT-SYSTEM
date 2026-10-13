@@ -131,9 +131,11 @@ public class UserManagement extends javax.swing.JInternalFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 660, 450));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
         jPanel2.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1050, 10, 160, 50));
 
@@ -143,22 +145,30 @@ public class UserManagement extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel2.setText("First Name");
+        jLabel2.setIconTextGap(10);
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 180, 40));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel3.setText("Last Name");
+        jLabel3.setIconTextGap(10);
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-password-11924_32.png"))); // NOI18N
         jLabel4.setText("Password");
+        jLabel4.setIconTextGap(10);
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 240, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-1_32.png"))); // NOI18N
         jLabel5.setText("Contact Number");
+        jLabel5.setIconTextGap(10);
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 230, 40));
 
         firstNameField.setBackground(new java.awt.Color(255, 255, 255));
@@ -187,8 +197,10 @@ public class UserManagement extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/two-workers-or-engineers-black-outline-21264_32.png"))); // NOI18N
         jLabel6.setText("Role");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 70, 40));
+        jLabel6.setIconTextGap(10);
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 80, 40));
 
         roleLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         roleLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -203,7 +215,9 @@ public class UserManagement extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/chart-871_32.png"))); // NOI18N
         jLabel8.setText("Account Status");
+        jLabel8.setIconTextGap(10);
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 230, 40));
 
         statusBox.setBackground(new java.awt.Color(255, 255, 255));
@@ -215,9 +229,11 @@ public class UserManagement extends javax.swing.JInternalFrame {
         createButton.setBackground(new java.awt.Color(255, 102, 0));
         createButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         createButton.setForeground(new java.awt.Color(255, 255, 255));
-        createButton.setText("Create");
+        createButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-create-user-account-black-outline-circle-27273_32.png"))); // NOI18N
+        createButton.setText("Create Account");
+        createButton.setIconTextGap(10);
         createButton.addActionListener(this::createButtonActionPerformed);
-        jPanel3.add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 210, 60));
+        jPanel3.add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 430, -1, 60));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 520, 510));
 
@@ -227,11 +243,13 @@ public class UserManagement extends javax.swing.JInternalFrame {
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 140, 130));
 
         manageAccountButton.setBackground(new java.awt.Color(0, 153, 153));
-        manageAccountButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        manageAccountButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         manageAccountButton.setForeground(new java.awt.Color(255, 255, 255));
+        manageAccountButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/restart-loop-gray-arrow-24701_32 (1).png"))); // NOI18N
         manageAccountButton.setText("Update Accounts");
+        manageAccountButton.setIconTextGap(10);
         manageAccountButton.addActionListener(this::manageAccountButtonActionPerformed);
-        jPanel1.add(manageAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 40, 280, 60));
+        jPanel1.add(manageAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1000, 20, 240, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
 

@@ -273,4 +273,34 @@ public class CompanyConnector {
         }
     return null;
     }
+    
+    
+    public boolean updateCompany(
+           int companyID,
+           String companyName,
+           String contactNumber,
+           String emailAddress) {
+        
+        String sql = "UPDATE tbl_companies "
+                   + "SET company_name = ?, "
+                   + "company_contact = ?, "
+                   + "company_email = ? "
+                   + "WHERE company_id = ?";
+        
+        try(Connection conn = DBConnection.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, companyName);
+            pstmt.setString(2, contactNumber);
+            pstmt.setString(3, emailAddress);
+            pstmt.setInt(4, companyID);
+            
+            int update = pstmt.executeUpdate();
+            
+            return update > 0;
+        } catch (SQLException error) {
+            System.out.println("Error updating company: " + error.getMessage());
+            return false;
+        }
+    }
 }

@@ -14,6 +14,7 @@ public class Order {
     private Integer companyID;
 
     private int quantity;
+    private String unitType;
 
     private double unitPrice;
     private double subtotal;
@@ -61,6 +62,10 @@ public class Order {
     
     public int getQuantity() {
         return quantity;
+    }
+    
+    public String getUnitType() {
+        return unitType;
     }
     
     public double getUnitPrice() {
@@ -158,6 +163,10 @@ public class Order {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+    
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
+    } 
     
     public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;

@@ -4,11 +4,8 @@
  */
 package customer_GUI;
 
-import company_GUI.*;
 import Database.CompanyConnector;
 import Database.CustomerConnector;
-import order_GUI.*;
-import Database.OrderConnector;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,7 +28,7 @@ public class CustomerList extends javax.swing.JInternalFrame {
     }
     
     public void loadTable() {
-        DefaultTableModel orderModel = (DefaultTableModel) companyTable.getModel();
+        DefaultTableModel orderModel = (DefaultTableModel) customerTable.getModel();
         
         orderModel.setRowCount(0);
         
@@ -44,11 +41,16 @@ public class CustomerList extends javax.swing.JInternalFrame {
         }
     }
     
-    private void searchOrdersTable() {
+    private void searchCustomerTable() {
 
         String search = searchField.getText().trim();
+        
+        if(search.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Please input information to search","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-        DefaultTableModel model = (DefaultTableModel) companyTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) customerTable.getModel();
 
         model.setRowCount(0);
 
@@ -73,7 +75,7 @@ public class CustomerList extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         searchField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        companyTable = new javax.swing.JTable();
+        customerTable = new javax.swing.JTable();
         searchButton = new javax.swing.JButton();
         displayAll = new javax.swing.JButton();
         archiveButton = new javax.swing.JButton();
@@ -91,7 +93,7 @@ public class CustomerList extends javax.swing.JInternalFrame {
         searchField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 430, 50));
 
-        companyTable.setModel(new javax.swing.table.DefaultTableModel(
+        customerTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
                 {null, null, null, null, null},
@@ -102,35 +104,54 @@ public class CustomerList extends javax.swing.JInternalFrame {
                 "Customer ID", "First Name", "Last Name", "Contact Number", "Email Address"
             }
         ));
-        jScrollPane1.setViewportView(companyTable);
+        jScrollPane1.setViewportView(customerTable);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1230, 610));
 
-        searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setBackground(new java.awt.Color(255, 255, 255));
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(0, 0, 0));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32.png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 140, 50));
+        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 150, 50));
 
-        displayAll.setBackground(new java.awt.Color(0, 153, 153));
-        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayAll.setForeground(new java.awt.Color(255, 255, 255));
+        displayAll.setBackground(new java.awt.Color(255, 255, 255));
+        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        displayAll.setForeground(new java.awt.Color(0, 0, 0));
+        displayAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/users-267_32.png"))); // NOI18N
         displayAll.setText("Display All");
+        displayAll.setIconTextGap(5);
         displayAll.addActionListener(this::displayAllActionPerformed);
-        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 140, 50));
+        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 150, 50));
 
+        archiveButton.setBackground(new java.awt.Color(255, 255, 255));
+        archiveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        archiveButton.setForeground(new java.awt.Color(0, 0, 0));
+        archiveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove-folder-11486_32.png"))); // NOI18N
         archiveButton.setText("Archive");
+        archiveButton.setIconTextGap(10);
         archiveButton.addActionListener(this::archiveButtonActionPerformed);
-        jPanel1.add(archiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 140, 50));
+        jPanel1.add(archiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 20, 150, 50));
 
+        viewArchiveButton.setBackground(new java.awt.Color(255, 255, 255));
+        viewArchiveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        viewArchiveButton.setForeground(new java.awt.Color(0, 0, 0));
+        viewArchiveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye-12109_32.png"))); // NOI18N
         viewArchiveButton.setText("View Archive");
+        viewArchiveButton.setIconTextGap(5);
         viewArchiveButton.addActionListener(this::viewArchiveButtonActionPerformed);
-        jPanel1.add(viewArchiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, 140, 50));
+        jPanel1.add(viewArchiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 20, -1, 50));
 
+        backButton.setBackground(new java.awt.Color(153, 153, 153));
+        backButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 0, 0));
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/left-curved-arrow-7982_32.png"))); // NOI18N
         backButton.setText("Back");
+        backButton.setIconTextGap(15);
         backButton.addActionListener(this::backButtonActionPerformed);
-        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 20, 140, 50));
+        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 20, 150, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
 
@@ -142,7 +163,7 @@ public class CustomerList extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_displayAllActionPerformed
 
     private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchButtonActionPerformed
-        searchOrdersTable();
+        searchCustomerTable();
     }//GEN-LAST:event_searchButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
@@ -151,33 +172,35 @@ public class CustomerList extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void archiveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_archiveButtonActionPerformed
-        int selectedRow = companyTable.getSelectedRow();
+        int selectedRow = customerTable.getSelectedRow();
 
         if(selectedRow == -1) {
             JOptionPane.showMessageDialog(this,"Please select a customer to archive.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        String companyID = companyTable.getValueAt(selectedRow, 0).toString();
+        String companyID = customerTable.getValueAt(selectedRow, 0).toString();
 
-        int convertedCompanyID = Integer.parseInt(companyID.replace("COMP-", ""));
+        int convertedCustomerID = Integer.parseInt(companyID.replace("CUST-", ""));
 
-        String companyName = companyTable.getValueAt(selectedRow, 1).toString();
+        String firstName = customerTable.getValueAt(selectedRow, 1).toString();
 
-        String contactNumber = companyTable.getValueAt(selectedRow, 2).toString();
+        String lastName = customerTable.getValueAt(selectedRow, 2).toString();
         
-        String emailAddress = companyTable.getValueAt(selectedRow, 3).toString();
+        String contactNumber = customerTable.getValueAt(selectedRow, 3).toString();
+        
+        String emailAddress = customerTable.getValueAt(selectedRow, 4).toString();
 
-        int confirmation = JOptionPane.showConfirmDialog(this,"Are you sure you want to archive " + companyName + "?","Archive confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
+        int confirmation = JOptionPane.showConfirmDialog(this,"Are you sure you want to archive " + firstName + " " + lastName + "?","Archive confirmation",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
 
         if(confirmation == JOptionPane.YES_OPTION) {
 
-            CompanyConnector comp = new CompanyConnector();
+            CustomerConnector ctm = new CustomerConnector();
             
-            boolean archived = comp.archiveCompany(convertedCompanyID);
+            boolean archived = ctm.archiveCustomer(convertedCustomerID);
 
             if(archived) {
-                JOptionPane.showMessageDialog(this,companyName + " has been archived successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this,firstName + " " + lastName + " has been archived successfully!","Success",JOptionPane.INFORMATION_MESSAGE);
                 loadTable();
             }
             else {
@@ -196,7 +219,7 @@ public class CustomerList extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton archiveButton;
     private javax.swing.JButton backButton;
-    private javax.swing.JTable companyTable;
+    private javax.swing.JTable customerTable;
     private javax.swing.JButton displayAll;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

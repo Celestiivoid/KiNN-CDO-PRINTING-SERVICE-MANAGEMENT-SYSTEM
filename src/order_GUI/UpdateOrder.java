@@ -96,7 +96,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         serviceBox.removeAll();
         
         for(Service svc : services) {
-            serviceBox.addItem(svc.getServiceName() + " - " + svc.getServiceSize());
+            serviceBox.addItem(svc.getServiceName() + " - " + svc.getServiceSize() + " By " + svc.getServiceUnit());
         }
         
         serviceBox.addActionListener( e -> {
@@ -114,7 +114,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
             serviceID = selectedService.getServiceID();
             
             for(Service svc : services) {
-                String displayedService = svc.getServiceName() + " - " + svc.getServiceSize();
+                String displayedService = svc.getServiceName() + " - " + svc.getServiceSize() + " By " + svc.getServiceUnit();
                 
                 if(displayedService.equals(selectedItem)) {
                     priceUnitLabel.setText(String.format("%.2f", svc.getServicePrice()));
@@ -176,6 +176,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         priceUnitLabel = new javax.swing.JLabel();
         totalAfterDiscountLabel = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         orderStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
@@ -236,12 +237,16 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel4.setText("First Name");
+        jLabel4.setIconTextGap(10);
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 168, 310, 39));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel5.setText("Last Name");
+        jLabel5.setIconTextGap(10);
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(533, 168, 310, 39));
 
         firstNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -254,12 +259,16 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-1_32.png"))); // NOI18N
         jLabel8.setText("Contact Number");
+        jLabel8.setIconTextGap(10);
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 250, 310, 36));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mail-142_32.png"))); // NOI18N
         jLabel9.setText("Email Address");
+        jLabel9.setIconTextGap(10);
         jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, 310, 36));
 
         ctNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -272,24 +281,28 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repairing-service-black-outline-22670_32.png"))); // NOI18N
         jLabel12.setText("Select Service");
+        jLabel12.setIconTextGap(10);
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 342, 310, 41));
 
         serviceBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         serviceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Select service ---" }));
         serviceBox.addActionListener(this::serviceBoxActionPerformed);
-        jPanel3.add(serviceBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 390, 180, 47));
+        jPanel3.add(serviceBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 390, 230, 47));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/packages-3358_32.png"))); // NOI18N
         jLabel13.setText("Quantity");
+        jLabel13.setIconTextGap(10);
         jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, 310, 41));
 
         quantityField.setBackground(new java.awt.Color(255, 255, 255));
         quantityField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         quantityField.setForeground(new java.awt.Color(0, 0, 0));
         quantityField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 190, 47));
+        jPanel3.add(quantityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 480, 210, 47));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -298,31 +311,36 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Price/Unit:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 98, 37));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 98, 37));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Total: ");
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 63, -1, -1));
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
 
         priceUnitLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         priceUnitLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel2.add(priceUnitLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 188, 37));
+        jPanel2.add(priceUnitLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(168, 20, 140, 37));
 
         totalAfterDiscountLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         totalAfterDiscountLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel2.add(totalAfterDiscountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(68, 63, 238, 25));
+        jPanel2.add(totalAfterDiscountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(126, 58, 180, 30));
 
-        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 160, 320, 130));
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/price-tag-9701_32.png"))); // NOI18N
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 40, 40));
+
+        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 160, 320, 120));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/progress-bar-6718_32.png"))); // NOI18N
         jLabel14.setText("Order Status");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(19, 448, 310, -1));
+        jLabel14.setIconTextGap(10);
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, 310, -1));
 
         orderStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--- Select Status ---", "PENDING", "PROCESSING", "COMPLETED", "CANCELLED" }));
-        jPanel3.add(orderStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, 180, 45));
+        jPanel3.add(orderStatusBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 480, 230, 45));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 0, 0));
@@ -344,11 +362,11 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         serviceLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         serviceLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(serviceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 150, 47));
+        jPanel3.add(serviceLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, 200, 47));
 
         orderStatusLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         orderStatusLabel.setForeground(new java.awt.Color(0, 0, 0));
-        jPanel3.add(orderStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 152, 45));
+        jPanel3.add(orderStatusLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 200, 45));
 
         quantityLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         quantityLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -356,7 +374,9 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/building-1062_32.png"))); // NOI18N
         jLabel6.setText("Company Name");
+        jLabel6.setIconTextGap(10);
         jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
 
         companyLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -403,18 +423,22 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
                 lastNameLabel.setText("");
 
                 companyLabel.setText(order.getCompanyName());
+                ctNumberLabel.setText(order.getCompanyNumber());
+                emAddressLabel.setText(order.getCompanyEmail());
 
             } else {
 
 
                 firstNameLabel.setText(order.getFirstName());
                 lastNameLabel.setText(order.getLastName());
+                ctNumberLabel.setText(order.getPhoneNumber());
+                emAddressLabel.setText(order.getEmailAddress());
 
                 companyLabel.setText("");
             }
 
             quantityLabel.setText(String.valueOf(order.getQuantity()));
-            serviceLabel.setText(order.getServiceName() + " - " + order.getServiceSize());
+            serviceLabel.setText(order.getServiceName() + " - " + order.getServiceSize() + " By " + order.getUnitType());
             orderStatusLabel.setText(order.getOrderStatus());
             priceUnitLabel.setText(String.format("%.2f", order.getUnitPrice()));
             totalAfterDiscountLabel.setText(String.format("%.2f", order.getTotalAmount()));
@@ -527,6 +551,7 @@ public class UpdateOrder extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

@@ -88,7 +88,8 @@ public class CompanyList extends javax.swing.JInternalFrame {
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         searchField.setForeground(new java.awt.Color(0, 0, 0));
         searchField.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 430, 50));
+        searchField.addActionListener(this::searchFieldActionPerformed);
+        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 370, 50));
 
         companyTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -105,31 +106,50 @@ public class CompanyList extends javax.swing.JInternalFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1230, 610));
 
-        searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setBackground(new java.awt.Color(255, 255, 255));
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(0, 0, 0));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32.png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 140, 50));
+        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 160, 50));
 
-        displayAll.setBackground(new java.awt.Color(0, 153, 153));
-        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayAll.setForeground(new java.awt.Color(255, 255, 255));
+        displayAll.setBackground(new java.awt.Color(255, 255, 255));
+        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        displayAll.setForeground(new java.awt.Color(0, 0, 0));
+        displayAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/flat-4722_32.png"))); // NOI18N
         displayAll.setText("Display All");
+        displayAll.setIconTextGap(10);
         displayAll.addActionListener(this::displayAllActionPerformed);
-        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 20, 140, 50));
+        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 160, 50));
 
+        archiveButton.setBackground(new java.awt.Color(255, 255, 255));
+        archiveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        archiveButton.setForeground(new java.awt.Color(0, 0, 0));
+        archiveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove-folder-11486_32.png"))); // NOI18N
         archiveButton.setText("Archive");
+        archiveButton.setIconTextGap(10);
         archiveButton.addActionListener(this::archiveButtonActionPerformed);
-        jPanel1.add(archiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 140, 50));
+        jPanel1.add(archiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 160, 50));
 
+        viewArchiveButton.setBackground(new java.awt.Color(255, 255, 255));
+        viewArchiveButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        viewArchiveButton.setForeground(new java.awt.Color(0, 0, 0));
+        viewArchiveButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye-12109_32.png"))); // NOI18N
         viewArchiveButton.setText("View Archive");
+        viewArchiveButton.setIconTextGap(10);
         viewArchiveButton.addActionListener(this::viewArchiveButtonActionPerformed);
-        jPanel1.add(viewArchiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 20, 140, 50));
+        jPanel1.add(viewArchiveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 20, 160, 50));
 
+        backButton.setBackground(new java.awt.Color(153, 153, 153));
+        backButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 0, 0));
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh-3104_32.png"))); // NOI18N
         backButton.setText("Back");
+        backButton.setIconTextGap(10);
         backButton.addActionListener(this::backButtonActionPerformed);
-        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 20, 140, 50));
+        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 170, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
 
@@ -153,7 +173,7 @@ public class CompanyList extends javax.swing.JInternalFrame {
         int selectedRow = companyTable.getSelectedRow();
 
         if(selectedRow == -1) {
-            JOptionPane.showMessageDialog(this,"Please select a customer to archive.","Warning",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this,"Please select a company to archive.","Warning",JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -180,7 +200,7 @@ public class CompanyList extends javax.swing.JInternalFrame {
                 loadTable();
             }
             else {
-                JOptionPane.showMessageDialog(this,"Error in archiving customer.","Database error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,"Error in archiving company.","Database error",JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -190,6 +210,10 @@ public class CompanyList extends javax.swing.JInternalFrame {
         ArchivedCompanyList arc = new ArchivedCompanyList(welcomeName,userRole,mainFrame);
         mainFrame.showFrame(arc);
     }//GEN-LAST:event_viewArchiveButtonActionPerformed
+
+    private void searchFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchFieldActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

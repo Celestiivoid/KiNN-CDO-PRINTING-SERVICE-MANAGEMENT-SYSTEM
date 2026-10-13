@@ -2,11 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
-package company_GUI;
+package customer_GUI;
 
-import customer_GUI.*;
-import company_GUI.*;
-import Database.CompanyConnector;
 import Database.CustomerConnector;
 import order_GUI.*;
 import Database.OrderConnector;
@@ -106,23 +103,32 @@ public class CustomerListOrder extends javax.swing.JInternalFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1230, 610));
 
-        searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setBackground(new java.awt.Color(255, 255, 255));
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        searchButton.setForeground(new java.awt.Color(0, 0, 0));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32.png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(15);
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 140, 50));
+        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 150, 50));
 
-        displayAll.setBackground(new java.awt.Color(0, 153, 153));
-        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        displayAll.setForeground(new java.awt.Color(255, 255, 255));
+        displayAll.setBackground(new java.awt.Color(255, 255, 255));
+        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        displayAll.setForeground(new java.awt.Color(0, 0, 0));
+        displayAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/users-267_32.png"))); // NOI18N
         displayAll.setText("Display All");
+        displayAll.setIconTextGap(15);
         displayAll.addActionListener(this::displayAllActionPerformed);
-        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 140, 50));
+        jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 20, 150, 50));
 
+        backButton.setBackground(new java.awt.Color(153, 153, 153));
+        backButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        backButton.setForeground(new java.awt.Color(0, 0, 0));
+        backButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/left-curved-arrow-7982_32.png"))); // NOI18N
         backButton.setText("Back");
+        backButton.setIconTextGap(15);
         backButton.addActionListener(this::backButtonActionPerformed);
-        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 20, 140, 50));
+        jPanel1.add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1100, 20, 150, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
 

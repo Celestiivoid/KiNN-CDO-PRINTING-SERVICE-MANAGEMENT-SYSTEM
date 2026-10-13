@@ -170,7 +170,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="2" name="C:\Users\User\Downloads\add-create-user-account-black-circle-27274_128.png"/>
+                  <Image iconType="3" name="/images/hotel-9216_128.png"/>
                 </Property>
               </Properties>
             </Component>
@@ -209,13 +209,6 @@
                                               <Component id="jLabel5" pref="252" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel6" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
-                                              <Component id="emailAddressField" alignment="0" min="-2" pref="252" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="resetButton" min="-2" pref="181" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
@@ -225,6 +218,14 @@
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="jLabel6" min="-2" pref="252" max="-2" attributes="0"/>
+                              <Component id="emailAddressField" min="-2" pref="252" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -243,11 +244,11 @@
                               <Component id="companyNameField" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                               <Component id="contactNumberField" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                           <Component id="jLabel6" min="-2" pref="37" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="emailAddressField" min="-2" pref="36" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
                               <Component id="saveCustomerButton" pref="50" max="32767" attributes="0"/>
                               <Component id="resetButton" max="32767" attributes="0"/>
@@ -278,7 +279,7 @@
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\User\Downloads\user-6767_32.png"/>
+                      <Image iconType="3" name="/images/building-1062_32.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Company Name"/>
                     <Property name="iconTextGap" type="int" value="15"/>
@@ -293,7 +294,7 @@
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\User\Downloads\user-6767_32.png"/>
+                      <Image iconType="3" name="/images/phone-1_32.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Contact Number"/>
                     <Property name="iconTextGap" type="int" value="15"/>
@@ -341,7 +342,7 @@
                       <Color blue="0" green="0" red="0" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="2" name="C:\Users\User\Downloads\phone-1_32.png"/>
+                      <Image iconType="3" name="/images/mail-142_32.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Email Address"/>
                     <Property name="iconTextGap" type="int" value="15"/>
@@ -448,7 +449,11 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/images/left-curved-arrow-7982_32.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Back"/>
+                <Property name="iconTextGap" type="int" value="10"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>

@@ -217,36 +217,35 @@ public class UserConnector {
 
     public User getUser(int userID) {
 
-    String sql = "SELECT user_id, first_name, last_name, "
+        String sql = "SELECT user_id, first_name, last_name, "
                + "contactNumber, password, role, account_status "
                + "FROM tbl_users "
                + "WHERE user_id = ?";
 
-    try (Connection conn = DBConnection.connect();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DBConnection.connect();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        pstmt.setInt(1, userID);
+            pstmt.setInt(1, userID);
 
-        try (ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                User user = new User();
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    User user = new User();
 
-                user.setUserID(rs.getInt("user_id"));
-                user.setFirstName(rs.getString("first_name"));
-                user.setLastName(rs.getString("last_name"));
-                user.setContactNumber(rs.getString("contactNumber"));
-                user.setPassword(rs.getString("password"));
-                user.setRole(rs.getString("role"));
-                user.setAccountStatus(rs.getString("account_status"));
+                    user.setUserID(rs.getInt("user_id"));
+                    user.setFirstName(rs.getString("first_name"));
+                    user.setLastName(rs.getString("last_name"));
+                    user.setContactNumber(rs.getString("contactNumber"));
+                    user.setPassword(rs.getString("password"));
+                    user.setRole(rs.getString("role"));
+                    user.setAccountStatus(rs.getString("account_status"));
 
-                return user;
+                    return user;
+                }
             }
+
+        } catch (SQLException error) {
+            System.out.println("Error loading user: " + error.getMessage());
         }
-
-    } catch (SQLException error) {
-        System.out.println("Error loading user: " + error.getMessage());
+        return null;
     }
-
-    return null;
-}
 }

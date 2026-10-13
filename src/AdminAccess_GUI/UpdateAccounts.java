@@ -132,9 +132,11 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 70, 660, 450));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
         jPanel2.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(890, 10, 160, 50));
 
@@ -144,22 +146,30 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel2.setText("First Name");
+        jLabel2.setIconTextGap(10);
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 180, 40));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel3.setText("Last Name");
+        jLabel3.setIconTextGap(10);
         jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 200, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/login-password-11924_32.png"))); // NOI18N
         jLabel4.setText("Password");
+        jLabel4.setIconTextGap(10);
         jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 240, 40));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-1_32.png"))); // NOI18N
         jLabel5.setText("Contact Number");
+        jLabel5.setIconTextGap(10);
         jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, 230, 40));
 
         firstNameField.setBackground(new java.awt.Color(255, 255, 255));
@@ -188,8 +198,10 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/two-workers-or-engineers-black-outline-21264_32.png"))); // NOI18N
         jLabel6.setText("Role");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 70, 40));
+        jLabel6.setIconTextGap(10);
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 80, 40));
 
         roleLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         roleLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -197,7 +209,9 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/chart-871_32.png"))); // NOI18N
         jLabel8.setText("Account Status");
+        jLabel8.setIconTextGap(10);
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 330, 230, 40));
 
         statusBox.setBackground(new java.awt.Color(255, 255, 255));
@@ -209,16 +223,20 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
         createButton.setBackground(new java.awt.Color(255, 102, 0));
         createButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         createButton.setForeground(new java.awt.Color(255, 255, 255));
-        createButton.setText("Create");
+        createButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh-black-outline-circle-arrow-20666_32.png"))); // NOI18N
+        createButton.setText("Update Account");
+        createButton.setIconTextGap(10);
         createButton.addActionListener(this::createButtonActionPerformed);
-        jPanel3.add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 430, 210, 60));
+        jPanel3.add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 430, 260, 60));
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 520, 510));
 
         jButton1.setBackground(new java.awt.Color(0, 153, 153));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/users-267_32 (1).png"))); // NOI18N
         jButton1.setText("Display All");
+        jButton1.setIconTextGap(10);
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(1060, 10, 150, 50));
 
@@ -229,10 +247,12 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
 
         manageAccountButton.setBackground(new java.awt.Color(153, 153, 153));
         manageAccountButton.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        manageAccountButton.setForeground(new java.awt.Color(255, 255, 255));
+        manageAccountButton.setForeground(new java.awt.Color(0, 0, 0));
+        manageAccountButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/left-curved-arrow-7982_32.png"))); // NOI18N
         manageAccountButton.setText("Back");
+        manageAccountButton.setIconTextGap(10);
         manageAccountButton.addActionListener(this::manageAccountButtonActionPerformed);
-        jPanel1.add(manageAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 40, 180, 60));
+        jPanel1.add(manageAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(1070, 20, 180, 60));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 710));
 
@@ -251,42 +271,33 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
 
             if (this.userID <= 0) {
                   throw new NumberFormatException();
-    }
+            }
 
-    UserConnector userDAO = new UserConnector();
-    User user = userDAO.getUser(this.userID);
+            UserConnector userDAO = new UserConnector();
+            User user = userDAO.getUser(this.userID);
 
-    if (user != null) {
-        firstNameField.setText(user.getFirstName());
-        lastNameField.setText(user.getLastName());
-        ctNumberField.setText(user.getContactNumber());
+            if (user != null) {
+                firstNameField.setText(user.getFirstName());
+        
+                lastNameField.setText(user.getLastName());
+        
+                ctNumberField.setText(user.getContactNumber());
+        
+                passwordField.setText("");
 
-        // Leave the password blank for security.
-        passwordField.setText("");
+                roleLabel.setText(user.getRole());
+        
+                statusBox.setSelectedItem(user.getAccountStatus());
+        
+                searchUser();
 
-        roleLabel.setText(user.getRole());
-        statusBox.setSelectedItem(user.getAccountStatus());
+            } else {
+                JOptionPane.showMessageDialog(this,"User not found!","Invalid Search",JOptionPane.WARNING_MESSAGE);
+            }
 
-        // Refresh the table using your existing method.
-        searchUser();
-
-    } else {
-        JOptionPane.showMessageDialog(
-            this,
-            "User not found!",
-            "Invalid Search",
-            JOptionPane.WARNING_MESSAGE
-        );
-    }
-
-} catch (NumberFormatException error) {
-    JOptionPane.showMessageDialog(
-        this,
-        "Enter a valid User ID, such as USER-00001.",
-        "Invalid ID",
-        JOptionPane.WARNING_MESSAGE
-    );
-}
+        } catch (NumberFormatException error) {
+            JOptionPane.showMessageDialog(this,"Enter a valid User ID, such as USER-00001.","Invalid ID",JOptionPane.WARNING_MESSAGE);
+        }
 
     }//GEN-LAST:event_searchButtonActionPerformed
 
@@ -295,51 +306,27 @@ public class UpdateAccounts extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_searchFieldActionPerformed
 
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
+        String firstName = firstNameField.getText().trim();
+        String lastName = lastNameField.getText().trim();
+        String contactNumber = ctNumberField.getText().trim();
+        String password = passwordField.getText();
+        String role = roleLabel.getText().trim();
+        String status = (String) statusBox.getSelectedItem();
+        
+        if ("Administrator".equalsIgnoreCase(role) && "INACTIVE".equalsIgnoreCase(status)) {
+            JOptionPane.showMessageDialog(this,"Cannot deactivate administrator account.","Warning!",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-String firstName = firstNameField.getText().trim();
-String lastName = lastNameField.getText().trim();
-String contactNumber = ctNumberField.getText().trim();
-String password = passwordField.getText();
-String role = roleLabel.getText().trim();
-String status = (String) statusBox.getSelectedItem();
+        UserConnector userUpdate = new UserConnector();
 
-// Validate before updating
-if ("Administrator".equalsIgnoreCase(role)
-        && "INACTIVE".equalsIgnoreCase(status)) {
+        boolean updated = userUpdate.updateUser(userID,firstName,lastName,password,contactNumber,status);
 
-    JOptionPane.showMessageDialog(
-        this,
-        "Cannot deactivate administrator account.",
-        "Warning!",
-        JOptionPane.WARNING_MESSAGE
-    );
-    return;
-}
-
-UserConnector userUpdate = new UserConnector();
-
-boolean updated = userUpdate.updateUser(
-    userID,
-    firstName,
-    lastName,
-    password,
-    contactNumber,
-    status
-);
-
-if (updated) {
-    JOptionPane.showMessageDialog(
-        this,
-        "Successfully updated " + firstName + " " + lastName + "!"
-    );
-} else {
-    JOptionPane.showMessageDialog(
-        this,
-        "Error updating user!",
-        "Error!",
-        JOptionPane.ERROR_MESSAGE
-    );
-}
+        if (updated) {
+            JOptionPane.showMessageDialog(this,"Successfully updated " + firstName + " " + lastName + "!");
+        } else {
+            JOptionPane.showMessageDialog(this,"Error updating user!","Error!",JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_createButtonActionPerformed
 
     private void manageAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageAccountButtonActionPerformed

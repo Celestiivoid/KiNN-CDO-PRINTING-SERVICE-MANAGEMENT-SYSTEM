@@ -104,8 +104,8 @@ public class COPType extends javax.swing.JFrame {
      *
      * 1 mm = 2.83465 PDF points
      */
-    float width = 80 * 2.83465f;
-    float height = 200 * 2.83465f;
+    float width = 210 * 2.83465f;
+    float height = 297 * 2.83465f;
 
     Rectangle receiptSize = new Rectangle(width, height);
 
@@ -162,7 +162,7 @@ public class COPType extends javax.swing.JFrame {
         // =========================
 
         Image logo = Image.getInstance(
-            "src/images/client_logo.jpg"
+            "src/images/Client_logo_noBG (2).png"
         );
 
         logo.scaleToFit(70, 70);

@@ -12,7 +12,7 @@ import Utility.Customer;
 import Utility.DateAndTimeHandler;
 import Utility.Service;
 import company_GUI.CompanyOrderFrame;
-import company_GUI.CustomerListOrder;
+import customer_GUI.CustomerListOrder;
 import customer_GUI.CustomerList;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -99,7 +99,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         serviceBox.removeAll();
         
         for(Service svc : services) {
-            serviceBox.addItem(svc.getServiceName() + " - " + svc.getServiceSize());
+            serviceBox.addItem(svc.getServiceName() + " - " + svc.getServiceSize() + " By " + svc.getServiceUnit());
         }
         
         serviceBox.addActionListener( e -> {
@@ -117,7 +117,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
             serviceID = selectedService.getServiceID();
             
             for(Service svc : services) {
-                String displayedService = svc.getServiceName() + " - " + svc.getServiceSize();
+                String displayedService = svc.getServiceName() + " - " + svc.getServiceSize() + " By " + svc.getServiceUnit();
                 
                 if(displayedService.equals(selectedItem)) {
                     priceUnitLabel.setText(String.format("%.2f", svc.getServicePrice()));
@@ -179,6 +179,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         priceUnitLabel = new javax.swing.JLabel();
         totalLabel = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         orderStatusBox = new javax.swing.JComboBox<>();
         jLabel18 = new javax.swing.JLabel();
@@ -205,7 +206,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         localTime.setBorder(null);
         jPanel1.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1025, 80, 225, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\rgb-colors-10810_128.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-to-cart-3046_128 (1).png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 10, 130, 130));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -218,7 +219,9 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 22)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel3.setText("Customer Information");
+        jLabel3.setIconTextGap(10);
 
         searchField.setBackground(new java.awt.Color(255, 255, 255));
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -228,16 +231,22 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel4.setText("First Name");
+        jLabel4.setIconTextGap(10);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/user-6767_32.png"))); // NOI18N
         jLabel5.setText("Last Name");
+        jLabel5.setIconTextGap(10);
 
         firstNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         firstNameLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -247,11 +256,15 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-1_32.png"))); // NOI18N
         jLabel8.setText("Contact Number");
+        jLabel8.setIconTextGap(10);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/mail-142_32.png"))); // NOI18N
         jLabel9.setText("Email Address");
+        jLabel9.setIconTextGap(10);
 
         ctNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         ctNumberLabel.setForeground(new java.awt.Color(0, 0, 0));
@@ -261,7 +274,9 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/repairing-service-black-outline-22670_32.png"))); // NOI18N
         jLabel12.setText("Select Service");
+        jLabel12.setIconTextGap(10);
 
         serviceBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         serviceBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select service..." }));
@@ -269,7 +284,9 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/packages-3358_32.png"))); // NOI18N
         jLabel13.setText("Quantity");
+        jLabel13.setIconTextGap(10);
 
         quantityField.setBackground(new java.awt.Color(255, 255, 255));
         quantityField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
@@ -278,56 +295,34 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Price/Unit:");
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 98, 37));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 0, 0));
         jLabel17.setText("Total:");
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, -1, -1));
 
         priceUnitLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         priceUnitLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel2.add(priceUnitLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 132, 20));
 
         totalLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         totalLabel.setForeground(new java.awt.Color(0, 0, 0));
+        jPanel2.add(totalLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 60, 170, 25));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(priceUnitLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel17)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(totalLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(priceUnitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel17)
-                    .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(126, 126, 126))
-        );
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/price-tag-9701_32.png"))); // NOI18N
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 40, 50));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/progress-bar-6718_32.png"))); // NOI18N
         jLabel14.setText("Order Status");
+        jLabel14.setIconTextGap(10);
 
         orderStatusBox.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         orderStatusBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select order status...", "PENDING", "PROCESSING" }));
@@ -339,25 +334,33 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
         customerListButton.setBackground(new java.awt.Color(0, 153, 153));
         customerListButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         customerListButton.setForeground(new java.awt.Color(255, 255, 255));
+        customerListButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/users-267_32 (1).png"))); // NOI18N
         customerListButton.setText("Customer List");
+        customerListButton.setIconTextGap(10);
         customerListButton.addActionListener(this::customerListButtonActionPerformed);
 
         placeOrderButton.setBackground(new java.awt.Color(255, 153, 0));
-        placeOrderButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        placeOrderButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         placeOrderButton.setForeground(new java.awt.Color(255, 255, 255));
+        placeOrderButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-to-cart-3046_32 (2).png"))); // NOI18N
         placeOrderButton.setText("Place Order");
+        placeOrderButton.setIconTextGap(10);
         placeOrderButton.addActionListener(this::placeOrderButtonActionPerformed);
 
         clearButton.setBackground(new java.awt.Color(251, 55, 55));
-        clearButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        clearButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         clearButton.setForeground(new java.awt.Color(255, 255, 255));
+        clearButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/trash-can-10416_32.png"))); // NOI18N
         clearButton.setText("Clear");
+        clearButton.setIconTextGap(10);
         clearButton.addActionListener(this::clearButtonActionPerformed);
 
         companyButton.setBackground(new java.awt.Color(0, 153, 153));
         companyButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         companyButton.setForeground(new java.awt.Color(255, 255, 255));
+        companyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/factory-1067_32 (2).png"))); // NOI18N
         companyButton.setText("Place as Company");
+        companyButton.setIconTextGap(6);
         companyButton.addActionListener(this::companyButtonActionPerformed);
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -397,27 +400,32 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(orderStatusBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(204, 204, 204)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
-                            .addComponent(emAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(quantityField))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lastNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, 310, Short.MAX_VALUE)
+                                    .addComponent(emAddressLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(quantityField))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(133, 133, 133)))))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel3Layout.createSequentialGroup()
                             .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(companyButton, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(29, 29, 29))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(customerListButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(companyButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -428,9 +436,10 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                     .addComponent(customerListButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
-                    .addComponent(companyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(companyButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -470,11 +479,11 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(74, 74, 74)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(149, 149, 149)
+                        .addGap(94, 94, 94)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(placeOrderButton, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 146, 1250, 550));
@@ -523,9 +532,6 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private void placeOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_placeOrderButtonActionPerformed
         int convertedQuantity;
         double convertedPrice;
-        double convertedSubtotal;
-        double convertedPercentage;
-        double convertedDiscountAmount;
         double convertedTotalAmount;
         
         int userID = userSession.getUserId();
@@ -636,6 +642,7 @@ public class NewOrderFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

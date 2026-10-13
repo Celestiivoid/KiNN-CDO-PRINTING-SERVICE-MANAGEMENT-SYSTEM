@@ -129,7 +129,6 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         removeButton = new javax.swing.JButton();
         sizeBox = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         searchField = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
 
@@ -139,16 +138,17 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         simulatedDate.setBackground(new java.awt.Color(255, 255, 255));
-        simulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        simulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         simulatedDate.setForeground(new java.awt.Color(0, 153, 153));
         simulatedDate.setBorder(null);
-        jPanel1.add(simulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 20, 225, 50));
+        simulatedDate.addActionListener(this::simulatedDateActionPerformed);
+        jPanel1.add(simulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 20, 225, 30));
 
         localTime.setBackground(new java.awt.Color(255, 255, 255));
-        localTime.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        localTime.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         localTime.setForeground(new java.awt.Color(255, 153, 0));
         localTime.setBorder(null);
-        jPanel1.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 80, 225, 50));
+        jPanel1.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1010, 60, 225, 30));
 
         serviceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -162,7 +162,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 750, 530));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\User\\Downloads\\rgb-colors-10810_128.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/rgb-colors-10810_128.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 130));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
@@ -277,7 +277,7 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(sizeBox, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(29, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -322,23 +322,20 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, 460, 530));
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel8.setText("Search:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 90, 50));
-
         searchField.setBackground(new java.awt.Color(255, 255, 255));
         searchField.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchField.setForeground(new java.awt.Color(0, 0, 0));
         searchField.addActionListener(this::searchFieldActionPerformed);
-        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 100, 260, 50));
+        jPanel1.add(searchField, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 260, 50));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 100, 120, 50));
+        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 100, 120, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 720));
 
@@ -420,6 +417,10 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_searchFieldActionPerformed
 
+    private void simulatedDateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_simulatedDateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_simulatedDateActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addServiceButton;
@@ -432,7 +433,6 @@ public class ServiceFrame extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

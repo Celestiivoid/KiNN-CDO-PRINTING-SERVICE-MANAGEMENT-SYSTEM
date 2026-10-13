@@ -210,7 +210,7 @@ public class ServiceConnector {
         
         List<Service> service = new ArrayList<>();
         
-        String sql = "SELECT service_id, service_name, service_size, service_price "
+        String sql = "SELECT service_id, service_name, service_size, service_price, service_unit "
                    + "FROM tbL_service "
                    + "WHERE service_status = 'Active'";
         
@@ -225,7 +225,9 @@ public class ServiceConnector {
                 svc.setServiceID(rs.getInt("service_id"));
                 svc.setServiceName(rs.getString("service_name"));
                 svc.setServiceSize(rs.getString("service_size"));
+                svc.setServiceUnit(rs.getString("service_unit"));
                 svc.setServicePrice(rs.getDouble("service_price"));
+                
                 
                 service.add(svc);
             }

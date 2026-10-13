@@ -6,6 +6,7 @@ package order_GUI;
 
 import Database.OrderConnector;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class OrderList extends javax.swing.JInternalFrame {
@@ -39,6 +40,11 @@ public class OrderList extends javax.swing.JInternalFrame {
     private void searchOrdersTable() {
 
         String search = searchField.getText().trim();
+        
+        if(search.isEmpty()) {
+            JOptionPane.showMessageDialog(this,"Please input information to search","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
         DefaultTableModel model = (DefaultTableModel) orderTable.getModel();
 
@@ -50,6 +56,12 @@ public class OrderList extends javax.swing.JInternalFrame {
 
         for (Object[] order : orders) {
             model.addRow(order);
+        }
+        
+        if(orders.isEmpty()) {
+            loadTable();
+            JOptionPane.showMessageDialog(this,"Order not found!","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
         }
     }
 
@@ -82,13 +94,13 @@ public class OrderList extends javax.swing.JInternalFrame {
 
         orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Order ID", "Company Name", "First Name", "Last Name", "Service", "Size", "Unit Price", "Quantity", "Total", "Order Status", "Payment Status"
+                "Order ID", "Company Name", "First Name", "Last Name", "Service", "Size", "Unit Price", "Quantity", "Unit", "Total", "Order Status", "Payment Status"
             }
         ));
         jScrollPane1.setViewportView(orderTable);
@@ -96,16 +108,20 @@ public class OrderList extends javax.swing.JInternalFrame {
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1230, 610));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
         jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, 170, 50));
 
         displayAll.setBackground(new java.awt.Color(0, 153, 153));
-        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         displayAll.setForeground(new java.awt.Color(255, 255, 255));
+        displayAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye-12109_32 (1).png"))); // NOI18N
         displayAll.setText("Display All");
+        displayAll.setIconTextGap(10);
         displayAll.addActionListener(this::displayAllActionPerformed);
         jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 170, 50));
 

@@ -124,16 +124,20 @@ public class TransactionHistory extends javax.swing.JInternalFrame {
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 1230, 610));
 
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
-        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        searchButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
         jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, 170, 50));
 
         displayAll.setBackground(new java.awt.Color(0, 153, 153));
-        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        displayAll.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         displayAll.setForeground(new java.awt.Color(255, 255, 255));
+        displayAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye-12109_32 (1).png"))); // NOI18N
         displayAll.setText("Display All");
+        displayAll.setIconTextGap(10);
         displayAll.addActionListener(this::displayAllActionPerformed);
         jPanel1.add(displayAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(1080, 20, 170, 50));
 

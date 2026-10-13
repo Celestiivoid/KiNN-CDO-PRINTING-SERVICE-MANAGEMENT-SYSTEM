@@ -86,9 +86,7 @@ public class OrderConnector {
         return pstmt.executeUpdate() > 0;
 
     } catch (SQLException error) {
-        System.out.println(
-            "Error adding company order: " + error.getMessage()
-        );
+        System.out.println("Error adding company order: " + error.getMessage());
         return false;
     }
 }
@@ -110,7 +108,8 @@ public class OrderConnector {
             + "co.company_name, "
             + "co.company_contact, "
             + "s.service_name, "
-            + "s.service_size "
+            + "s.service_size, "
+            + "s.service_unit "
             + "FROM tbl_orders o "
             + "JOIN tbl_companies co "
             + "ON o.company_id = co.company_id "
@@ -148,6 +147,7 @@ public class OrderConnector {
 
                 order.setServiceName(rs.getString("service_name"));
                 order.setServiceSize(rs.getString("service_size"));
+                order.setUnitType(rs.getString("service_unit"));
 
                 Timestamp timestamp = rs.getTimestamp("order_date");
 
@@ -160,16 +160,11 @@ public class OrderConnector {
         }
 
     } catch (SQLException error) {
-        System.out.println(
-            "Error loading company order: " + error.getMessage()
-        );
+        System.out.println("Error loading company order: " + error.getMessage());
     }
-
     return null;
 }
 
-    
-    
 public Order getOrder(int orderID) {
 
     String sql =
@@ -193,7 +188,8 @@ public Order getOrder(int orderID) {
       + "co.company_contact, "
       + "co.company_email,"
       + "s.service_name, "
-      + "s.service_size "
+      + "s.service_size, "
+      + "s.service_unit "
       + "FROM tbl_orders o "
       + "LEFT JOIN tbl_customers c "
       + "ON o.customer_id = c.ctm_id "
@@ -245,6 +241,7 @@ public Order getOrder(int orderID) {
 
                 order.setServiceName(rs.getString("service_name"));
                 order.setServiceSize(rs.getString("service_size"));
+                order.setUnitType(rs.getString("service_unit"));
 
                 Timestamp timestamp = rs.getTimestamp("order_date");
 
@@ -257,11 +254,8 @@ public Order getOrder(int orderID) {
         }
 
     } catch (SQLException error) {
-        System.out.println(
-            "Error loading order: " + error.getMessage()
-        );
+        System.out.println("Error loading order: " + error.getMessage());
     }
-
     return null;
 }
 
@@ -324,8 +318,8 @@ public Order getOrder(int orderID) {
         return pstmt.executeUpdate() > 0;
 
         } catch (SQLException error) {
-        System.out.println("Error updating order: " + error.getMessage());
-        return false;
+            System.out.println("Error updating order: " + error.getMessage());
+            return false;
     }
 }
 
@@ -340,6 +334,7 @@ public Order getOrder(int orderID) {
                + "c.ctm_ltName, "
                + "s.service_name, "
                + "s.service_size, "
+               + "s.service_unit, "
                + "o.unit_price, "
                + "o.quantity, "
                + "o.total_amount, "
@@ -352,6 +347,7 @@ public Order getOrder(int orderID) {
                + "ON o.company_id = co.company_id "
                + "JOIN tbl_service s "
                + "ON o.service_id = s.service_id "
+               + "WHERE o.payment_status <> 'PAID' "
                + "ORDER BY o.order_id DESC";
 
         try (Connection conn = DBConnection.connect();
@@ -372,12 +368,13 @@ public Order getOrder(int orderID) {
                     rs.getString("service_size"),
                     rs.getDouble("unit_price"),
                     rs.getInt("quantity"),
+                    rs.getString("service_unit"),
                     rs.getDouble("total_amount"),
                     rs.getString("order_status"),
                     rs.getString("payment_status")
                 };
-
-            orders.add(row);
+                
+                orders.add(row);
             }
 
         } catch (SQLException error) {
@@ -391,22 +388,36 @@ public Order getOrder(int orderID) {
 
         List<Object[]> orders = new ArrayList<>();
 
+        
         String sql =
             "SELECT o.order_id, " +
-            "c.ctm_ftName, c.ctm_ltName, " +
-            "s.service_name, s.service_size, s.service_price, " +
-            "o.total_amount, o.order_status, o.payment_status, o.quantity " +
+            "co.company_name, " +
+            "c.ctm_ftName, " +
+            "c.ctm_ltName, " +
+            "s.service_name, " +
+            "s.service_size, " +
+            "s.service_unit, " +
+            "o.unit_price, " +
+            "o.quantity, " +
+            "o.total_amount, " +
+            "o.order_status, " +
+            "o.payment_status " +
             "FROM tbl_orders o " +
-            "JOIN tbl_customers c ON o.customer_id = c.ctm_id " +
+            "LEFT JOIN tbl_customers c ON o.customer_id = c.ctm_id " +
+            "LEFT JOIN tbl_companies co ON o.company_id = co.company_id " +
             "JOIN tbl_service s ON o.service_id = s.service_id " +
-            "WHERE (" +
+            "WHERE o.payment_status = 'UNPAID' " +
+            "AND (" +
             "CONCAT('ORD-', LPAD(o.order_id, 5, '0')) LIKE ? " +
+            "OR co.company_name LIKE ? " +
             "OR c.ctm_ftName LIKE ? " +
             "OR c.ctm_ltName LIKE ? " +
             "OR s.service_name LIKE ? " +
             "OR s.service_size LIKE ? " +
-            "OR o.order_status LIKE ?) " +
+            "OR o.order_status LIKE ? " +
+            ") " +
             "ORDER BY o.order_id DESC";
+
 
         try (Connection conn = DBConnection.connect();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -419,6 +430,7 @@ public Order getOrder(int orderID) {
             pstmt.setString(4, keyword);
             pstmt.setString(5, keyword);
             pstmt.setString(6, keyword);
+            pstmt.setString(7, keyword);
 
             try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -429,12 +441,14 @@ public Order getOrder(int orderID) {
 
                     Object[] row = {
                         orderID,
+                        rs.getString("company_name"),
                         rs.getString("ctm_ftName"),
                         rs.getString("ctm_ltName"),
                         rs.getString("service_name"),
                         rs.getString("service_size"),
-                        rs.getString("service_price"),
+                        rs.getDouble("unit_price"),
                         rs.getInt("quantity"),
+                        rs.getString("service_unit"),
                         rs.getDouble("total_amount"),
                         rs.getString("order_status"),
                         rs.getString("payment_status")
@@ -498,6 +512,7 @@ public Order getOrder(int orderID) {
             + "c.ctm_ltName, "
             + "s.service_name, "
             + "s.service_size, "
+            + "s.service_unit, "
             + "o.quantity, "
             + "o.total_amount, "
             + "o.order_status "
@@ -528,6 +543,7 @@ public Order getOrder(int orderID) {
                     rs.getString("service_name"),
                     rs.getString("service_size"),
                     rs.getInt("quantity"),
+                    rs.getString("service_unit"),
                     rs.getDouble("total_amount"),
                     rs.getString("order_status")
                 };

@@ -151,13 +151,13 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         simulatedDate.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         simulatedDate.setForeground(new java.awt.Color(0, 153, 153));
         simulatedDate.setBorder(null);
-        jPanel1.add(simulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 20, 225, 50));
+        jPanel1.add(simulatedDate, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 20, 225, 30));
 
         localTime.setBackground(new java.awt.Color(255, 255, 255));
         localTime.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
         localTime.setForeground(new java.awt.Color(255, 153, 0));
         localTime.setBorder(null);
-        jPanel1.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 80, 225, 50));
+        jPanel1.add(localTime, new org.netbeans.lib.awtextra.AbsoluteConstraints(1020, 60, 225, 30));
 
         serviceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -251,7 +251,9 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         searchIDButton.setBackground(new java.awt.Color(0, 153, 153));
         searchIDButton.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         searchIDButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchIDButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchIDButton.setText("Search");
+        searchIDButton.setIconTextGap(10);
         searchIDButton.addActionListener(this::searchIDButtonActionPerformed);
 
         sizeBox.setBackground(new java.awt.Color(255, 255, 255));
@@ -395,16 +397,20 @@ public class UpdateServiceFrame extends javax.swing.JInternalFrame {
         searchButton.setBackground(new java.awt.Color(0, 153, 153));
         searchButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         searchButton.setForeground(new java.awt.Color(255, 255, 255));
+        searchButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search-2904_32 (1).png"))); // NOI18N
         searchButton.setText("Search");
+        searchButton.setIconTextGap(10);
         searchButton.addActionListener(this::searchButtonActionPerformed);
-        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 120, 50));
+        jPanel1.add(searchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 100, 130, 50));
 
         viewAll.setBackground(new java.awt.Color(0, 153, 153));
         viewAll.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         viewAll.setForeground(new java.awt.Color(255, 255, 255));
+        viewAll.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eye-12109_32 (1).png"))); // NOI18N
         viewAll.setText("View All");
+        viewAll.setIconTextGap(10);
         viewAll.addActionListener(this::viewAllActionPerformed);
-        jPanel1.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 100, 120, 50));
+        jPanel1.add(viewAll, new org.netbeans.lib.awtextra.AbsoluteConstraints(910, 100, -1, 50));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1270, 740));
 
